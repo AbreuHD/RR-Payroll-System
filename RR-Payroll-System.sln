@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraest
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{3A4BF662-83BF-476C-8650-C0F335C230D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "Core.Application\Core.Application.csproj", "{AD734056-37D4-4B19-9359-4F4C7D3AA0C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Application", "Core.Application\Core.Application.csproj", "{AD734056-37D4-4B19-9359-4F4C7D3AA0C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "Core.Domain\Core.Domain.csproj", "{0BC8A3FD-9289-435D-9276-AAC300766F97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Domain", "Core.Domain\Core.Domain.csproj", "{0BC8A3FD-9289-435D-9276-AAC300766F97}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.Identity", "Infraestructure.Identity\Infraestructure.Identity.csproj", "{D4A4F280-D0B0-4281-99DE-E51C66248CCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructure.Identity", "Infraestructure.Identity\Infraestructure.Identity.csproj", "{D4A4F280-D0B0-4281-99DE-E51C66248CCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infraestructure.Persistence", "Infraestructure.Persistence\Infraestructure.Persistence.csproj", "{B9EED4AB-DC2F-4898-92AC-2DB803599C4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructure.Persistence", "Infraestructure.Persistence\Infraestructure.Persistence.csproj", "{B9EED4AB-DC2F-4898-92AC-2DB803599C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
