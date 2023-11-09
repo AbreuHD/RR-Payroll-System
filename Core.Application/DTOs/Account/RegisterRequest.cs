@@ -19,5 +19,6 @@ namespace Core.Application.DTOs.Account
         public string SavingsAccount { get; set; }
 
         public bool isActive { get; set; } = false;
+        public bool isAdmin { get; set; } = false;
     }
 }

@@ -62,7 +62,7 @@ namespace Infraestructure.Identity.Services
             return response;
         }
 
-        public async Task<RegisterResponse> RegisterClients(RegisterRequest request, string origin)
+        public async Task<RegisterResponse> RegisterClients(RegisterRequest request)
         {
             RegisterResponse response = new();
 
@@ -83,9 +83,7 @@ namespace Infraestructure.Identity.Services
                 return response;
             }
 
-            {
-
-
+            
                 var user = new ApplicationUser()
                 {
                     Email = request.Email,
@@ -106,22 +104,58 @@ namespace Infraestructure.Identity.Services
                 await _userManager.AddToRoleAsync(user, Roles.User.ToString());
 
                 return response;
-            }
+            
         }
 
-        public async Task<RegisterResponse> UpdateClient(RegisterRequest request, string origin)
+        public async Task<RegisterResponse> UpdateClient(RegisterRequest request)
         {
             RegisterResponse response = new();
             response.HasError = false;
 
             var userToUpdate = await _userManager.FindByNameAsync(request.UserName);
-            var nuevoMonto = request.SavingsAccount;
             var user = userToUpdate;
 
             user.Email = request.Email;
             user.Name = request.Name;
             user.LastName = request.LastName;
             user.UserName = request.UserName;
+            user.PhoneNumber = request.Phone;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (request.isAdmin)
+            {
+                await _userManager.RemoveFromRoleAsync(user, Roles.User.ToString());
+                await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+            }
+            else
+            {
+                await _userManager.RemoveFromRoleAsync(user, Roles.Admin.ToString());
+                await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+            }
+
+            if (!result.Succeeded)
+            {
+                response.HasError = true;
+                response.Error = $"An error ocurred trying to update the user";
+                return response;
+            }
+            return response;
+        }
+
+        public async Task<RegisterResponse> UpdateAdmin(RegisterRequest request)
+        {
+            RegisterResponse response = new();
+            response.HasError = false;
+
+            var userToUpdate = await _userManager.FindByNameAsync(request.UserName);
+
+            var user = userToUpdate;
+
+            user.Email = request.Email;
+            user.Name = request.Name;
+            user.LastName = request.LastName;
+            user.UserName = request.UserName;
+
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
             {
@@ -132,7 +166,7 @@ namespace Infraestructure.Identity.Services
             return response;
         }
 
-        public async Task<RegisterResponse> RegisterAdmin(RegisterRequest request, string origin)
+        public async Task<RegisterResponse> RegisterAdmin(RegisterRequest request)
         {
             RegisterResponse response = new();
 
@@ -167,36 +201,18 @@ namespace Infraestructure.Identity.Services
                 response.Error = $"An error ocurred trying to register the user";
                 return response;
             }
-            await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
-            var verificationUri = await SendVerificacionEmailUrl(user, origin);
-            return response;
-        }
-
-        public async Task<RegisterResponse> UpdateAdmin(RegisterRequest request, string origin)
-        {
-            RegisterResponse response = new();
-            response.HasError = false;
-
-            var userToUpdate = await _userManager.FindByNameAsync(request.UserName);
-
-            var user = userToUpdate;
-
-            user.Email = request.Email;
-            user.Name = request.Name;
-            user.LastName = request.LastName;
-            user.UserName = request.UserName;
-
-            var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded)
+            if (request.isAdmin)
             {
-                response.HasError = true;
-                response.Error = $"An error ocurred trying to update the user";
-                return response;
+                await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+            }
+            else
+            {
+                await _userManager.AddToRoleAsync(user, Roles.User.ToString());
             }
             return response;
         }
 
-        public async Task<ForgotPasswordResponse> ForgotPassword(ForgotPasswordRequest request, string origin)
+        public async Task<ForgotPasswordResponse> ForgotPassword(ForgotPasswordRequest request)
         {
             ForgotPasswordResponse response = new();
 
@@ -210,7 +226,6 @@ namespace Infraestructure.Identity.Services
 
                 return response;
             }
-            var verificationUri = await SendForgotPasswordUrl(user, origin);
 
             return response;
         }
@@ -255,26 +270,26 @@ namespace Infraestructure.Identity.Services
             return $"An error occurred while confirming {user.Email}.";
         }
 
-        private async Task<string> SendVerificacionEmailUrl(ApplicationUser user, string origin)
+        private async Task<string> SendVerificacionEmailUrl(ApplicationUser user)
         {
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var route = "User/ConfirmEmail";
-            var Uri = new Uri(string.Concat($"{origin}/", route));
+            var Uri = new Uri(string.Concat($"{"a"}/", route));
             var verificationUrl = QueryHelpers.AddQueryString(Uri.ToString(), "userId", user.Id);
             verificationUrl += QueryHelpers.AddQueryString(verificationUrl, "token", code);
 
             return verificationUrl;
         }
 
-        private async Task<string> SendForgotPasswordUrl(ApplicationUser user, string origin)
+        private async Task<string> SendForgotPasswordUrl(ApplicationUser user)
         {
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             string route = "User/ResetPassword";
-            var uri = new Uri(string.Concat($"{origin}/{route}"));
+            var uri = new Uri(string.Concat($"{""}/{route}"));
             var verificationUrl = QueryHelpers.AddQueryString(uri.ToString(), "token", code);
 
             return verificationUrl;
@@ -306,7 +321,11 @@ namespace Infraestructure.Identity.Services
             {
                 Id = x.Id,
                 UserName = x.UserName,
-                IsAdmin = false
+                IsAdmin = false,
+                Email = x.Email,
+                LastName = x.LastName,
+                Name = x.Name,
+                IsActive = x.EmailConfirmed
             }).ToList();
 
             var adminID = GetAdminUsers().Result;
@@ -346,7 +365,9 @@ namespace Infraestructure.Identity.Services
                 UserName = data.UserName,
                 Email = data.Email,
                 Id = data.Id,
-                isActive = data.EmailConfirmed
+                isActive = data.EmailConfirmed,
+                Phone = data.PhoneNumber,
+                IsAdmin = await _userManager.IsInRoleAsync(data, "Admin")
             };
         }
 

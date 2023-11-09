@@ -16,11 +16,11 @@ namespace Infrastructure.Identity.Seeds
         {
             ApplicationUser user = new ApplicationUser
             {
-                Name = "Jefferson",
-                LastName = "Abreu",
-                UserName = "AbreuHDm",
-                Email = "abreuhd08@gmail.com",
-                PhoneNumber = "809-491-0570",
+                Name = "Jack",
+                LastName = "Black",
+                UserName = "User",
+                Email = "user@gmail.com",
+                PhoneNumber = "809-111-2222",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
 

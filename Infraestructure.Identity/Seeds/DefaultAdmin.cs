@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Identity.Seeds
 {
-    public static class DefaultOwner
+    public static class DefaultAdmin
     {
         public static async Task Seed(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             var user = new ApplicationUser
             {
-                Name = "John",
-                LastName = "Doe",
-                UserName = "Owner",
-                Email = "Owner@gmail.com",
-                PhoneNumber = "809-999-9999",
+                Name = "Josh",
+                LastName = "Browlin",
+                UserName = "Admin",
+                Email = "Admin@gmail.com",
+                PhoneNumber = "809-000-9999",
                 EmailConfirmed = true
             };
             if (userManager.Users.All(u => u.Id != user.Id))
@@ -23,7 +23,7 @@ namespace Infrastructure.Identity.Seeds
                 if (userEmail == null)
                 {
                     await userManager.CreateAsync(user, "123Pa$$word!");
-                    await userManager.AddToRoleAsync(user, Roles.Owner.ToString());
+                    await userManager.AddToRoleAsync(user, Roles.Admin.ToString());
                 }
             }
         }
