@@ -61,14 +61,6 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> ReportesProyecto()
-        {
-            return View();
-        }
-        public async Task<IActionResult> Proyectos()
-        {
-            return View();
-        }
         public async Task<IActionResult> Deducciones()
         {
             return View();
