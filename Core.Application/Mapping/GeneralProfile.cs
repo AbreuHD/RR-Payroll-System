@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Estado;
+using Core.Application.DTOs.Proyecto;
+using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.ViewModels.User;
+using Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +35,15 @@ namespace Core.Application.Mapping
                 .ForMember(dest => dest.HasError, opt => opt.Ignore())
                     .ForMember(dest => dest.Error, opt => opt.Ignore())
                         .ReverseMap();
+
+            CreateMap<GetAllStatusDTO, Estado>()
+                .ReverseMap();
+
+            CreateMap<CreateProjectCommand, Proyecto>()
+                .ReverseMap();
+
+            CreateMap<ProyectoDTO, Proyecto>()
+                .ReverseMap();
         }
     }
 }

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Admin\ReportesProyecto.cshtml" />
+    <None Include="Views\Reportes\ReportesProyecto.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

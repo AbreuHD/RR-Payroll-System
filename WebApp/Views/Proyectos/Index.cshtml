@@ -1,0 +1,91 @@
+﻿@using Core.Application.DTOs.Proyecto
+@model List<ProyectoDTO>
+@{
+    ViewData["Title"] = "Proyectos";
+}
+
+
+<div class="container">
+
+    <div class="row m-3">
+        <div class="col-3 offset-10">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Usuario</button>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <div class="row row-cols-2">
+            @foreach(var data in Model)
+            {
+                <div class="p-3">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            @data.Estado.Nombre
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@data.Nombre</h5>
+                            <p class="card-text">@data.Descripcion</p>
+                            <a href="Proyectos/Info/@data.Id" class="btn btn-primary">Mas info</a>
+                        </div>
+                        <div class="card-footer text-body-secondary">
+                            @data.Locacion
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Proyecto</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" asp-controller="Proyectos" asp-action="Crear">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="name" name="Nombre" aria-describedby="name">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="cliente" class="form-label">Cliente</label>
+                                    <input type="text" class="form-control" id="cliente" name="Cliente">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="localizacion" class="form-label">Localizacion</label>
+                                    <input type="localizacion" class="form-control" id="localizacion" name="Locacion">
+                                </div>
+
+                                <select class="form-select" aria-label="Estado" name="IdEstado">
+                                    <option selected>Selecciona un estado</option>
+                                    <option value="2">Iniciado</option>
+                                    <option value="3">Terminado</option>
+                                </select>
+
+                                <div class="mb-3">
+                                    <label for="fechaInicio" class="form-label">Fecha de inicio</label>
+                                    <input type="date" class="form-control" id="fechaInicio" name="FechaInicio">
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label for="FechaEntrega" class="form-label">Fecha De Entrega</label>
+                                    <input type="date" class="form-control" id="FechaEntrega" name="FechaFinal">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Descripcion" class="form-label">Descripcion</label>
+                                    <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Crear</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

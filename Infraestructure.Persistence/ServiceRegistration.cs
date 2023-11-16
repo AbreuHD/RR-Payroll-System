@@ -1,4 +1,5 @@
 ﻿using Core.Application.Interface.Repositories;
+using Core.Application.Interface.Repository;
 using Infraestructure.Persistence.Context;
 using Infraestructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,8 @@ namespace Infraestructure.Persistence
                     m.MigrationsAssembly(typeof(PersistenceContext).Assembly.FullName)));
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IProyectoRepository, ProyectoRepository>();
+            services.AddTransient<IEstadoRepository, EstadoRepository>();
         }
     }
 }
