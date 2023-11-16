@@ -1,10 +1,11 @@
 ﻿using Core.Application.DTOs.Proyecto;
-using Core.Application.Features.Estado.Commands.GetAllStatus;
-using Core.Application.Features.Proyecto.Commands.GetAllProjects;
-using Core.Application.Features.Proyecto.Queries.CreateProject;
+using Core.Application.Features.Estado.Queries.GetAllStatus;
+using Core.Application.Features.Proyecto.Queries.GetAllProjects;
+using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.Interface.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Core.Application.Features.Proyecto.Queries.GetProjectById;
 
 namespace WebApp.Controllers
 {
@@ -15,14 +16,29 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.Estados = await Mediator.Send(new GetAllStatusCommand());
-            return View(await Mediator.Send(new GetAllProjectsCommand()));
+            ViewBag.Estados = await Mediator.Send(new GetAllStatusQuery());
+            return View(await Mediator.Send(new GetAllProjectsQuery()));
+        }
+
+        public async Task<IActionResult> Info(int Id)
+        {
+            return View(await Mediator.Send(new GetProjectByIdQuery
+            {
+                Id = Id
+            }));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditarProyectoDTO request)
+        {
+            return RedirectToAction("Index");
+
         }
 
         [HttpPost]
         public async Task<IActionResult> Crear(CrearProyectoDTO request)
         {
-            var response = await Mediator.Send(new CreateProjectQuery
+            var response = await Mediator.Send(new CreateProjectCommand
             {
                 Cliente = request.Cliente,
                 Descripcion = request.Descripcion,
@@ -34,6 +50,5 @@ namespace WebApp.Controllers
             });
             return RedirectToAction("Index");
         }
-
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Core.Application.DTOs.Proyecto;
 using Core.Application.Interface.Repository;
 using MediatR;
 using System;
@@ -8,43 +7,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.Features.Proyecto.Queries.CreateProject
+namespace Core.Application.Features.Proyecto.Commands.EditProject
 {
-    public class CreateProjectQuery : IRequest<bool>
+    public class EditProjectCommand : IRequest<bool>
     {
+        public int Id { get; set; }
         public string Nombre { get; set; }
-        public string Cliente { get; set; }
         public string Locacion { get; set; }
         public string Descripcion { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFinal { get; set; }
         public int IdEstado { get; set; }
+        public string Cliente { get; set; }
     }
-
-    public class CreateProjectQueryHandler : IRequestHandler<CreateProjectQuery, bool>
+    public class EditProjectCommandHandler : IRequestHandler<EditProjectCommand, bool>
     {
         public readonly IProyectoRepository _proyectoRepository;
         public readonly IMapper _mapper;
 
-        public CreateProjectQueryHandler(IProyectoRepository proyectoRepository, IMapper mapper)
+        public EditProjectCommandHandler(IProyectoRepository projectRepository, IMapper mapper)
         {
-            _proyectoRepository = proyectoRepository;
+            _proyectoRepository = projectRepository;
             _mapper = mapper;
         }
 
-        public async Task<bool> Handle(CreateProjectQuery request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(EditProjectCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var proyecto = _mapper.Map<Domain.Entities.Proyecto>(request);
-                await _proyectoRepository.AddAsync(proyecto);
+                await _proyectoRepository.UpdateAsync(proyecto, request.Id);
                 return true;
             }catch(Exception e)
             {
                 return false;
             }
 
-
+            throw new NotImplementedException();
         }
     }
 }

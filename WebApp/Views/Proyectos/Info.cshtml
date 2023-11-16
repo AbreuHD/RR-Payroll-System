@@ -1,0 +1,120 @@
+﻿@using Core.Application.DTOs.Proyecto
+@model ProyectoDTO
+@{
+    ViewData["Title"] = "Info Proyecto";
+}
+
+
+<div class="container">
+
+    <div class="row m-3">
+        <div class="col-3 offset-10">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Info Proyecto</h1>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaInicio)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FechaInicio)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.FechaFinal)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FechaFinal)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Proyecto</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-controller="Proyectos" asp-action="Edit">
+                        <input value="@Model.Id" name="Id" hidden>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" name="Nombre" value="@Model.Nombre" aria-describedby="name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="cliente" class="form-label">Cliente</label>
+                            <input type="text" class="form-control" id="cliente" name="Cliente" value="@Model.Cliente">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="localizacion" class="form-label">Localizacion</label>
+                            <input type="localizacion" class="form-control" id="localizacion" name="Locacion" value="@Model.Locacion">
+                        </div>
+
+                        <select class="form-select" aria-label="Estado" name="IdEstado">
+                            <option selected>Selecciona un estado</option>
+                            <option value="2">Iniciado</option>
+                            <option value="3">Terminado</option>
+                        </select>
+
+                        <div class="mb-3">
+                            <label for="fechaInicio" class="form-label">Fecha de inicio</label>
+                            <input type="date" class="form-control" id="fechaInicio" name="FechaInicio" value="@Model.FechaInicio">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="FechaEntrega" class="form-label">Fecha De Entrega</label>
+                            <input type="date" class="form-control" id="FechaEntrega" name="FechaFinal" value="@Model.FechaFinal">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Descripcion" class="form-label">Descripcion</label>
+                            <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3">@Model.Descripcion</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Crear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

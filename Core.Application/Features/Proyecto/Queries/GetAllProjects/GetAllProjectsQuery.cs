@@ -8,24 +8,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.Features.Proyecto.Commands.GetAllProjects
+namespace Core.Application.Features.Proyecto.Queries.GetAllProjects
 {
-    public class GetAllProjectsCommand : IRequest<List<ProyectoDTO>>
+    public class GetAllProjectsQuery : IRequest<List<ProyectoDTO>>
     {
     }
 
-    public class GetAllProjectsCommandsHandler : IRequestHandler<GetAllProjectsCommand, List<ProyectoDTO>>
+    public class GetAllProjectsQueryHandler : IRequestHandler<GetAllProjectsQuery, List<ProyectoDTO>>
     {
         private readonly IProyectoRepository _proyectoRepository;
         private readonly IMapper _mapper;
 
-        public GetAllProjectsCommandsHandler(IProyectoRepository proyectoRepository, IMapper mapper)
+        public GetAllProjectsQueryHandler(IProyectoRepository proyectoRepository, IMapper mapper)
         {
             _mapper = mapper;
             _proyectoRepository = proyectoRepository;
         }
 
-        public async Task<List<ProyectoDTO>> Handle(GetAllProjectsCommand request, CancellationToken cancellationToken)
+        public async Task<List<ProyectoDTO>> Handle(GetAllProjectsQuery request, CancellationToken cancellationToken)
         {
             var proyectos = await _proyectoRepository.GetAllAsync();
             var response = _mapper.Map<List<ProyectoDTO>>(proyectos);

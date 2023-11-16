@@ -8,23 +8,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.Features.Estado.Commands.GetAllStatus
+namespace Core.Application.Features.Estado.Queries.GetAllStatus
 {
-    public class GetAllStatusCommand : IRequest<List<GetAllStatusDTO>>
+    public class GetAllStatusQuery : IRequest<List<GetAllStatusDTO>>
     {
     }
 
-    public class GetAllStatusCommandHandler : IRequestHandler<GetAllStatusCommand, List<GetAllStatusDTO>>
+    public class GetAllStatusQueryHandler : IRequestHandler<GetAllStatusQuery, List<GetAllStatusDTO>>
     {
         private readonly IEstadoRepository _estadoRepository;
         private readonly IMapper _mapper;
 
-        public GetAllStatusCommandHandler(IEstadoRepository estadoRepository, IMapper mapper)
+        public GetAllStatusQueryHandler(IEstadoRepository estadoRepository, IMapper mapper)
         {
             _mapper = mapper;
             _estadoRepository = estadoRepository;
         }
-        public async Task<List<GetAllStatusDTO>> Handle(GetAllStatusCommand request, CancellationToken cancellationToken)
+        public async Task<List<GetAllStatusDTO>> Handle(GetAllStatusQuery request, CancellationToken cancellationToken)
         {
             var estados = await _estadoRepository.GetAllAsync();
             var response = _mapper.Map<List<GetAllStatusDTO>>(estados);

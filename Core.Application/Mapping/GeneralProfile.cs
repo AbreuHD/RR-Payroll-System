@@ -2,7 +2,7 @@
 using Core.Application.DTOs.Account;
 using Core.Application.DTOs.Estado;
 using Core.Application.DTOs.Proyecto;
-using Core.Application.Features.Proyecto.Queries.CreateProject;
+using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.ViewModels.User;
 using Core.Domain.Entities;
 using System;
@@ -39,7 +39,7 @@ namespace Core.Application.Mapping
             CreateMap<GetAllStatusDTO, Estado>()
                 .ReverseMap();
 
-            CreateMap<CreateProjectQuery, Proyecto>()
+            CreateMap<CreateProjectCommand, Proyecto>()
                 .ReverseMap();
 
             CreateMap<ProyectoDTO, Proyecto>()
