@@ -51,59 +51,116 @@
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Usuario</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" asp-controller="Admin" asp-action="CreateUser">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="username" name="UserName" aria-describedby="username">
-                        </div>
+                    <div class="text-center">
+                        <form method="post" asp-controller="Admin" asp-action="CreateUser">
+                            <div class="row row-cols-2">
+                                <div>
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">Usuario</label>
+                                        <input type="text" class="form-control" id="username" name="UserName" aria-describedby="username">
+                                    </div>
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" name="Name" aria-describedby="name">
-                        </div>
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="name" name="Name" aria-describedby="name">
+                                    </div>
 
-                        <div class="mb-3">
-                            <label for="lastname" class="form-label">Apellido</label>
-                            <input type="text" class="form-control" id="lastname" name="LastName">
-                        </div>
+                                    <div class="mb-3">
+                                        <label for="lastname" class="form-label">Apellido</label>
+                                        <input type="text" class="form-control" id="lastname" name="LastName">
+                                    </div>
 
-                        <div class="mb-3">
-                            <label for="cedula" class="form-label">Cedula</label>
-                            <input type="number" class="form-control" id="cedula" name="Identification">
-                        </div>
+                                    <div class="mb-3">
+                                        <label for="cedula" class="form-label">Cedula</label>
+                                        <input type="number" class="form-control" id="cedula" name="Identification">
+                                    </div>
 
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="Email">
-                        </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="Email">
+                                    </div>
 
-                        <div class="mb-3">
-                            <label for="phone" class="form-label">Telefono</label>
-                            <input type="tel" class="form-control" id="phone" name="Phone">
-                        </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label">Telefono</label>
+                                        <input type="tel" class="form-control" id="phone" name="Phone">
+                                    </div>
 
-                        <div class="mb-3">
-                            <label for="psw" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="psw" name="Password">
-                        </div>
+                                    <div class="mb-3">
+                                        <label for="psw" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="psw" name="Password">
+                                    </div>
 
-                        <div class="mb-3">
-                            <label for="conpsw" class="form-label">Repite la contraseña</label>
-                            <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
-                            <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    <div class="mb-3">
+                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
+                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
+                                        <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mb-3">
+                                        <label for="FechaNacimiento" class="form-label">Fecha Nacimiento</label>
+                                        <input type="datetime" class="form-control" id="FechaNacimiento" name="FechaNacimiento" aria-describedby="username">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Sexo" class="form-label">Genero</label>
+                                        <select class="form-select" name="Sexo" aria-label="Default select example">
+                                            <option selected>Selecciona un sexo</option>
+                                            <option value="0">Femenino</option>
+                                            <option value="1">Masculino</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Celular" class="form-label">Celular</label>
+                                        <input type="tel" class="form-control" id="Celular" name="Celular" aria-describedby="username">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="tipoPago" class="form-label">Tipo Pago</label>
+                                        <input type="text" class="form-control" id="tipoPago" name="tipoPago" aria-describedby="username">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="IdNacionalidad" class="form-label">Nacionalidad</label>
+                                        <select class="form-select" name="IdNacionalidad" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            <option value="0">Femenino</option>
+                                            <option value="1">Masculino</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Direccion" class="form-label">Direccion</label>
+                                        <input type="text" class="form-control" id="Direccion" name="Direccion" aria-describedby="username">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="IdProvincia" class="form-label">Provincia</label>
+                                        <select class="form-select" name="IdProvincia" aria-label="Default select example">
+                                            <option selected>Selecciona tu provincia</option>
+                                            <option value="0">Femenino</option>
+                                            <option value="1">Masculino</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="IdEstado" class="form-label">Estado</label>
+                                        <select class="form-select" name="IdEstado" aria-label="Default select example">
+                                            <option selected>Selecciona tu estado</option>
+                                            <option value="0">Femenino</option>
+                                            <option value="1">Masculino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+                    </div>
                 </div>
             </div>
         </div>

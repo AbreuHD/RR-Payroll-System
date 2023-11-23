@@ -93,7 +93,7 @@ namespace Infraestructure.Identity.Services
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);
-                var created = GetAllUser();
+                //var created = GetAllUser();
 
                 if (!result.Succeeded)
                 {
@@ -102,7 +102,7 @@ namespace Infraestructure.Identity.Services
                     return response;
                 }
                 await _userManager.AddToRoleAsync(user, Roles.User.ToString());
-
+                response.Id = user.Id;
                 return response;
             
         }

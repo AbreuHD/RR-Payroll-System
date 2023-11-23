@@ -18,5 +18,6 @@ namespace Core.Application.DTOs.Proyecto
         public DateTime FechaFinal { get; set; }
         public int IdEstado { get; set; }
         public Domain.Entities.Estado Estado { get; set; }
+        public List<EmpleadoProyecto> EmpleadoProyectos { get; set; }
     }
 }

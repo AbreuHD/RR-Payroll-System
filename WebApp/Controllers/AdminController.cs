@@ -1,11 +1,15 @@
-﻿using Core.Application.Interface.Services;
+﻿using Core.Application.Features.Empleado.Comands.CreateEmpleado;
+using Core.Application.Interface.Services;
 using Core.Application.ViewModels.User;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Controllers
 {
     public class AdminController : Controller
     {
+        private IMediator _mediator;
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
         private readonly IUserService _userService;
 
         public AdminController(IUserService userService)
@@ -20,13 +24,24 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserSaveViewModel vm)
+        public async Task<IActionResult> CreateUser(UserSaveViewModel vm, CreateEmpleadoCommand comm)
         {
-            if (!ModelState.IsValid)
+            try
+            {
+                comm.Telefono = vm.Phone;
+                comm.Nombre = vm.Name;
+                comm.Apellido = vm.LastName;
+            }catch(Exception e)
             {
                 return RedirectToRoute(new { controller = "Admin", action = "Index" });
             }
+            //if (!ModelState.IsValid)
+            //{
+            //    return RedirectToRoute(new { controller = "Admin", action = "Index" });
+            //}
             var data = await _userService.RegisterAdmin(vm);
+            comm.UserID = data.Id;
+            await Mediator.Send(comm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }
 
