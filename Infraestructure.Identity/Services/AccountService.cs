@@ -209,6 +209,7 @@ namespace Infraestructure.Identity.Services
             {
                 await _userManager.AddToRoleAsync(user, Roles.User.ToString());
             }
+            response.Id = user.Id;
             return response;
         }
 

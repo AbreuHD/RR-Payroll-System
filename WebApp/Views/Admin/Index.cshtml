@@ -109,7 +109,7 @@
                                 <div>
                                     <div class="mb-3">
                                         <label for="FechaNacimiento" class="form-label">Fecha Nacimiento</label>
-                                        <input type="datetime" class="form-control" id="FechaNacimiento" name="FechaNacimiento" aria-describedby="username">
+                                        <input type="date" class="form-control" id="FechaNacimiento" name="FechaNacimiento" aria-describedby="username">
                                     </div>
                                     <div class="mb-3">
                                         <label for="Sexo" class="form-label">Genero</label>
@@ -131,8 +131,10 @@
                                         <label for="IdNacionalidad" class="form-label">Nacionalidad</label>
                                         <select class="form-select" name="IdNacionalidad" aria-label="Default select example">
                                             <option selected>Selecciona tu nacionalidad</option>
-                                            <option value="0">Femenino</option>
-                                            <option value="1">Masculino</option>
+                                            @foreach (var i in ViewBag.Nacionalidades)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
                                         </select>
                                     </div>
                                     <div class="mb-3">
@@ -143,16 +145,20 @@
                                         <label for="IdProvincia" class="form-label">Provincia</label>
                                         <select class="form-select" name="IdProvincia" aria-label="Default select example">
                                             <option selected>Selecciona tu provincia</option>
-                                            <option value="0">Femenino</option>
-                                            <option value="1">Masculino</option>
+                                            @foreach (var i in ViewBag.Provincias)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
                                         </select>
                                     </div>
                                     <div class="mb-3">
                                         <label for="IdEstado" class="form-label">Estado</label>
                                         <select class="form-select" name="IdEstado" aria-label="Default select example">
                                             <option selected>Selecciona tu estado</option>
-                                            <option value="0">Femenino</option>
-                                            <option value="1">Masculino</option>
+                                            @foreach (var i in ViewBag.Estados)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
                                         </select>
                                     </div>
                                 </div>

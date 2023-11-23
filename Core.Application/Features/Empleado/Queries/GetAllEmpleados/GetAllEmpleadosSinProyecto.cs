@@ -28,7 +28,10 @@ namespace Core.Application.Features.Empleado.Queries.GetAllEmpleados
         public async Task<List<GetAllEmpleadosResponseDTO>> Handle(GetAllEmpleadosSinProyecto request, CancellationToken cancellationToken)
         {
             var empleados = await _empleadoRepository.GetAllAsync();
-            empleados = empleados.Where(item => !request.Id.Contains(item.Id)).ToList();
+            if(request.Id != null)
+            {
+                empleados = empleados.Where(item => !request.Id.Contains(item.Id)).ToList();
+            }
             var response = _mapper.Map<List<GetAllEmpleadosResponseDTO>>(empleados);
             return response;
         }

@@ -12,6 +12,6 @@ namespace Core.Domain.Entities
         public string Tipo { get; set; }
         public string Descripcion { get; set; }
 
-        public ICollection<EmpleadoProyecto> EmpleadoProyectos { get; set; }
+        public ICollection<EmpleadoProyectos> EmpleadoProyectos { get; set; }
     }
 }

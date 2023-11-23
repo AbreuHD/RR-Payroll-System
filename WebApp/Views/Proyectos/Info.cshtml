@@ -79,16 +79,18 @@
                     </div>
                 </div>
 
-                <div id="Empleados">
-                    <div class="card text-center" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">John Doe</h5>
-                            <p class="card-text">Supervisor.</p>
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#EditarEmpleadoModal" class="btn btn-primary">Editar</button>
+                @foreach (var item in Model.EmpleadoProyectos)
+                {
+                    <div id="Empleados">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Empleado.Nombre</h5>
+                                <p class="card-text">@item.Puesto.Nombre</p>
+                                <button type="button" class="btn btn-primary editarEmpleado" data-bs-toggle="modal" data-bs-target="#EditarEmpleadoModal" data-idEmpleadoProyectos="@item.IdEmpleado" data-id="@item.Id" data-nombre="@item.Empleado.Nombre">Editar</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-
+                }
             </div>
         </div>
     </div>
@@ -98,7 +100,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Proyecto</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Proyecto</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -158,30 +160,35 @@
                         <h1 class="modal-title fs-5" id="AgregarEmpleadoModal">Agregar Usuario</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Usuario</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                    <form method="post" asp-controller="Proyectos" asp-action="AddEmpleado">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Usuario</label>
+                                <select class="form-select" name="IdEmpleado" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    @foreach (var item in ViewBag.Empleados)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Rol</label>
+                                <select class="form-select" name="IdPuesto" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    @foreach (var item in ViewBag.Puestos)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <input value="@Model.Id" name="IdProyecto" hidden>
                         </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Rol</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -195,29 +202,59 @@
                         <h1 class="modal-title fs-5" id="EditarEmpleadoModal">Editar Usuario</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Usuario</label>
-                            <select class="form-select" aria-label="Default select example" disabled>
-                                <option selected>John Doe</option>
-                            </select>
+                    <form method="post" asp-controller="Proyectos" asp-action="EditEmpleado">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Usuario</label>
+                                <input type="text" class="btn" name="Nombre" value="John Doe" disabled />
+
+                                <input type="text" name="IdEmpleado" value="1" hidden />
+                                <input type="text" name="IdProyecto" value="@Model.Id" hidden />
+                                <input type="text" name="Id" value="0" hidden />
+                            
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Rol</label>
+                                <select class="form-select" name="IdPuesto" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    @foreach (var item in ViewBag.Puestos)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Rol</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var editarBotones = document.querySelectorAll('.editarEmpleado');
+
+        var nombreInput = document.querySelector('#EditarEmpleadoModal input[name="Nombre"]');
+        
+        var idEmpleadoInput = document.querySelector('#EditarEmpleadoModal input[name="IdEmpleado"]');
+        //var idEmpleadoProyecto = document.querySelector('#EditarEmpleadoModal input[name="idEmpleadoProyecto"]');
+        var IdProyect = document.querySelector('#EditarEmpleadoModal input[name="Id"]');
+
+        editarBotones.forEach(function (boton) {
+            boton.addEventListener('click', function () {
+                var idEmpleado = this.getAttribute('data-id');
+                var nombreEmpleado = this.getAttribute('data-nombre');
+                var idEmpleadoProyectoss = this.getAttribute('data-idEmpleadoProyectos');
+
+                nombreInput.value = nombreEmpleado;
+                idEmpleadoInput.value = idEmpleadoProyectoss;
+                IdProyect.value = idEmpleado;
+            });
+        });
+    });
+</script>
+

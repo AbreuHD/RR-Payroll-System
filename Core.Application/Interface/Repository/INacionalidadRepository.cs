@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Interface.Repository
 {
-    public interface IEmpleadoProyectoRepository : IGenericRepository<EmpleadoProyecto>
+    public interface INacionalidadRepository : IGenericRepository<Nacionalidad>
     {
     }
 }

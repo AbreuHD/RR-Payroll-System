@@ -9,7 +9,7 @@
 
     <div class="row m-3">
         <div class="col-3 offset-10">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Usuario</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Proyecto</button>
         </div>
     </div>
 
@@ -60,8 +60,10 @@
 
                                 <select class="form-select" aria-label="Estado" name="IdEstado">
                                     <option selected>Selecciona un estado</option>
-                                    <option value="2">Iniciado</option>
-                                    <option value="3">Terminado</option>
+                                    @foreach (var i in ViewBag.Estados)
+                                    {
+                                        <option value="@i.Id">@i.Nombre</option>
+                                    }
                                 </select>
 
                                 <div class="mb-3">

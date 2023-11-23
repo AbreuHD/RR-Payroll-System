@@ -28,7 +28,6 @@ namespace Core.Application.Features.Empleado.Comands.CreateEmpleado
         public int IdNacionalidad { get; set; }
         public int IdProvincia { get; set; }
         public int IdEstado { get; set; }
-        public int IdLicencia { get; set; }
     }
 
     public class CreateEmpleadoCommandHandler : IRequestHandler<CreateEmpleadoCommand, bool>

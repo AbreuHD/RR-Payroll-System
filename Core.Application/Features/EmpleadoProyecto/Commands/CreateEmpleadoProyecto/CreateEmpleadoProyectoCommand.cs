@@ -11,19 +11,17 @@ namespace Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProy
 {
     public class CreateEmpleadoProyectoCommand : IRequest<bool>
     {
-        public bool EsEncargado { get; set; }
         public int IdPuesto { get; set; }
-        public int IdCOntrato { get; set; }
         public int IdProyecto { get; set; }
         public int IdEmpleado { get; set; }
     }
 
     public class CreateEmpleadoProyectoCommandHandler : IRequestHandler<CreateEmpleadoProyectoCommand, bool>
     {
-        private readonly IEmpleadoProyectoRepository _empleadoProyectoRepository;
+        private readonly IEmpleadoProyectosRepository _empleadoProyectoRepository;
         private readonly IMapper _mapper;
 
-        public CreateEmpleadoProyectoCommandHandler(IEmpleadoProyectoRepository empleadoProyectoRepository, IMapper mapper)
+        public CreateEmpleadoProyectoCommandHandler(IEmpleadoProyectosRepository empleadoProyectoRepository, IMapper mapper)
         {
             _empleadoProyectoRepository = empleadoProyectoRepository;
             _mapper = mapper;
@@ -33,7 +31,7 @@ namespace Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProy
         {
             try
             {
-                var empleadoProyecto = _mapper.Map<Domain.Entities.EmpleadoProyecto>(request);
+                var empleadoProyecto = _mapper.Map<Domain.Entities.EmpleadoProyectos>(request);
                 await _empleadoProyectoRepository.AddAsync(empleadoProyecto);
                 return true;
             }

@@ -13,7 +13,7 @@ namespace Core.Domain.Entities
         public DateTime FechaSalida { get; set; }
         public int IdEmpleadoProyecto { get; set; }
 
-        public EmpleadoProyecto EmpleadoProyecto { get; set; }
+        public EmpleadoProyectos EmpleadoProyecto { get; set; }
         public ICollection<Horas> Horas { get; set; }
     }
 }

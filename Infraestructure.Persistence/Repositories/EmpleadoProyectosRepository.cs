@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Persistence.Repositories
 {
-    public class EmpleadoProyectoRepository : GenericRepository<EmpleadoProyecto>, IEmpleadoProyectoRepository
+    public class EmpleadoProyectosRepository : GenericRepository<EmpleadoProyectos>, IEmpleadoProyectosRepository
     {
         private readonly PersistenceContext _dbContext;
 
-        public EmpleadoProyectoRepository(PersistenceContext dbContext) : base(dbContext)
+        public EmpleadoProyectosRepository(PersistenceContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
         }

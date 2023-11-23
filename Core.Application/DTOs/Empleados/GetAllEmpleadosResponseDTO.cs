@@ -8,6 +8,7 @@ namespace Core.Application.DTOs.Empleados
 {
     public class GetAllEmpleadosResponseDTO
     {
+        public int Id { get; set; }
         public string UserID { get; set; } //FK
         public string Documento { get; set; }
         public int Codigo { get; set; }

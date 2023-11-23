@@ -20,8 +20,10 @@ namespace Infraestructure.Persistence
             services.AddTransient<IProyectoRepository, ProyectoRepository>();
             services.AddTransient<IEstadoRepository, EstadoRepository>();
             services.AddTransient<IEmpleadoRepository, EmpleadoRepository>();
-            services.AddTransient<IEmpleadoProyectoRepository, EmpleadoProyectoRepository>();
+            services.AddTransient<IEmpleadoProyectosRepository, EmpleadoProyectosRepository>();
             services.AddTransient<IPuestoRepository, PuestoRepository>();
+            services.AddTransient<INacionalidadRepository, NacionalidadRepository>();
+            services.AddTransient<IProvinciaRepository, ProvinciaRepository>();
         }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using Core.Application.Features.Empleado.Comands.CreateEmpleado;
+using Core.Application.Features.Estado.Queries.GetAllEstado;
+using Core.Application.Features.Nacionalidad.Queries.GetAllNacionalidad;
+using Core.Application.Features.Provincia.Queries.GetAllProvincia;
 using Core.Application.Interface.Services;
 using Core.Application.ViewModels.User;
 using MediatR;
@@ -19,6 +22,9 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.Nacionalidades = await Mediator.Send(new GetAllNacionalidadQuery());
+            ViewBag.Provincias = await Mediator.Send(new GetAllProvinciaQuery());
+            ViewBag.Estados = await Mediator.Send(new GetAllEstadoQuery());
             var data = await _userService.GetAllClients();
             return View(data);
         }
@@ -31,14 +37,17 @@ namespace WebApp.Controllers
                 comm.Telefono = vm.Phone;
                 comm.Nombre = vm.Name;
                 comm.Apellido = vm.LastName;
+
             }catch(Exception e)
             {
                 return RedirectToRoute(new { controller = "Admin", action = "Index" });
             }
+
             //if (!ModelState.IsValid)
             //{
             //    return RedirectToRoute(new { controller = "Admin", action = "Index" });
             //}
+
             var data = await _userService.RegisterAdmin(vm);
             comm.UserID = data.Id;
             await Mediator.Send(comm);

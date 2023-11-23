@@ -10,9 +10,9 @@ namespace Core.Domain.Entities
     public class Empleado : AuditableBase
     {
         public string UserID { get; set; } //FK
-        public string Documento { get; set; }
-        public int Codigo { get; set; }
-        public string NumCuenta { get; set; }
+        //public string Documento { get; set; }
+        //public int Codigo { get; set; }
+        //public string NumCuenta { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public DateTime FechaNacimiento { get; set; }
@@ -26,14 +26,13 @@ namespace Core.Domain.Entities
         public int IdNacionalidad { get; set; }
         public int IdProvincia { get; set; }
         public int IdEstado { get; set; }
-        public int IdLicencia { get; set; }
 
         public Nacionalidad Nacionalidad { get; set; }
         public Provincia Provincia { get; set; }
         public Estado Estado { get; set; }
 
-        public Licencia Licencia { get; set; }
+        public ICollection<Licencia> Licencias { get; set; }
         public ICollection<Pago> Pagos { get; set; }
-        public ICollection<EmpleadoProyecto> EmpleadoProyectos { get; set; }
+        public ICollection<EmpleadoProyectos> EmpleadoProyectos { get; set; }
     }
 }

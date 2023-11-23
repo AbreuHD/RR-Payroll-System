@@ -56,16 +56,15 @@
                                 Home
                             </a>
                         </li
-                        <li class="mb-1">
-                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
+                        <li>
+                            <a asp-controller="Proyectos" asp-action="Index" class="nav-link link-dark">
                                 Proyectos
-                            </button>
-                            <div class="collapse" id="dashboard-collapse" style="">
-                                <ul class="btn-toggle-nav list-unstyled ps-4 pb-1 small">
-                                    <li><a asp-controller="Proyectos" asp-action="Index" class="text-primary d-inline-flex text-decoration-none rounded">Proyectos</a></li>
-                                    <li><a asp-controller="Admin" asp-action="Deducciones" class="text-primary  d-inline-flex text-decoration-none rounded">Deducciones</a></li>
-                                </ul>
-                            </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Deducciones" class="nav-link link-dark">
+                                Deducciones
+                            </a>
                         </li>
                         <li>
                             <a asp-controller="Admin" asp-action="Pagos" class="nav-link link-dark">
@@ -77,6 +76,20 @@
                                 Asistencia
                             </a>
                         </li>
+                        <li class="mb-1">
+                            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
+                                ExtraAdmin
+                            </button>
+                            <div class="collapse" id="dashboard-collapse" style="">
+                                <ul class="btn-toggle-nav list-unstyled ps-4 pb-1 small">
+                                    <li><a asp-controller="ExtraAdmin" asp-action="Puesto" class="text-primary d-inline-flex text-decoration-none rounded">Puesto</a></li>
+                                    <li><a asp-controller="ExtraAdmin" asp-action="Estado" class="text-primary  d-inline-flex text-decoration-none rounded">Estado</a></li>
+                                    <li><a asp-controller="ExtraAdmin" asp-action="Nacionalidad" class="text-primary  d-inline-flex text-decoration-none rounded">Nacionalidad</a></li>
+                                    <li><a asp-controller="ExtraAdmin" asp-action="Provincia" class="text-primary  d-inline-flex text-decoration-none rounded">Provincia</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
                     }
                     else
                     {
