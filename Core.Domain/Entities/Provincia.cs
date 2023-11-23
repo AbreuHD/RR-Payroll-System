@@ -12,6 +12,6 @@ namespace Core.Domain.Entities
         public string Nombre { get; set; }
 
         public ICollection<Municipio> Municipios { get; set; }
-        public Empleado Empleado { get; set; }
+        public ICollection<Empleado> Empleado { get; set; }
     }
 }

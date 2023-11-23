@@ -1,11 +1,16 @@
 ﻿using Core.Application.DTOs.Proyecto;
-using Core.Application.Features.Estado.Queries.GetAllStatus;
+using Core.Application.Features.Estado.Queries.GetAllEstado;
 using Core.Application.Features.Proyecto.Queries.GetAllProjects;
 using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.Interface.Repository;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Core.Application.Features.Proyecto.Queries.GetProjectById;
+using Core.Application.Features.Puesto.Queries.GetAllPuestos;
+using Core.Application.Features.Empleado.Queries.GetAllEmpleados;
+using Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProyecto;
+using Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyecto;
+using Core.Application.Features.Proyecto.Commands.EditProject;
 
 namespace WebApp.Controllers
 {
@@ -16,21 +21,35 @@ namespace WebApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.Estados = await Mediator.Send(new GetAllStatusQuery());
+            ViewBag.Estados = await Mediator.Send(new GetAllEstadoQuery());
             return View(await Mediator.Send(new GetAllProjectsQuery()));
         }
 
         public async Task<IActionResult> Info(int Id)
         {
-            return View(await Mediator.Send(new GetProjectByIdQuery
-            {
-                Id = Id
-            }));
+            ViewBag.Puestos = await Mediator.Send(new GetAllPuestosQuery());
+            ViewBag.Empleados = await Mediator.Send(new GetAllEmpleadosSinProyecto());
+            var response = (await Mediator.Send(new GetProjectByIdQuery {Id = Id} ));
+            return View(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddEmpleado(CreateEmpleadoProyectoCommand request)
+        {
+            await Mediator.Send(request);
+            return RedirectToAction("Info", new { Id = request.IdProyecto });
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditEmpleado(EditEmpleadoProyectoCommand request)
+        {
+            await Mediator.Send(request);
+            return RedirectToAction("Info", new { Id = request.IdProyecto });
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Edit(EditarProyectoDTO request)
+        public async Task<IActionResult> Edit(EditProjectCommand request)
         {
+            await Mediator.Send(request);
             return RedirectToAction("Index");
 
         }

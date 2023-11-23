@@ -8,13 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.Features.Estado.Queries.GetAllStatus
+namespace Core.Application.Features.Estado.Queries.GetAllEstado
 {
-    public class GetAllStatusQuery : IRequest<List<GetAllStatusDTO>>
+    public class GetAllEstadoQuery : IRequest<List<GetAllStatusDTO>>
     {
     }
 
-    public class GetAllStatusQueryHandler : IRequestHandler<GetAllStatusQuery, List<GetAllStatusDTO>>
+    public class GetAllStatusQueryHandler : IRequestHandler<GetAllEstadoQuery, List<GetAllStatusDTO>>
     {
         private readonly IEstadoRepository _estadoRepository;
         private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace Core.Application.Features.Estado.Queries.GetAllStatus
             _mapper = mapper;
             _estadoRepository = estadoRepository;
         }
-        public async Task<List<GetAllStatusDTO>> Handle(GetAllStatusQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetAllStatusDTO>> Handle(GetAllEstadoQuery request, CancellationToken cancellationToken)
         {
             var estados = await _estadoRepository.GetAllAsync();
             var response = _mapper.Map<List<GetAllStatusDTO>>(estados);

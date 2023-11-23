@@ -19,6 +19,6 @@ namespace Core.Domain.Entities
 
         public Estado Estado { get; set; }
         public ICollection<DetalleNomina> DetalleNominas { get; set; }
-        public ICollection<EmpleadoProyecto> EmpleadoProyectos { get; set; }
+        public ICollection<EmpleadoProyectos> EmpleadoProyectos { get; set; }
      }
 }

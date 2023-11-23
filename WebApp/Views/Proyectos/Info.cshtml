@@ -13,108 +13,248 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Info Proyecto</h1>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </dt>
+    <div id="Cardnfo">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Info Proyecto</h1>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Nombre)
+                            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Nombre)
-                </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.Nombre)
+                            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Descripcion)
-                </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Descripcion)
+                            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Descripcion)
-                </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.Descripcion)
+                            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.FechaInicio)
-                </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.FechaInicio)
+                            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.FechaInicio)
-                </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.FechaInicio)
+                            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.FechaFinal)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.FechaFinal)
-                </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.FechaFinal)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.FechaFinal)
+                            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Estado)
-                </dt>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Estado)
+                            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Id)
-                </dd>
+                            <dd>
+                                @Html.DisplayFor(model => model.Id)
+                            </dd>
 
-            </dl>
+                        </dl>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Proyecto</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div id="Empleado">
+        <div class="text-center">
+            <div class="row row-cols-4">
+                <div id="AgregarEmpleado">
+                    <div class="card pb-3" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Añdir Empleado</h5>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#AgregarEmpleadoModal" class="btn btn-primary"><i class="bi bi-person-plus-fill h1"></i></button>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form method="post" asp-controller="Proyectos" asp-action="Edit">
-                        <input value="@Model.Id" name="Id" hidden>
 
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="name" name="Nombre" value="@Model.Nombre" aria-describedby="name">
+                @foreach (var item in Model.EmpleadoProyectos)
+                {
+                    <div id="Empleados">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Empleado.Nombre</h5>
+                                <p class="card-text">@item.Puesto.Nombre</p>
+                                <button type="button" class="btn btn-primary editarEmpleado" data-bs-toggle="modal" data-bs-target="#EditarEmpleadoModal" data-idEmpleadoProyectos="@item.IdEmpleado" data-id="@item.Id" data-nombre="@item.Empleado.Nombre">Editar</button>
+                            </div>
                         </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
-                        <div class="mb-3">
-                            <label for="cliente" class="form-label">Cliente</label>
-                            <input type="text" class="form-control" id="cliente" name="Cliente" value="@Model.Cliente">
+    <div id="ModalEditar">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Proyecto</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" asp-controller="Proyectos" asp-action="Edit">
+                            <input value="@Model.Id" name="Id" hidden>
+
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" name="Nombre" value="@Model.Nombre" aria-describedby="name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="cliente" class="form-label">Cliente</label>
+                                <input type="text" class="form-control" id="cliente" name="Cliente" value="@Model.Cliente">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="localizacion" class="form-label">Localizacion</label>
+                                <input type="localizacion" class="form-control" id="localizacion" name="Locacion" value="@Model.Locacion">
+                            </div>
+
+                            <select class="form-select" aria-label="Estado" name="IdEstado">
+                                <option selected>Selecciona un estado</option>
+                                <option value="2">Iniciado</option>
+                                <option value="3">Terminado</option>
+                            </select>
+
+                            <div class="mb-3">
+                                <label for="fechaInicio" class="form-label">Fecha de inicio</label>
+                                <input type="date" class="form-control" id="fechaInicio" name="FechaInicio" value="@Model.FechaInicio">
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="FechaEntrega" class="form-label">Fecha De Entrega</label>
+                                <input type="date" class="form-control" id="FechaEntrega" name="FechaFinal" value="@Model.FechaFinal">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Descripcion" class="form-label">Descripcion</label>
+                                <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3">@Model.Descripcion</textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalAgregarEmpleado">
+        <div class="modal fade" id="AgregarEmpleadoModal" tabindex="-1" aria-labelledby="AgregarEmpleadoModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="AgregarEmpleadoModal">Agregar Usuario</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" asp-controller="Proyectos" asp-action="AddEmpleado">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Usuario</label>
+                                <select class="form-select" name="IdEmpleado" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    @foreach (var item in ViewBag.Empleados)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Rol</label>
+                                <select class="form-select" name="IdPuesto" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    @foreach (var item in ViewBag.Puestos)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <input value="@Model.Id" name="IdProyecto" hidden>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="localizacion" class="form-label">Localizacion</label>
-                            <input type="localizacion" class="form-control" id="localizacion" name="Locacion" value="@Model.Locacion">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                        <select class="form-select" aria-label="Estado" name="IdEstado">
-                            <option selected>Selecciona un estado</option>
-                            <option value="2">Iniciado</option>
-                            <option value="3">Terminado</option>
-                        </select>
+    <div id="ModalEditarEmpleado">
+        <div class="modal fade" id="EditarEmpleadoModal" tabindex="-1" aria-labelledby="EditarEmpleadoModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="EditarEmpleadoModal">Editar Usuario</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" asp-controller="Proyectos" asp-action="EditEmpleado">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Usuario</label>
+                                <input type="text" class="btn" name="Nombre" value="John Doe" disabled />
 
-                        <div class="mb-3">
-                            <label for="fechaInicio" class="form-label">Fecha de inicio</label>
-                            <input type="date" class="form-control" id="fechaInicio" name="FechaInicio" value="@Model.FechaInicio">
+                                <input type="text" name="IdEmpleado" value="1" hidden />
+                                <input type="text" name="IdProyecto" value="@Model.Id" hidden />
+                                <input type="text" name="Id" value="0" hidden />
+                            
+                            </div>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Rol</label>
+                                <select class="form-select" name="IdPuesto" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    @foreach (var item in ViewBag.Puestos)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
-
-
-                        <div class="mb-3">
-                            <label for="FechaEntrega" class="form-label">Fecha De Entrega</label>
-                            <input type="date" class="form-control" id="FechaEntrega" name="FechaFinal" value="@Model.FechaFinal">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="Descripcion" class="form-label">Descripcion</label>
-                            <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3">@Model.Descripcion</textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Crear</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var editarBotones = document.querySelectorAll('.editarEmpleado');
+
+        var nombreInput = document.querySelector('#EditarEmpleadoModal input[name="Nombre"]');
+        
+        var idEmpleadoInput = document.querySelector('#EditarEmpleadoModal input[name="IdEmpleado"]');
+        //var idEmpleadoProyecto = document.querySelector('#EditarEmpleadoModal input[name="idEmpleadoProyecto"]');
+        var IdProyect = document.querySelector('#EditarEmpleadoModal input[name="Id"]');
+
+        editarBotones.forEach(function (boton) {
+            boton.addEventListener('click', function () {
+                var idEmpleado = this.getAttribute('data-id');
+                var nombreEmpleado = this.getAttribute('data-nombre');
+                var idEmpleadoProyectoss = this.getAttribute('data-idEmpleadoProyectos');
+
+                nombreInput.value = nombreEmpleado;
+                idEmpleadoInput.value = idEmpleadoProyectoss;
+                IdProyect.value = idEmpleado;
+            });
+        });
+    });
+</script>
+

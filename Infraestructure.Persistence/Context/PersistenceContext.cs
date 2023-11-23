@@ -20,7 +20,7 @@ namespace Infraestructure.Persistence.Context
         public DbSet<Deducciones> Deducciones { get; set; }
         public DbSet<DetalleNomina> DetalleNomina { get; set; }
         public DbSet<Empleado> Empleado { get; set; }
-        public DbSet<EmpleadoProyecto> EmpleadoProyectos { get; set; }
+        public DbSet<EmpleadoProyectos> EmpleadoProyectos { get; set; }
         public DbSet<Estado> Estado { get; set; }
         public DbSet<Horas> Horas { get; set; }
         public DbSet<Licencia> Licencias { get; set; }
@@ -49,7 +49,7 @@ namespace Infraestructure.Persistence.Context
                         break;
                     case EntityState.Modified:
                         entry.Entity.LastModifiedAt = DateTime.Now;
-                        //entry.Entity.CreatedBy = "System";
+                        entry.Entity.CreatedBy = "System";
                         break;
                 }
             }
@@ -66,7 +66,7 @@ namespace Infraestructure.Persistence.Context
             modelBuilder.Entity<Deducciones>().ToTable("Deducciones");
             modelBuilder.Entity<DetalleNomina>().ToTable("DetalleNomina");
             modelBuilder.Entity<Empleado>().ToTable("Empleado");
-            modelBuilder.Entity<EmpleadoProyecto>().ToTable("EmpleadoProyectos");
+            modelBuilder.Entity<EmpleadoProyectos>().ToTable("EmpleadoProyectos");
             modelBuilder.Entity<Estado>().ToTable("Estado");
             modelBuilder.Entity<Horas>().ToTable("Horas");
             modelBuilder.Entity<Licencia>().ToTable("Licencias");
@@ -90,7 +90,7 @@ namespace Infraestructure.Persistence.Context
             modelBuilder.Entity<Deducciones>().HasKey(x => x.Id);
             modelBuilder.Entity<DetalleNomina>().HasKey(x => x.Id);
             modelBuilder.Entity<Empleado>().HasKey(x => x.Id);
-            modelBuilder.Entity<EmpleadoProyecto>().HasKey(x => x.Id);
+            modelBuilder.Entity<EmpleadoProyectos>().HasKey(x => x.Id);
             modelBuilder.Entity<Estado>().HasKey(x => x.Id);
             modelBuilder.Entity<Horas>().HasKey(x => x.Id);
             modelBuilder.Entity<Licencia>().HasKey(x => x.Id);
@@ -113,11 +113,11 @@ namespace Infraestructure.Persistence.Context
                 .WithMany(aa => aa.Actividades)
                 .HasForeignKey(a => a.IdActividadAsignada);
 
-            modelBuilder.Entity<ActividadesAsignadas>()
-                .HasOne(aa => aa.EmpleadoProyecto)
-                .WithOne(ep => ep.ActividadesAsignadas)
-                .HasForeignKey<ActividadesAsignadas>(aa => aa.IdEmpleadoProyecto)
-                .IsRequired();
+            //modelBuilder.Entity<ActividadesAsignadas>()
+            //    .HasOne(aa => aa.EmpleadoProyecto)
+            //    .WithOne(ep => ep.ActividadesAsignadas)
+            //    .HasForeignKey<ActividadesAsignadas>(aa => aa.IdEmpleadoProyecto)
+            //    .IsRequired();
 
 
             modelBuilder.Entity<ActividadesAsignadas>()
@@ -125,10 +125,10 @@ namespace Infraestructure.Persistence.Context
                 .WithMany(e => e.ActividadesAsignadas)
                 .HasForeignKey(aa => aa.IdEstado).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Asistencia>()
-                .HasOne(a => a.EmpleadoProyecto)
-                .WithOne(ep => ep.Asistencia)
-                .HasForeignKey<Asistencia>(a => a.IdEmpleadoProyecto);
+            //modelBuilder.Entity<Asistencia>()
+            //    .HasOne(a => a.EmpleadoProyecto)
+            //    .WithOne(ep => ep.Asistencia)
+            //    .HasForeignKey<Asistencia>(a => a.IdEmpleadoProyecto);
 
             modelBuilder.Entity<Deducciones>()
                 .HasMany(d => d.Pagos)
@@ -147,18 +147,14 @@ namespace Infraestructure.Persistence.Context
 
             modelBuilder.Entity<Empleado>()
                 .HasOne(e => e.Provincia)
-                .WithOne(p => p.Empleado)
-                .HasForeignKey<Empleado>(e => e.IdProvincia);
+                .WithMany(p => p.Empleado)
+                .HasForeignKey(e => e.IdProvincia);
+                //.HasForeignKey<Empleado>(e => e.IdProvincia);
 
             modelBuilder.Entity<Empleado>()
                 .HasOne(e => e.Estado)
                 .WithMany(es => es.Empleados)
                 .HasForeignKey(e => e.IdEstado);
-
-            modelBuilder.Entity<Empleado>()
-                .HasOne(e => e.Licencia)
-                .WithOne(l => l.Empleado)
-                .HasForeignKey<Licencia>(l => l.IdEmpleado);
 
             modelBuilder.Entity<Pago>()
                 .HasOne(p => p.TipoDePago)
@@ -191,27 +187,30 @@ namespace Infraestructure.Persistence.Context
                 .WithMany(es => es.Proyecto)
                 .HasForeignKey(p => p.IdEstado);
 
-            modelBuilder.Entity<EmpleadoProyecto>()
+            modelBuilder.Entity<EmpleadoProyectos>()
                 .HasOne(ep => ep.Puesto)
                 .WithMany(p => p.EmpleadoProyecto)
                 .HasForeignKey(ep => ep.IdPuesto);
 
-            modelBuilder.Entity<EmpleadoProyecto>()
-                .HasOne(ep => ep.Contrato)
-                .WithMany(c => c.EmpleadoProyectos)
-                .HasForeignKey(ep => ep.IdCOntrato);
+            //modelBuilder.Entity<EmpleadoProyecto>()
+            //    .HasOne(ep => ep.Contrato)
+            //    .WithMany(c => c.EmpleadoProyectos)
+            //    .HasForeignKey(ep => ep.IdCOntrato);
 
-            modelBuilder.Entity<EmpleadoProyecto>()
+            modelBuilder.Entity<EmpleadoProyectos>()
                 .HasOne(ep => ep.Proyecto)
                 .WithMany(p => p.EmpleadoProyectos)
                 .HasForeignKey(ep => ep.IdProyecto).OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<EmpleadoProyecto>()
+            modelBuilder.Entity<EmpleadoProyectos>()
                 .HasOne(ep => ep.Empleado)
                 .WithMany(e => e.EmpleadoProyectos)
                 .HasForeignKey(ep => ep.IdEmpleado);
 
-
+            modelBuilder.Entity<Licencia>()
+                .HasOne(e => e.Empleado)
+                .WithMany(l => l.Licencias)
+                .HasForeignKey(e => e.IdEmpleado);
             #endregion
 
         }

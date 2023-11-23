@@ -18,10 +18,12 @@ namespace Core.Application.Features.Proyecto.Queries.GetProjectById
     public class GetProjectByIdQueryHandler : IRequestHandler<GetProjectByIdQuery, ProyectoDTO>
     {
         private readonly IProyectoRepository _proyectoRepository;
+        private readonly IEmpleadoProyectosRepository _empleadoProyectoRepository;
         private readonly IMapper _mapper;
 
-        public GetProjectByIdQueryHandler(IProyectoRepository proyectoRepository, IMapper mapper)
+        public GetProjectByIdQueryHandler(IProyectoRepository proyectoRepository, IMapper mapper, IEmpleadoProyectosRepository empleadoProyectoRepository)
         {
+            _empleadoProyectoRepository = empleadoProyectoRepository;
             _mapper = mapper;
             _proyectoRepository = proyectoRepository;
         }
@@ -30,6 +32,8 @@ namespace Core.Application.Features.Proyecto.Queries.GetProjectById
         {
             var proyecto = await _proyectoRepository.GetByIdAsync(request.Id);
             var response = _mapper.Map<ProyectoDTO>(proyecto);
+            var infodata = await _empleadoProyectoRepository.GetAllAsync(request.Id);
+            response.EmpleadoProyectos = infodata.Where(x => x.IdProyecto == request.Id).ToList();
             return response;
         }
     }

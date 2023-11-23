@@ -19,6 +19,11 @@ namespace Infraestructure.Persistence
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IProyectoRepository, ProyectoRepository>();
             services.AddTransient<IEstadoRepository, EstadoRepository>();
+            services.AddTransient<IEmpleadoRepository, EmpleadoRepository>();
+            services.AddTransient<IEmpleadoProyectosRepository, EmpleadoProyectosRepository>();
+            services.AddTransient<IPuestoRepository, PuestoRepository>();
+            services.AddTransient<INacionalidadRepository, NacionalidadRepository>();
+            services.AddTransient<IProvinciaRepository, ProvinciaRepository>();
         }
     }
 }
