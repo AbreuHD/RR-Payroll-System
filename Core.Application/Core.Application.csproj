@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Core.Domain\Core.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\EmpleadoProyecto\Queries\" />
-  </ItemGroup>
-
 </Project>

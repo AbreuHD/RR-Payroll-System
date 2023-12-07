@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProyecto
 {
-    public class CreateEmpleadoProyectoCommand : IRequest<bool>
+    public class CreateEmpleadoProyectoCommand : IRequest<Core.Domain.Entities.EmpleadoProyectos>
     {
         public int IdPuesto { get; set; }
         public int IdProyecto { get; set; }
         public int IdEmpleado { get; set; }
     }
 
-    public class CreateEmpleadoProyectoCommandHandler : IRequestHandler<CreateEmpleadoProyectoCommand, bool>
+    public class CreateEmpleadoProyectoCommandHandler : IRequestHandler<CreateEmpleadoProyectoCommand, Domain.Entities.EmpleadoProyectos>
     {
         private readonly IEmpleadoProyectosRepository _empleadoProyectoRepository;
         private readonly IMapper _mapper;
@@ -27,17 +27,17 @@ namespace Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProy
             _mapper = mapper;
         }
 
-        public async Task<bool> Handle(CreateEmpleadoProyectoCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Entities.EmpleadoProyectos> Handle(CreateEmpleadoProyectoCommand request, CancellationToken cancellationToken)
         {
             try
             {
                 var empleadoProyecto = _mapper.Map<Domain.Entities.EmpleadoProyectos>(request);
-                await _empleadoProyectoRepository.AddAsync(empleadoProyecto);
-                return true;
+                var response = await _empleadoProyectoRepository.AddAsync(empleadoProyecto);
+                return response;
             }
             catch (Exception e)
             {
-                return false;
+                return null;
             }
         }
     }

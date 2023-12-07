@@ -4,6 +4,7 @@ using Infraestructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    partial class PersistenceContextModelSnapshot : ModelSnapshot
+    [Migration("20231130153014_idk")]
+    partial class idk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -440,13 +443,19 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("HoraFinal")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("HorasExtras")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("HorasInicio")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("HorasNormales")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdAsistencia")
+                    b.Property<string>("HorasTrabajadas")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdAsistencia")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModifiedAt")
@@ -980,7 +989,9 @@ namespace Infraestructure.Persistence.Migrations
                 {
                     b.HasOne("Core.Domain.Entities.Asistencia", "Asistencia")
                         .WithMany("Horas")
-                        .HasForeignKey("IdAsistencia");
+                        .HasForeignKey("IdAsistencia")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Asistencia");
                 });

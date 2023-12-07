@@ -21,6 +21,7 @@
                 <th scope="col">Apellido</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Usuario</th>
+                <th scope="col">Empleado</th>
                 <th scope="col">Admin</th>
                 <th scope="col">Activo</th>
                 <th scope="col">Editar</th>
@@ -36,6 +37,21 @@
                     <td>@user.LastName</td>
                     <td>@user.Email</td>
                     <td>@user.UserName</td>
+                    <td>
+                        @if(user.EsEmpleado == 0)
+                        {
+                            <div>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalEmpleado" data-idEmpleadoProyectos="@user.Id" onclick="updateInputValue(this)">Crear</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <button type="button" class="btn btn-primary">Ver</button>
+                            </div>
+                        }
+
+                    </td>
                     <td>@user.IsAdmin</td>
                     <td>@user.IsActive</td>
                     <td>
@@ -43,7 +59,7 @@
                     </td>
                     <td>
                         <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Desactivar" asp-route-id="@user.Id">Cambiar Estatus</a></button>
-                    </td>
+                    </td> 
                 </tr>
             }
         </tbody>
@@ -51,7 +67,7 @@
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Usuario</h1>
@@ -60,7 +76,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <form method="post" asp-controller="Admin" asp-action="CreateUser">
-                            <div class="row row-cols-2">
+                            <div class="row">
                                 <div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Usuario</label>
@@ -106,7 +122,29 @@
                                         <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEmpleado" tabindex="-1" aria-labelledby="ModalEmpleado" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="ModalEmpleado">Crear Empleado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <form method="post" asp-controller="Admin" asp-action="CreateEmpleado">
+                            <div class="row">
                                 <div>
+                                    <input value="1" name="IdentityId" id="IdentityId" hidden />
                                     <div class="mb-3">
                                         <label for="FechaNacimiento" class="form-label">Fecha Nacimiento</label>
                                         <input type="date" class="form-control" id="FechaNacimiento" name="FechaNacimiento" aria-describedby="username">
@@ -162,6 +200,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                             </div>
                             
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -172,4 +211,10 @@
         </div>
     </div>
 
+    <script>
+        function updateInputValue(button) {
+            var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
+            document.getElementById('IdentityId').value = idEmpleadoProyectos;
+        }
+    </script>
 </div>

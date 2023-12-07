@@ -15,8 +15,9 @@ namespace Core.Application.ViewModels.User
         public string Email { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        
-        
+
+
+        public int EsEmpleado { get; set; }
         //public double Monto { get; set; }
     }
 }

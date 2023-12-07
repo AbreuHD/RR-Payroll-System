@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Account;
+using Core.Application.DTOs.EmpleadoProyecto;
 using Core.Application.DTOs.Empleados;
 using Core.Application.DTOs.Estado;
 using Core.Application.DTOs.Nacionalidad;
 using Core.Application.DTOs.Provincia;
 using Core.Application.DTOs.Proyecto;
 using Core.Application.DTOs.Puestos;
+using Core.Application.Features.Asistencia.Command.CreateAsistenciaTable;
 using Core.Application.Features.Empleado.Comands.CreateEmpleado;
 using Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProyecto;
 using Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyecto;
 using Core.Application.Features.Estado.Command.CreateEstado;
+using Core.Application.Features.Horas.Command.AddHoras;
 using Core.Application.Features.Nacionalidad.Commands.CreateNacionalidad;
 using Core.Application.Features.Provincia.Command.CreateProvincia;
 using Core.Application.Features.Proyecto.Commands.CreateProject;
@@ -98,6 +101,16 @@ namespace Core.Application.Mapping
             
             CreateMap<EditProjectCommand, Proyecto>()
                 .ReverseMap();
+
+            CreateMap<CreateAsistenciaTableCommand, Asistencia>()
+                .ReverseMap();
+
+            CreateMap<Horas, AddHorasCommand>()
+                .ReverseMap();
+
+            CreateMap<EmpleadoProyectos, EmpleadoProyectoReponseDTO>()
+                .ReverseMap();
+
         }
-    }
+}
 }

@@ -24,6 +24,8 @@ namespace Infraestructure.Persistence
             services.AddTransient<IPuestoRepository, PuestoRepository>();
             services.AddTransient<INacionalidadRepository, NacionalidadRepository>();
             services.AddTransient<IProvinciaRepository, ProvinciaRepository>();
+            services.AddTransient<IAsistenciaRepository, AsistenciaRepository>();
+            services.AddTransient<IHorasRepository, HorasRepository>();
         }
     }
 }

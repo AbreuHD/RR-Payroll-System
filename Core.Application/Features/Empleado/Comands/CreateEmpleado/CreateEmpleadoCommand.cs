@@ -46,6 +46,8 @@ namespace Core.Application.Features.Empleado.Comands.CreateEmpleado
             try
             {
                 var empleado = _mapper.Map<Domain.Entities.Empleado>(request);
+                empleado.Celular = request.Celular;
+                empleado.Telefono = request.Celular;
                 await _empleadoRepository.AddAsync(empleado);
                 return true;
             }

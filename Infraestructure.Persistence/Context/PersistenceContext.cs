@@ -125,10 +125,10 @@ namespace Infraestructure.Persistence.Context
                 .WithMany(e => e.ActividadesAsignadas)
                 .HasForeignKey(aa => aa.IdEstado).OnDelete(DeleteBehavior.NoAction);
 
-            //modelBuilder.Entity<Asistencia>()
-            //    .HasOne(a => a.EmpleadoProyecto)
-            //    .WithOne(ep => ep.Asistencia)
-            //    .HasForeignKey<Asistencia>(a => a.IdEmpleadoProyecto);
+            modelBuilder.Entity<Asistencia>()
+                .HasOne(a => a.EmpleadoProyecto)
+                .WithOne(ep => ep.Asistencia)
+                .HasForeignKey<Asistencia>(a => a.IdEmpleadoProyecto);
 
             modelBuilder.Entity<Deducciones>()
                 .HasMany(d => d.Pagos)
