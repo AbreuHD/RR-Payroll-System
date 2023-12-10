@@ -32,7 +32,9 @@ namespace Infraestructure.Persistence.Context
         public DbSet<Provincia> Provincias { get; set; }
         public DbSet<Proyecto> Proyectos { get; set; }
         public DbSet<Puesto> Puestos { get; set; }
-        public DbSet<TipoDePago> TipoDePagos { get; set; }
+        public DbSet<TipoPago> TipoPago { get; set; }
+        public DbSet<TipoCuenta> TipoCuenta { get; set; }
+        public DbSet<TipoBanco> TipoBanco { get; set; }
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -78,7 +80,9 @@ namespace Infraestructure.Persistence.Context
             modelBuilder.Entity<Provincia>().ToTable("Provincias");
             modelBuilder.Entity<Proyecto>().ToTable("Proyectos");
             modelBuilder.Entity<Puesto>().ToTable("Puestos");
-            modelBuilder.Entity<TipoDePago>().ToTable("TipoDePagos");
+            modelBuilder.Entity<TipoPago>().ToTable("TipoPago");
+            modelBuilder.Entity<TipoBanco>().ToTable("TipoBanco");
+            modelBuilder.Entity<TipoCuenta>().ToTable("TipoCuenta");
 
             #endregion
 
@@ -102,7 +106,7 @@ namespace Infraestructure.Persistence.Context
             modelBuilder.Entity<Provincia>().HasKey(x => x.Id);
             modelBuilder.Entity<Proyecto>().HasKey(x => x.Id);
             modelBuilder.Entity<Puesto>().HasKey(x => x.Id);
-            modelBuilder.Entity<TipoDePago>().HasKey(x => x.Id);
+            modelBuilder.Entity<TipoPago>().HasKey(x => x.Id);
 
             #endregion
 
@@ -156,15 +160,10 @@ namespace Infraestructure.Persistence.Context
                 .WithMany(es => es.Empleados)
                 .HasForeignKey(e => e.IdEstado);
 
-            modelBuilder.Entity<Pago>()
-                .HasOne(p => p.TipoDePago)
-                .WithMany(tp => tp.Pagos)
-                .HasForeignKey(p => p.IdTipoDePago);
-
-            modelBuilder.Entity<Pago>()
-                .HasOne(p => p.Empleado)
-                .WithMany(e => e.Pagos)
-                .HasForeignKey(p => p.IdEmpleado);
+            //modelBuilder.Entity<Pago>()
+            //    .HasOne(p => p.Empleado)
+            //    .WithMany(e => e.Pagos)
+            //    .HasForeignKey(p => p.IdEmpleado);
 
             modelBuilder.Entity<Pago>()
                 .HasOne(p => p.Percepciones)
@@ -211,6 +210,21 @@ namespace Infraestructure.Persistence.Context
                 .HasOne(e => e.Empleado)
                 .WithMany(l => l.Licencias)
                 .HasForeignKey(e => e.IdEmpleado);
+
+            modelBuilder.Entity<Pago>()
+                .HasOne(p => p.TipoPago)
+                .WithMany(tp => tp.Pagos)
+                .HasForeignKey(p => p.IdTipoPago);
+
+            modelBuilder.Entity<TipoPago>()
+                .HasOne(p => p.TipoBanco)
+                .WithMany(tp => tp.TipoPagos)
+                .HasForeignKey(p => p.IdTipoBanco);
+
+            modelBuilder.Entity<TipoPago>()
+                .HasOne(p => p.TipoCuenta)
+                .WithMany(tp => tp.TipoPagos)
+                .HasForeignKey(p => p.IdTipoCuenta);
             #endregion
 
         }

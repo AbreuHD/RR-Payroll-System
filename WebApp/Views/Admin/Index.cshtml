@@ -67,7 +67,7 @@
 
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Usuario</h1>
@@ -76,7 +76,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <form method="post" asp-controller="Admin" asp-action="CreateUser">
-                            <div class="row">
+                            <div class="row row-cols-2">
                                 <div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Usuario</label>
@@ -122,8 +122,17 @@
                                         <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
                                     </div>
                                 </div>
+                                <div>
+                                    <div class="mb-3">
+                                        <label for="Direccion" class="form-label">Direccion</label>
+                                        <input type="text" class="form-control" id="Direccion" name="Direccion" aria-describedby="username">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Direccion" class="form-label">Direccion</label>
+                                        <input type="text" class="form-control" id="Direccion" name="Direccion" aria-describedby="username">
+                                    </div>
+                                </div>
                             </div>
-                            
                             <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     </div>
@@ -161,10 +170,10 @@
                                         <label for="Celular" class="form-label">Celular</label>
                                         <input type="tel" class="form-control" id="Celular" name="Celular" aria-describedby="username">
                                     </div>
-                                    <div class="mb-3">
+                                  @*<div class="mb-3">
                                         <label for="tipoPago" class="form-label">Tipo Pago</label>
                                         <input type="text" class="form-control" id="tipoPago" name="tipoPago" aria-describedby="username">
-                                    </div>
+                                    </div> *@
                                     <div class="mb-3">
                                         <label for="IdNacionalidad" class="form-label">Nacionalidad</label>
                                         <select class="form-select" name="IdNacionalidad" aria-label="Default select example">
@@ -200,7 +209,6 @@
                                         </select>
                                     </div>
                                 </div>
-
                             </div>
                             
                             <button type="submit" class="btn btn-primary">Submit</button>

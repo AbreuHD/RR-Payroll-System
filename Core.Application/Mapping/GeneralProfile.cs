@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Banco;
 using Core.Application.DTOs.EmpleadoProyecto;
 using Core.Application.DTOs.Empleados;
 using Core.Application.DTOs.Estado;
@@ -7,17 +8,21 @@ using Core.Application.DTOs.Nacionalidad;
 using Core.Application.DTOs.Provincia;
 using Core.Application.DTOs.Proyecto;
 using Core.Application.DTOs.Puestos;
+using Core.Application.DTOs.TipoCuenta;
 using Core.Application.Features.Asistencia.Command.CreateAsistenciaTable;
+using Core.Application.Features.Deducciones.Commands.CreateDeduccion;
 using Core.Application.Features.Empleado.Comands.CreateEmpleado;
 using Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProyecto;
 using Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyecto;
 using Core.Application.Features.Estado.Command.CreateEstado;
 using Core.Application.Features.Horas.Command.AddHoras;
 using Core.Application.Features.Nacionalidad.Commands.CreateNacionalidad;
+using Core.Application.Features.Percepciones.Commands.CreatePercepciones;
 using Core.Application.Features.Provincia.Command.CreateProvincia;
 using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.Features.Proyecto.Commands.EditProject;
 using Core.Application.Features.Puesto.Command.CreatePuesto;
+using Core.Application.Features.TipoPago.Commands.CreateTipoPago;
 using Core.Application.ViewModels.User;
 using Core.Domain.Entities;
 using System;
@@ -111,6 +116,22 @@ namespace Core.Application.Mapping
             CreateMap<EmpleadoProyectos, EmpleadoProyectoReponseDTO>()
                 .ReverseMap();
 
+            CreateMap<TipoBanco, TipoBancoResponseDTO>()
+                .ReverseMap();
+            
+            CreateMap<TipoCuenta, TipoCuentaResponseDTO>()
+                .ReverseMap();
+            
+            CreateMap<Deducciones, CreateDeduccionesCommand>()
+                .ReverseMap();
+                        
+            CreateMap<Percepciones, CreatePercepcionesCommand>()
+                .ReverseMap();
+                        
+            CreateMap<TipoPago, CreateTipoPagoCommand>()
+                .ReverseMap();
+
+            
         }
-}
+    }
 }
