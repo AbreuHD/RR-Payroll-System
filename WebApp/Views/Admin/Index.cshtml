@@ -99,6 +99,24 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
+                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="psw" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="psw" name="Password">
+                                    </div>
+
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
+                                        <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
+                                    </div>
+                                </div>
+                                <div>
+
+
+                                    <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email" name="Email">
                                     </div>
@@ -109,27 +127,28 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="psw" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="psw" name="Password">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
-                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
-                                    </div>
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
-                                        <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="mb-3">
-                                        <label for="Direccion" class="form-label">Direccion</label>
-                                        <input type="text" class="form-control" id="Direccion" name="Direccion" aria-describedby="username">
+                                        <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
+                                        <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoCuenta)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="Direccion" class="form-label">Direccion</label>
-                                        <input type="text" class="form-control" id="Direccion" name="Direccion" aria-describedby="username">
+                                        <label for="IdTipoBanco" class="form-label">Banco</label>
+                                        <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoBanco)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Cuenta" class="form-label">Cuenta</label>
+                                        <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
                                     </div>
                                 </div>
                             </div>

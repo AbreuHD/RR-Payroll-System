@@ -1,8 +1,10 @@
-﻿using Core.Application.Features.Empleado.Comands.CreateEmpleado;
+﻿using Core.Application.Features.Banco.Queries.GetAllTipoBanco;
+using Core.Application.Features.Empleado.Comands.CreateEmpleado;
 using Core.Application.Features.Empleado.Queries.GetEmpleadoByIdentityId;
 using Core.Application.Features.Estado.Queries.GetAllEstado;
 using Core.Application.Features.Nacionalidad.Queries.GetAllNacionalidad;
 using Core.Application.Features.Provincia.Queries.GetAllProvincia;
+using Core.Application.Features.TipoPago.Commands.CreateTipoPago;
 using Core.Application.Interface.Services;
 using Core.Application.ViewModels.User;
 using MediatR;
@@ -26,6 +28,10 @@ namespace WebApp.Controllers
             ViewBag.Nacionalidades = await Mediator.Send(new GetAllNacionalidadQuery());
             ViewBag.Provincias = await Mediator.Send(new GetAllProvinciaQuery());
             ViewBag.Estados = await Mediator.Send(new GetAllEstadoQuery());
+
+            ViewBag.TipoCuenta = await Mediator.Send(new GetAllTTipoCuentaQuery());
+            ViewBag.TipoBanco = await Mediator.Send(new GetAllTipoBancoQuery());
+
             var data = await _userService.GetAllClients();
             foreach (var item in data)
             {
@@ -36,9 +42,11 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserSaveViewModel vm)
+        public async Task<IActionResult> CreateUser(UserSaveViewModel vm, CreateTipoPagoCommand comm)
         {
             var data = await _userService.RegisterAdmin(vm);
+            comm.IdUsuario = data.Id;
+            await Mediator.Send(comm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }
 

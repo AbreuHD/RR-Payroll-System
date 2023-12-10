@@ -36,7 +36,7 @@ namespace Core.Application.Features.TipoPago.Commands.CreateTipoPago
                 await _tipoPagoRepository.AddAsync(tipoPago);
                 return true;
             }
-            catch (Exception)
+            catch (Exception Ex)
             {
                 return false;
             }
