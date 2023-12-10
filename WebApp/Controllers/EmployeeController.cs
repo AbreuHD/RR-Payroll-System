@@ -41,5 +41,11 @@ namespace WebApp.Controllers
             
             return View(response);
         }
+
+        public async Task<IActionResult> Info(string Id)
+        {
+            var response = await Mediator.Send(new GetAllProjectsQuery() { IdUser = Id });
+            return View(response);
+        }
     }
 }
