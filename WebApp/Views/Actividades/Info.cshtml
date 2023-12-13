@@ -1,0 +1,151 @@
+﻿@using Core.Application.DTOs.Actividades
+@model GetActivityByIdResponseDTO
+@{
+    ViewData["Title"] = "Actividades Proyecto";
+}
+
+
+<div class="container">
+
+    <div class="row m-3">
+        <div class="col-3 offset-10">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
+        </div>
+    </div>
+
+    <div id="Cardnfo">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Info Proyecto</h1>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Titulo)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Titulo)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Descripcion)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Descripcion)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Monto)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Monto)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="Empleado">
+        <div class="text-center">
+            <div class="row row-cols-4">
+                <div id="AgregarEmpleado">
+                    <div class="card pb-3" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Añdir Empleado</h5>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#AgregarEmpleadoModal" class="btn btn-primary"><i class="bi bi-person-plus-fill h1"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach (var item in Model.Empleados)
+                {
+                    <div id="Empleados">
+                        <div class="card text-center" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Nombre</h5>
+                                <p class="card-text">@item.Email</p>
+                                <button type="button" class="btn btn-primary editarEmpleado" data-bs-toggle="modal" data-bs-target="#EditarEmpleadoModal" >Editar</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalEditar">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Proyecto</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" asp-controller="Proyectos" asp-action="Edit">
+                            <input value="@Model.Id" name="Id" hidden>
+
+                            <div class="mb-3">
+                                <label for="Titulo" class="form-label">Titulo</label>
+                                <input type="text" class="form-control" id="Titulo" name="Titulo" value="@Model.Titulo" aria-describedby="Titulo">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Monto" class="form-label">Pago</label>
+                                <input type="number" class="form-control" name="Monto" id="Monto" placeholder="1000.00" value="@Model.Monto">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Descripcion" class="form-label">Descripcion</label>
+                                <textarea class="form-control" name="Descripcion" id="Descripcion" rows="3">@Model.Descripcion</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalAgregarEmpleado">
+        <div class="modal fade" id="AgregarEmpleadoModal" tabindex="-1" aria-labelledby="AgregarEmpleadoModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="AgregarEmpleadoModal">Agregar Empleado</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" asp-controller="Actividades" asp-action="AddEmpleado">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Usuario</label>
+                                <select class="form-select" name="IdEmpleado" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    @foreach (var item in ViewBag.Empleados)
+                                    {
+                                        <option value="@item.Id">@item.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                            <input value="@Model.Id" name="IdProyecto" hidden>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+

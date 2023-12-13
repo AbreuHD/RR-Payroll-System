@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Actividades;
 using Core.Application.DTOs.Banco;
 using Core.Application.DTOs.EmpleadoProyecto;
 using Core.Application.DTOs.Empleados;
@@ -9,6 +10,7 @@ using Core.Application.DTOs.Provincia;
 using Core.Application.DTOs.Proyecto;
 using Core.Application.DTOs.Puestos;
 using Core.Application.DTOs.TipoCuenta;
+using Core.Application.Features.Actividades.Command.CreateActividades;
 using Core.Application.Features.Asistencia.Command.CreateAsistenciaTable;
 using Core.Application.Features.Deducciones.Commands.CreateDeduccion;
 using Core.Application.Features.Empleado.Comands.CreateEmpleado;
@@ -131,7 +133,17 @@ namespace Core.Application.Mapping
             CreateMap<TipoPago, CreateTipoPagoCommand>()
                 .ReverseMap();
 
+            CreateMap<Actividades, CreateActividadesCommand>()
+                .ReverseMap();
+
+            CreateMap<Actividades, GetAllActividadesResponseDTO>()
+                .ReverseMap();            
             
+            CreateMap<Actividades, GetActivityByIdResponseDTO>()
+                .ReverseMap();            
+            
+            CreateMap<Actividades, GetAllEmpleadosResponseDTO>()
+                .ReverseMap();
         }
     }
 }

@@ -112,10 +112,10 @@ namespace Infraestructure.Persistence.Context
 
 
             #region Relations  
-            modelBuilder.Entity<Actividades>()
-                .HasOne(a => a.ActividadesAsignadas)
-                .WithMany(aa => aa.Actividades)
-                .HasForeignKey(a => a.IdActividadAsignada);
+            modelBuilder.Entity<ActividadesAsignadas>()
+                .HasOne(a => a.Actividad)
+                .WithMany(aa => aa.ActividadesAsignadas)
+                .HasForeignKey(a => a.IdActividad);
 
             //modelBuilder.Entity<ActividadesAsignadas>()
             //    .HasOne(aa => aa.EmpleadoProyecto)
