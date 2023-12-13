@@ -21,6 +21,6 @@ namespace Core.Domain.Entities
         public Proyecto Proyecto { get; set; }
         public Empleado Empleado { get; set; }
         public Asistencia Asistencia { get; set; }
-        //public ActividadesAsignadas ActividadesAsignadas { get; set; }
+        public ICollection<ActividadesAsignadas> ActividadesAsignadas { get; set; }
     }
 }

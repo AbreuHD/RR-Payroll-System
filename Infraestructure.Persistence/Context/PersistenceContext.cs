@@ -118,16 +118,9 @@ namespace Infraestructure.Persistence.Context
                 .HasForeignKey(a => a.IdActividad);
 
             //modelBuilder.Entity<ActividadesAsignadas>()
-            //    .HasOne(aa => aa.EmpleadoProyecto)
-            //    .WithOne(ep => ep.ActividadesAsignadas)
-            //    .HasForeignKey<ActividadesAsignadas>(aa => aa.IdEmpleadoProyecto)
-            //    .IsRequired();
-
-
-            modelBuilder.Entity<ActividadesAsignadas>()
-                .HasOne(aa => aa.Estado)
-                .WithMany(e => e.ActividadesAsignadas)
-                .HasForeignKey(aa => aa.IdEstado).OnDelete(DeleteBehavior.NoAction);
+            //    .HasOne(aa => aa.Estado)
+            //    .WithMany(e => e.ActividadesAsignadas)
+            //    .HasForeignKey(aa => aa.IdEstado).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Asistencia>()
                 .HasOne(a => a.EmpleadoProyecto)
@@ -184,7 +177,7 @@ namespace Infraestructure.Persistence.Context
             modelBuilder.Entity<Proyecto>()
                 .HasOne(p => p.Estado)
                 .WithMany(es => es.Proyecto)
-                .HasForeignKey(p => p.IdEstado);
+                .HasForeignKey(p => p.IdEstado).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<EmpleadoProyectos>()
                 .HasOne(ep => ep.Puesto)
@@ -225,6 +218,16 @@ namespace Infraestructure.Persistence.Context
                 .HasOne(p => p.TipoCuenta)
                 .WithMany(tp => tp.TipoPagos)
                 .HasForeignKey(p => p.IdTipoCuenta);
+
+            modelBuilder.Entity<Actividades>()
+                .HasOne(ep => ep.Proyecto)
+                .WithMany(p => p.Actividades)
+                .HasForeignKey(ep => ep.IdProyecto).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ActividadesAsignadas>()
+                .HasOne(aa => aa.EmpleadoProyecto)
+                .WithMany(ep => ep.ActividadesAsignadas)
+                .HasForeignKey(aa => aa.IdEmpleadoProyecto).OnDelete(DeleteBehavior.NoAction);
             #endregion
 
         }

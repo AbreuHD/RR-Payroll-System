@@ -40,6 +40,7 @@ namespace Core.Application.Features.EmpleadoProyecto.Queries.GetAllProjects
                 var search = result.Where(x => x.IdEmpleado == searchEmpleado.Id).ToList();
                 var response = _mapper.Map<List<EmpleadoProyectoReponseDTO>>(search);
 
+
                 foreach (var item in response)
                 {
                     item.Proyecto = await _proyectoRepository.GetByIdAsync(item.IdProyecto);

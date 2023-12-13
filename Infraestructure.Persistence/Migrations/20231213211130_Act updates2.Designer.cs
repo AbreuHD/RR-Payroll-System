@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    [Migration("20231206223645_idkbroitest")]
-    partial class idkbroitest
+    [Migration("20231213211130_Act updates2")]
+    partial class Actupdates2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,7 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdActividadAsignada")
+                    b.Property<int>("IdProyecto")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModifiedAt")
@@ -56,9 +56,13 @@ namespace Infraestructure.Persistence.Migrations
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdActividadAsignada");
+                    b.HasIndex("IdProyecto");
 
                     b.ToTable("Actividades", (string)null);
                 });
@@ -81,6 +85,9 @@ namespace Infraestructure.Persistence.Migrations
                     b.Property<int>("EmpleadoProyectoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("FechaFin")
                         .HasColumnType("datetime2");
 
@@ -93,9 +100,6 @@ namespace Infraestructure.Persistence.Migrations
                     b.Property<int>("IdEmpleadoProyecto")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -106,7 +110,7 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.HasIndex("EmpleadoProyectoId");
 
-                    b.HasIndex("IdEstado");
+                    b.HasIndex("IdActividad");
 
                     b.ToTable("ActividadesAsignadas", (string)null);
                 });
@@ -214,9 +218,6 @@ namespace Infraestructure.Persistence.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Porcentaje")
-                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -330,10 +331,6 @@ namespace Infraestructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("tipoPago")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -597,6 +594,9 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
@@ -609,7 +609,7 @@ namespace Infraestructure.Persistence.Migrations
                     b.Property<int>("IdPercepciones")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTipoDePago")
+                    b.Property<int>("IdTipoPago")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("LastModifiedAt")
@@ -623,13 +623,13 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdDeducciones");
+                    b.HasIndex("EmpleadoId");
 
-                    b.HasIndex("IdEmpleado");
+                    b.HasIndex("IdDeducciones");
 
                     b.HasIndex("IdPercepciones");
 
-                    b.HasIndex("IdTipoDePago");
+                    b.HasIndex("IdTipoPago");
 
                     b.ToTable("Pagos", (string)null);
                 });
@@ -835,7 +835,7 @@ namespace Infraestructure.Persistence.Migrations
                     b.ToTable("Puestos", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.TipoDePago", b =>
+            modelBuilder.Entity("Core.Domain.Entities.TipoBanco", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -847,10 +847,6 @@ namespace Infraestructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -866,18 +862,92 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoDePagos", (string)null);
+                    b.ToTable("TipoBanco", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.TipoCuenta", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TipoCuenta", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.TipoPago", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cuenta")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("IdTipoBanco")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdTipoCuenta")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdUsuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdTipoBanco");
+
+                    b.HasIndex("IdTipoCuenta");
+
+                    b.ToTable("TipoPago", (string)null);
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Actividades", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.ActividadesAsignadas", "ActividadesAsignadas")
+                    b.HasOne("Core.Domain.Entities.Proyecto", "Proyecto")
                         .WithMany("Actividades")
-                        .HasForeignKey("IdActividadAsignada")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("IdProyecto")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ActividadesAsignadas");
+                    b.Navigation("Proyecto");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.ActividadesAsignadas", b =>
@@ -888,15 +958,15 @@ namespace Infraestructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Domain.Entities.Estado", "Estado")
+                    b.HasOne("Core.Domain.Entities.Actividades", "Actividad")
                         .WithMany("ActividadesAsignadas")
-                        .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("IdActividad")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("EmpleadoProyecto");
+                    b.Navigation("Actividad");
 
-                    b.Navigation("Estado");
+                    b.Navigation("EmpleadoProyecto");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Asistencia", b =>
@@ -1012,15 +1082,15 @@ namespace Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.Pago", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.Deducciones", "Deducciones")
-                        .WithMany("Pagos")
-                        .HasForeignKey("IdDeducciones")
+                    b.HasOne("Core.Domain.Entities.Empleado", "Empleado")
+                        .WithMany()
+                        .HasForeignKey("EmpleadoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Domain.Entities.Empleado", "Empleado")
+                    b.HasOne("Core.Domain.Entities.Deducciones", "Deducciones")
                         .WithMany("Pagos")
-                        .HasForeignKey("IdEmpleado")
+                        .HasForeignKey("IdDeducciones")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1030,9 +1100,9 @@ namespace Infraestructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Domain.Entities.TipoDePago", "TipoDePago")
+                    b.HasOne("Core.Domain.Entities.TipoPago", "TipoPago")
                         .WithMany("Pagos")
-                        .HasForeignKey("IdTipoDePago")
+                        .HasForeignKey("IdTipoPago")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1042,7 +1112,7 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.Navigation("Percepciones");
 
-                    b.Navigation("TipoDePago");
+                    b.Navigation("TipoPago");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Permiso", b =>
@@ -1061,15 +1131,34 @@ namespace Infraestructure.Persistence.Migrations
                     b.HasOne("Core.Domain.Entities.Estado", "Estado")
                         .WithMany("Proyecto")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Estado");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.ActividadesAsignadas", b =>
+            modelBuilder.Entity("Core.Domain.Entities.TipoPago", b =>
                 {
-                    b.Navigation("Actividades");
+                    b.HasOne("Core.Domain.Entities.TipoBanco", "TipoBanco")
+                        .WithMany("TipoPagos")
+                        .HasForeignKey("IdTipoBanco")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Entities.TipoCuenta", "TipoCuenta")
+                        .WithMany("TipoPagos")
+                        .HasForeignKey("IdTipoCuenta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TipoBanco");
+
+                    b.Navigation("TipoCuenta");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.Actividades", b =>
+                {
+                    b.Navigation("ActividadesAsignadas");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Asistencia", b =>
@@ -1092,8 +1181,6 @@ namespace Infraestructure.Persistence.Migrations
                     b.Navigation("EmpleadoProyectos");
 
                     b.Navigation("Licencias");
-
-                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.EmpleadoProyectos", b =>
@@ -1104,8 +1191,6 @@ namespace Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.Estado", b =>
                 {
-                    b.Navigation("ActividadesAsignadas");
-
                     b.Navigation("Empleados");
 
                     b.Navigation("Proyecto");
@@ -1130,6 +1215,8 @@ namespace Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.Proyecto", b =>
                 {
+                    b.Navigation("Actividades");
+
                     b.Navigation("DetalleNominas");
 
                     b.Navigation("EmpleadoProyectos");
@@ -1140,7 +1227,17 @@ namespace Infraestructure.Persistence.Migrations
                     b.Navigation("EmpleadoProyecto");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.TipoDePago", b =>
+            modelBuilder.Entity("Core.Domain.Entities.TipoBanco", b =>
+                {
+                    b.Navigation("TipoPagos");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.TipoCuenta", b =>
+                {
+                    b.Navigation("TipoPagos");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.TipoPago", b =>
                 {
                     b.Navigation("Pagos");
                 });

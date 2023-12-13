@@ -11,6 +11,7 @@ using Core.Application.DTOs.Proyecto;
 using Core.Application.DTOs.Puestos;
 using Core.Application.DTOs.TipoCuenta;
 using Core.Application.Features.Actividades.Command.CreateActividades;
+using Core.Application.Features.ActividadesAsignadas.Commands.CreateActAsignada;
 using Core.Application.Features.Asistencia.Command.CreateAsistenciaTable;
 using Core.Application.Features.Deducciones.Commands.CreateDeduccion;
 using Core.Application.Features.Empleado.Comands.CreateEmpleado;
@@ -142,7 +143,12 @@ namespace Core.Application.Mapping
             CreateMap<Actividades, GetActivityByIdResponseDTO>()
                 .ReverseMap();            
             
-            CreateMap<Actividades, GetAllEmpleadosResponseDTO>()
+            CreateMap<Empleado, GetAllEmpleadosResponseDTO>()
+                .ForMember(x=> x.EmpleadoProyectos, i => i.Ignore())
+                .ReverseMap();            
+            
+            
+            CreateMap<ActividadesAsignadas, CreateActAsignadaCommand>()
                 .ReverseMap();
         }
     }

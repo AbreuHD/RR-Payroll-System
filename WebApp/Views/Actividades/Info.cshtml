@@ -18,7 +18,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>Info Proyecto</h1>
+                        <h1>Info Tareas</h1>
                         <hr />
                         <dl class="dl-horizontal">
                             <dt>
@@ -84,7 +84,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Proyecto</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Tareas</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -121,11 +121,11 @@
                         <h1 class="modal-title fs-5" id="AgregarEmpleadoModal">Agregar Empleado</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="post" asp-controller="Actividades" asp-action="AddEmpleado">
+                    <form method="post" asp-controller="Actividades" asp-action="AgregarEmpleados">
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Usuario</label>
-                                <select class="form-select" name="IdEmpleado" aria-label="Default select example">
+                                <select class="form-select" name="IdEmpleadoProyecto" aria-label="Default select example">
                                     <option selected>Open this select menu</option>
                                     @foreach (var item in ViewBag.Empleados)
                                     {
@@ -133,7 +133,24 @@
                                     }
                                 </select>
                             </div>
-                            <input value="@Model.Id" name="IdProyecto" hidden>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Estado</label>
+                                <select class="form-select" name="Estado" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">Iniciado</option>
+                                    <option value="2">Pausado</option>
+                                    <option value="3">Terminado</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="FechaInicio" class="form-label">Fecha Inicial</label>
+                                <input type="date" class="form-control" id="FechaInicio" name="FechaInicio" aria-describedby="FechaInicio">
+                            </div>
+                            <div class="mb-3">
+                                <label for="FechaFin" class="form-label">Fecha Final</label>
+                                <input type="date" class="form-control" id="FechaFin" name="FechaFin" aria-describedby="FechaFin">
+                            </div>
+                            <input value="@Model.Id" name="IdActividad" hidden>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

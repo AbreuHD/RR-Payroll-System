@@ -1,4 +1,6 @@
-﻿@using Core.Application.DTOs.Actividades
+﻿
+
+@using Core.Application.DTOs.Actividades
 @model List<GetAllActividadesResponseDTO>
 @{
     ViewData["Title"] = "Actividades Panel";
@@ -42,10 +44,10 @@
                         <td>@act.HaveEmployee</td>
 
                         <td>
-                            <button class="btn btn-warning"><a asp-controller="Actividad" asp-action="InfoTarea" asp-route-id="@act.Id">Ver</a></button>
+                            <button class="btn btn-warning"><a asp-controller="Actividades" asp-action="Info" asp-route-id="@act.Id" asp-route-IdProyecto="@act.IdProyecto">Ver</a></button>
                         </td>
                         <td>
-                            <button class="btn btn-danger"><a asp-controller="Actividad" asp-action="EliminarActividad" asp-route-id="@act.Id">Eliminar</a></button>
+                            <button class="btn btn-danger"><a asp-controller="Actividades" asp-action="EliminarActividad" asp-route-id="@act.Id">Eliminar</a></button>
                         </td>
                     </tr>
                 }
@@ -66,6 +68,14 @@
                             <label for="Titulo" class="form-label">Titutlo</label>
                             <input type="text" class="form-control" name="Titulo" id="Titulo" placeholder="Actualizar DB">
                         </div>
+                        <select class="form-select" name="IdProyecto" aria-label="Default select example">
+                            <option selected>Selecciona el proyecto</option>
+                            @foreach (var i in ViewBag.Proyectos)
+                            {
+                                <option value="@i.Id">@i.Nombre</option>
+                            }
+                        </select>
+
                         <div class="mb-3">
                             <label for="Monto" class="form-label">Pago</label>
                             <input type="number" class="form-control" name="Monto" id="Monto" placeholder="1000.00">

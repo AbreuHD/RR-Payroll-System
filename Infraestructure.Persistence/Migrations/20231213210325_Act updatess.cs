@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infraestructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Actupdatess : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +38,6 @@ namespace Infraestructure.Persistence.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Porcentaje = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -55,7 +54,7 @@ namespace Infraestructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<int>(type: "int", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -139,13 +138,12 @@ namespace Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TipoDePagos",
+                name: "TipoBanco",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -153,7 +151,24 @@ namespace Infraestructure.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoDePagos", x => x.Id);
+                    table.PrimaryKey("PK_TipoBanco", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TipoCuenta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoCuenta", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,8 +196,7 @@ namespace Infraestructure.Persistence.Migrations
                         name: "FK_Proyectos_Estado_IdEstado",
                         column: x => x.IdEstado,
                         principalTable: "Estado",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -192,9 +206,6 @@ namespace Infraestructure.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Documento = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Codigo = table.Column<int>(type: "int", nullable: false),
-                    NumCuenta = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -203,11 +214,9 @@ namespace Infraestructure.Persistence.Migrations
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Celular = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    tipoPago = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdNacionalidad = table.Column<int>(type: "int", nullable: false),
                     IdProvincia = table.Column<int>(type: "int", nullable: false),
                     IdEstado = table.Column<int>(type: "int", nullable: false),
-                    IdLicencia = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -261,6 +270,63 @@ namespace Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TipoPago",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cuenta = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdTipoCuenta = table.Column<int>(type: "int", nullable: false),
+                    IdTipoBanco = table.Column<int>(type: "int", nullable: false),
+                    IdUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TipoPago", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TipoPago_TipoBanco_IdTipoBanco",
+                        column: x => x.IdTipoBanco,
+                        principalTable: "TipoBanco",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TipoPago_TipoCuenta_IdTipoCuenta",
+                        column: x => x.IdTipoCuenta,
+                        principalTable: "TipoCuenta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Actividades",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IdProyecto = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Actividades", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Actividades_Proyectos_IdProyecto",
+                        column: x => x.IdProyecto,
+                        principalTable: "Proyectos",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DetalleNomina",
                 columns: table => new
                 {
@@ -294,11 +360,10 @@ namespace Infraestructure.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EsEncargado = table.Column<bool>(type: "bit", nullable: false),
                     IdPuesto = table.Column<int>(type: "int", nullable: false),
-                    IdCOntrato = table.Column<int>(type: "int", nullable: false),
                     IdProyecto = table.Column<int>(type: "int", nullable: false),
                     IdEmpleado = table.Column<int>(type: "int", nullable: false),
+                    ContratoId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -308,11 +373,10 @@ namespace Infraestructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_EmpleadoProyectos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EmpleadoProyectos_Contrato_IdCOntrato",
-                        column: x => x.IdCOntrato,
+                        name: "FK_EmpleadoProyectos_Contrato_ContratoId",
+                        column: x => x.ContratoId,
                         principalTable: "Contrato",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_EmpleadoProyectos_Empleado_IdEmpleado",
                         column: x => x.IdEmpleado,
@@ -369,10 +433,11 @@ namespace Infraestructure.Persistence.Migrations
                     Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Comision = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Emisor = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdTipoDePago = table.Column<int>(type: "int", nullable: false),
+                    IdTipoPago = table.Column<int>(type: "int", nullable: false),
                     IdEmpleado = table.Column<int>(type: "int", nullable: false),
                     IdPercepciones = table.Column<int>(type: "int", nullable: false),
                     IdDeducciones = table.Column<int>(type: "int", nullable: false),
+                    EmpleadoId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -388,8 +453,8 @@ namespace Infraestructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pagos_Empleado_IdEmpleado",
-                        column: x => x.IdEmpleado,
+                        name: "FK_Pagos_Empleado_EmpleadoId",
+                        column: x => x.EmpleadoId,
                         principalTable: "Empleado",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -400,9 +465,9 @@ namespace Infraestructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pagos_TipoDePagos_IdTipoDePago",
-                        column: x => x.IdTipoDePago,
-                        principalTable: "TipoDePagos",
+                        name: "FK_Pagos_TipoPago_IdTipoPago",
+                        column: x => x.IdTipoPago,
+                        principalTable: "TipoPago",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -418,6 +483,8 @@ namespace Infraestructure.Persistence.Migrations
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IdEstado = table.Column<int>(type: "int", nullable: false),
+                    IdProyecto = table.Column<int>(type: "int", nullable: false),
+                    EmpleadoProyectoId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -427,8 +494,14 @@ namespace Infraestructure.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_ActividadesAsignadas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActividadesAsignadas_EmpleadoProyectos_IdEmpleadoProyecto",
-                        column: x => x.IdEmpleadoProyecto,
+                        name: "FK_ActividadesAsignadas_Actividades_IdActividad",
+                        column: x => x.IdActividad,
+                        principalTable: "Actividades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ActividadesAsignadas_EmpleadoProyectos_EmpleadoProyectoId",
+                        column: x => x.EmpleadoProyectoId,
                         principalTable: "EmpleadoProyectos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -465,40 +538,14 @@ namespace Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Actividades",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IdActividadAsignada = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Actividades", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Actividades_ActividadesAsignadas_IdActividadAsignada",
-                        column: x => x.IdActividadAsignada,
-                        principalTable: "ActividadesAsignadas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Horas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    HorasTrabajadas = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HorasNormales = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HorasExtras = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdAsistencia = table.Column<int>(type: "int", nullable: false),
+                    HorasInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HoraFinal = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IdAsistencia = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastModifiedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -511,8 +558,7 @@ namespace Infraestructure.Persistence.Migrations
                         name: "FK_Horas_Asistencias_IdAsistencia",
                         column: x => x.IdAsistencia,
                         principalTable: "Asistencias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -544,15 +590,19 @@ namespace Infraestructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Actividades_IdActividadAsignada",
+                name: "IX_Actividades_IdProyecto",
                 table: "Actividades",
-                column: "IdActividadAsignada");
+                column: "IdProyecto");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActividadesAsignadas_IdEmpleadoProyecto",
+                name: "IX_ActividadesAsignadas_EmpleadoProyectoId",
                 table: "ActividadesAsignadas",
-                column: "IdEmpleadoProyecto",
-                unique: true);
+                column: "EmpleadoProyectoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ActividadesAsignadas_IdActividad",
+                table: "ActividadesAsignadas",
+                column: "IdActividad");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActividadesAsignadas_IdEstado",
@@ -583,13 +633,12 @@ namespace Infraestructure.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Empleado_IdProvincia",
                 table: "Empleado",
-                column: "IdProvincia",
-                unique: true);
+                column: "IdProvincia");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmpleadoProyectos_IdCOntrato",
+                name: "IX_EmpleadoProyectos_ContratoId",
                 table: "EmpleadoProyectos",
-                column: "IdCOntrato");
+                column: "ContratoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmpleadoProyectos_IdEmpleado",
@@ -614,8 +663,7 @@ namespace Infraestructure.Persistence.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Licencias_IdEmpleado",
                 table: "Licencias",
-                column: "IdEmpleado",
-                unique: true);
+                column: "IdEmpleado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Municipios_IdProvincia",
@@ -623,14 +671,14 @@ namespace Infraestructure.Persistence.Migrations
                 column: "IdProvincia");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pagos_EmpleadoId",
+                table: "Pagos",
+                column: "EmpleadoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pagos_IdDeducciones",
                 table: "Pagos",
                 column: "IdDeducciones");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pagos_IdEmpleado",
-                table: "Pagos",
-                column: "IdEmpleado");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pagos_IdPercepciones",
@@ -638,9 +686,9 @@ namespace Infraestructure.Persistence.Migrations
                 column: "IdPercepciones");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagos_IdTipoDePago",
+                name: "IX_Pagos_IdTipoPago",
                 table: "Pagos",
-                column: "IdTipoDePago");
+                column: "IdTipoPago");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Permisos_AsistenciaId",
@@ -651,13 +699,23 @@ namespace Infraestructure.Persistence.Migrations
                 name: "IX_Proyectos_IdEstado",
                 table: "Proyectos",
                 column: "IdEstado");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoPago_IdTipoBanco",
+                table: "TipoPago",
+                column: "IdTipoBanco");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoPago_IdTipoCuenta",
+                table: "TipoPago",
+                column: "IdTipoCuenta");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Actividades");
+                name: "ActividadesAsignadas");
 
             migrationBuilder.DropTable(
                 name: "DetalleNomina");
@@ -678,7 +736,7 @@ namespace Infraestructure.Persistence.Migrations
                 name: "Permisos");
 
             migrationBuilder.DropTable(
-                name: "ActividadesAsignadas");
+                name: "Actividades");
 
             migrationBuilder.DropTable(
                 name: "Deducciones");
@@ -687,10 +745,16 @@ namespace Infraestructure.Persistence.Migrations
                 name: "Percepciones");
 
             migrationBuilder.DropTable(
-                name: "TipoDePagos");
+                name: "TipoPago");
 
             migrationBuilder.DropTable(
                 name: "Asistencias");
+
+            migrationBuilder.DropTable(
+                name: "TipoBanco");
+
+            migrationBuilder.DropTable(
+                name: "TipoCuenta");
 
             migrationBuilder.DropTable(
                 name: "EmpleadoProyectos");

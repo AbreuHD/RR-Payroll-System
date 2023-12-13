@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    [Migration("20231210231028_update activity")]
-    partial class updateactivity
+    [Migration("20231213210653_Act updates")]
+    partial class Actupdates
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,9 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IdProyecto")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -53,7 +56,13 @@ namespace Infraestructure.Persistence.Migrations
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("IdProyecto");
 
                     b.ToTable("Actividades", (string)null);
                 });
@@ -932,6 +941,17 @@ namespace Infraestructure.Persistence.Migrations
                     b.ToTable("TipoPago", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Domain.Entities.Actividades", b =>
+                {
+                    b.HasOne("Core.Domain.Entities.Proyecto", "Proyecto")
+                        .WithMany("Actividades")
+                        .HasForeignKey("IdProyecto")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Proyecto");
+                });
+
             modelBuilder.Entity("Core.Domain.Entities.ActividadesAsignadas", b =>
                 {
                     b.HasOne("Core.Domain.Entities.EmpleadoProyectos", "EmpleadoProyecto")
@@ -1121,7 +1141,7 @@ namespace Infraestructure.Persistence.Migrations
                     b.HasOne("Core.Domain.Entities.Estado", "Estado")
                         .WithMany("Proyecto")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Estado");
@@ -1207,6 +1227,8 @@ namespace Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.Proyecto", b =>
                 {
+                    b.Navigation("Actividades");
+
                     b.Navigation("DetalleNominas");
 
                     b.Navigation("EmpleadoProyectos");

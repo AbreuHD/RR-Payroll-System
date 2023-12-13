@@ -41,6 +41,9 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IdProyecto")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -55,6 +58,8 @@ namespace Infraestructure.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdProyecto");
 
                     b.ToTable("Actividades", (string)null);
                 });
@@ -74,7 +79,7 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmpleadoProyectoId")
+                    b.Property<int>("Estado")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaFin")
@@ -89,9 +94,6 @@ namespace Infraestructure.Persistence.Migrations
                     b.Property<int>("IdEmpleadoProyecto")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEstado")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LastModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -100,11 +102,9 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmpleadoProyectoId");
-
                     b.HasIndex("IdActividad");
 
-                    b.HasIndex("IdEstado");
+                    b.HasIndex("IdEmpleadoProyecto");
 
                     b.ToTable("ActividadesAsignadas", (string)null);
                 });
@@ -933,31 +933,34 @@ namespace Infraestructure.Persistence.Migrations
                     b.ToTable("TipoPago", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.ActividadesAsignadas", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Actividades", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.EmpleadoProyectos", "EmpleadoProyecto")
-                        .WithMany()
-                        .HasForeignKey("EmpleadoProyectoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Core.Domain.Entities.Proyecto", "Proyecto")
+                        .WithMany("Actividades")
+                        .HasForeignKey("IdProyecto")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.Navigation("Proyecto");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.ActividadesAsignadas", b =>
+                {
                     b.HasOne("Core.Domain.Entities.Actividades", "Actividad")
                         .WithMany("ActividadesAsignadas")
                         .HasForeignKey("IdActividad")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Domain.Entities.Estado", "Estado")
+                    b.HasOne("Core.Domain.Entities.EmpleadoProyectos", "EmpleadoProyecto")
                         .WithMany("ActividadesAsignadas")
-                        .HasForeignKey("IdEstado")
+                        .HasForeignKey("IdEmpleadoProyecto")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Actividad");
 
                     b.Navigation("EmpleadoProyecto");
-
-                    b.Navigation("Estado");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Asistencia", b =>
@@ -1122,7 +1125,7 @@ namespace Infraestructure.Persistence.Migrations
                     b.HasOne("Core.Domain.Entities.Estado", "Estado")
                         .WithMany("Proyecto")
                         .HasForeignKey("IdEstado")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Estado");
@@ -1176,14 +1179,14 @@ namespace Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.EmpleadoProyectos", b =>
                 {
+                    b.Navigation("ActividadesAsignadas");
+
                     b.Navigation("Asistencia")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Estado", b =>
                 {
-                    b.Navigation("ActividadesAsignadas");
-
                     b.Navigation("Empleados");
 
                     b.Navigation("Proyecto");
@@ -1208,6 +1211,8 @@ namespace Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.Proyecto", b =>
                 {
+                    b.Navigation("Actividades");
+
                     b.Navigation("DetalleNominas");
 
                     b.Navigation("EmpleadoProyectos");

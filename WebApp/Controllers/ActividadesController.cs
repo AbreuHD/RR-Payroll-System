@@ -2,8 +2,10 @@
 using Core.Application.Features.Actividades.Command.UpdateActividades;
 using Core.Application.Features.Actividades.Queries.GetActivityById;
 using Core.Application.Features.Actividades.Queries.GetAllActividades;
+using Core.Application.Features.ActividadesAsignadas.Commands.CreateActAsignada;
 using Core.Application.Features.ActividadesAsignadas.Queries.GetActividadesAsignadasByUserQuery;
 using Core.Application.Features.Empleado.Queries.GetAllEmpleadosWithoutChosen;
+using Core.Application.Features.Proyecto.Queries.GetAllProjects;
 using Core.Application.ViewModels.User;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +29,8 @@ namespace WebApp.Controllers
         }
 
         public async Task<IActionResult> Admin()
-        { 
+        {
+            ViewBag.Proyectos = await Mediator.Send(new GetAllProjectsQuery());
             var response = await Mediator.Send(new GetAllActividadesQuery());
             return View(response);
         }
@@ -39,10 +42,14 @@ namespace WebApp.Controllers
             return RedirectToAction("Admin");
         }
 
-        public async Task<IActionResult> Info(int Id)
+        public async Task<IActionResult> Info(int Id, int IdProyecto)
         {
             var response = await Mediator.Send(new GetActivityByIdQuery() { Id = Id });
-            ViewBag.Empleados = await Mediator.Send(new GetAllEmpleadosWithoutChosenQuery() { Empleados = response.Empleados });
+            ViewBag.Empleados = await Mediator.Send(new GetAllEmpleadosWithoutChosenQuery() 
+            { 
+                Empleados = response.Empleados, 
+                IdProyecto = IdProyecto
+            });
             return View(response);
         }
 
@@ -53,5 +60,11 @@ namespace WebApp.Controllers
             return RedirectToAction("Admin");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AgregarEmpleados(CreateActAsignadaCommand command)
+        {
+            await Mediator.Send(command);
+            return RedirectToAction("Admin");
+        }
     }
 }
