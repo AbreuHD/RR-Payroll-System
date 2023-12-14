@@ -16,7 +16,7 @@ namespace Core.Domain.Entities
         public int IdEstado { get; set; }
 
 
-        public ICollection<Actividades> Actividades { get; set; }
+        public Actividades Actividad { get; set; }
         public EmpleadoProyectos EmpleadoProyecto { get; set; }
         public Estado Estado { get; set; }
     }

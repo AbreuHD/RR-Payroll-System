@@ -14,13 +14,13 @@ namespace Core.Domain.Entities
         public decimal Comision { get; set; }
         public string Emisor { get; set; }
         
-        public int IdTipoDePago { get; set; }
+        public int IdTipoPago { get; set; }
         public int IdEmpleado { get; set; }
         public int IdPercepciones { get; set; }
         public int IdDeducciones { get; set; }
 
 
-        public TipoDePago TipoDePago { get; set; }
+        public TipoPago TipoPago { get; set; }
         public Empleado Empleado { get; set; }
         public Percepciones Percepciones { get; set; }
         public Deducciones Deducciones { get; set; }

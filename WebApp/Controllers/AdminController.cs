@@ -1,7 +1,10 @@
-﻿using Core.Application.Features.Empleado.Comands.CreateEmpleado;
+﻿using Core.Application.Features.Banco.Queries.GetAllTipoBanco;
+using Core.Application.Features.Empleado.Comands.CreateEmpleado;
+using Core.Application.Features.Empleado.Queries.GetEmpleadoByIdentityId;
 using Core.Application.Features.Estado.Queries.GetAllEstado;
 using Core.Application.Features.Nacionalidad.Queries.GetAllNacionalidad;
 using Core.Application.Features.Provincia.Queries.GetAllProvincia;
+using Core.Application.Features.TipoPago.Commands.CreateTipoPago;
 using Core.Application.Interface.Services;
 using Core.Application.ViewModels.User;
 using MediatR;
@@ -25,31 +28,45 @@ namespace WebApp.Controllers
             ViewBag.Nacionalidades = await Mediator.Send(new GetAllNacionalidadQuery());
             ViewBag.Provincias = await Mediator.Send(new GetAllProvinciaQuery());
             ViewBag.Estados = await Mediator.Send(new GetAllEstadoQuery());
+
+            ViewBag.TipoCuenta = await Mediator.Send(new GetAllTTipoCuentaQuery());
+            ViewBag.TipoBanco = await Mediator.Send(new GetAllTipoBancoQuery());
+
             var data = await _userService.GetAllClients();
+            foreach (var item in data)
+            {
+                var result = await Mediator.Send(new GetEmpleadoByIdentityIdQuery { IdentityId = item.Id });
+                item.EsEmpleado = result;
+            }
             return View(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserSaveViewModel vm, CreateEmpleadoCommand comm)
+        public async Task<IActionResult> CreateUser(UserSaveViewModel vm, CreateTipoPagoCommand comm)
         {
+            var data = await _userService.RegisterAdmin(vm);
+            comm.IdUsuario = data.Id;
+            await Mediator.Send(comm);
+            return RedirectToRoute(new { controller = "Admin", action = "Index" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEmpleado(CreateEmpleadoCommand comm, string IdentityId)
+        {
+            var user = await _userService.GetAccountByid(IdentityId);
             try
             {
-                comm.Telefono = vm.Phone;
-                comm.Nombre = vm.Name;
-                comm.Apellido = vm.LastName;
-
-            }catch(Exception e)
+                comm.Telefono = user.Phone;
+                comm.Nombre = user.Name;
+                comm.Apellido = user.LastName;
+                comm.Email = user.Email;
+                comm.Telefono = user.Phone;
+            }
+            catch (Exception e)
             {
                 return RedirectToRoute(new { controller = "Admin", action = "Index" });
             }
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return RedirectToRoute(new { controller = "Admin", action = "Index" });
-            //}
-
-            var data = await _userService.RegisterAdmin(vm);
-            comm.UserID = data.Id;
+            comm.UserID = user.Id;
             await Mediator.Send(comm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }

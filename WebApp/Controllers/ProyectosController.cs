@@ -11,6 +11,7 @@ using Core.Application.Features.Empleado.Queries.GetAllEmpleados;
 using Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProyecto;
 using Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyecto;
 using Core.Application.Features.Proyecto.Commands.EditProject;
+using Core.Application.Features.Asistencia.Command.CreateAsistenciaTable;
 
 namespace WebApp.Controllers
 {
@@ -35,7 +36,14 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> AddEmpleado(CreateEmpleadoProyectoCommand request)
         {
-            await Mediator.Send(request);
+            var response = await Mediator.Send(request);
+            var asistenciaResponse = await Mediator.Send(new CreateAsistenciaTableCommand()
+            {
+                FechaEntrada = DateTime.UtcNow,
+                FechaSalida = DateTime.UtcNow,
+                IdEmpleadoProyecto = response.Id
+            });
+
             return RedirectToAction("Info", new { Id = request.IdProyecto });
         }
         [HttpPost]

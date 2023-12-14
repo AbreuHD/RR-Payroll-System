@@ -34,11 +34,15 @@ namespace Core.Application.ViewModels.User
         [Compare(nameof(Password), ErrorMessage = "Las contraseñas deben ser iguales")]
         [Required(ErrorMessage = "Debe ingresar una contraseña para el usuario")]
         [DataType(DataType.Password)]
+        public string ConfirmPassword { get; set; }
+
         public bool IsAdmin { get; set; }
         public string Phone{ get; set; }
-        public string ConfirmPassword { get; set;}
-        public string SavingsAccount { get; set; }
+        
         public bool isActive { get; set; }
+
+        //Quitar
+        public string SavingsAccount { get; set; }
         public bool HasError { get; set; }
         public string Error { get; set; }
 

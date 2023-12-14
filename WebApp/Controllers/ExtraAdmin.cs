@@ -1,4 +1,6 @@
 ﻿using Azure.Core;
+using Core.Application.Features.Banco.Commands.CreateBanco;
+using Core.Application.Features.Banco.Queries.GetAllTipoBanco;
 using Core.Application.Features.Estado.Command.CreateEstado;
 using Core.Application.Features.Estado.Queries.GetAllEstado;
 using Core.Application.Features.Nacionalidad.Commands.CreateNacionalidad;
@@ -7,6 +9,8 @@ using Core.Application.Features.Provincia.Command.CreateProvincia;
 using Core.Application.Features.Provincia.Queries.GetAllProvincia;
 using Core.Application.Features.Puesto.Command.CreatePuesto;
 using Core.Application.Features.Puesto.Queries.GetAllPuestos;
+using Core.Application.Features.TipoCuenta.Commands.CreateTipoCuenta;
+using Core.Application.Features.TipoPago.Commands.CreateTipoPago;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -64,7 +68,30 @@ namespace WebApp.Controllers
         {
             await Mediator.Send(request);
             return RedirectToAction("Provincia");
+        }
 
+        public async Task<IActionResult> TipoCuenta()
+        {
+            return View(await Mediator.Send(new GetAllTTipoCuentaQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTipoCuenta(CreateTipoCuentaCommand request)
+        {
+            await Mediator.Send(request);
+            return RedirectToAction("TipoCuenta");
+        }
+
+        public async Task<IActionResult> TipoBanco()
+        {
+            return View(await Mediator.Send(new GetAllTipoBancoQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTipoBanco(CreateTipoBancoCommand request)
+        {
+            await Mediator.Send(request);
+            return RedirectToAction("TipoBanco");
         }
     }
 }

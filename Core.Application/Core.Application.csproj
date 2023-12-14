@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\TipoBanco\wdawdaw\**" />
+    <EmbeddedResource Remove="Features\TipoBanco\wdawdaw\**" />
+    <None Remove="Features\TipoBanco\wdawdaw\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="MediatR" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
@@ -22,7 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\EmpleadoProyecto\Queries\" />
+    <Folder Include="DTOs\Pago\Commands\CreatePago\" />
+    <Folder Include="DTOs\Pago\Queries\VerPagos\" />
+    <Folder Include="DTOs\Percepciones\" />
   </ItemGroup>
 
 </Project>

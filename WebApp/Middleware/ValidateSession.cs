@@ -20,5 +20,11 @@ namespace WebApp.Middleware
             }
             return true;
         }
+
+        public UserViewModel GetUser()
+        {
+            UserViewModel user = _httpContext.HttpContext.Session.Id != null ? JsonConvert.DeserializeObject<UserViewModel>(_httpContext.HttpContext.Session.GetString("user")) : null;
+            return user;
+        }
     }
 }

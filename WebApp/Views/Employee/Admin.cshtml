@@ -1,0 +1,44 @@
+﻿@using Core.Application.DTOs.Empleados;
+@model List<GetAllEmpleadosResponseDTO>
+@{
+    ViewData["Title"] = "Admin Employee";
+}
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+            <tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Genero</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Activo</th>
+                <th scope="col">Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <th scope="row">@user.Id</th>
+                    <td>@user.Nombre</td>
+                    <td>@user.Apellido</td>
+                    <td>@user.Email</td>
+                    <td>@user.Sexo</td>
+                    <td>@user.Telefono</td>
+                    <td>
+                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Editar</a></button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Desactivar" asp-route-id="@user.Id">Cambiar Estatus</a></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

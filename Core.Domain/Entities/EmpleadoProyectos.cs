@@ -20,7 +20,7 @@ namespace Core.Domain.Entities
         //public Contrato Contrato { get; set; }
         public Proyecto Proyecto { get; set; }
         public Empleado Empleado { get; set; }
-        //public Asistencia Asistencia { get; set; }
+        public Asistencia Asistencia { get; set; }
         //public ActividadesAsignadas ActividadesAsignadas { get; set; }
     }
 }

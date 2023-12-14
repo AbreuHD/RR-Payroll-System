@@ -21,7 +21,7 @@ namespace Core.Domain.Entities
         public string Telefono { get; set; }
         public string Celular { get; set; }
         public string Email { get; set; }
-        public string tipoPago { get; set; }
+        //public string tipoPago { get; set; }
         
         public int IdNacionalidad { get; set; }
         public int IdProvincia { get; set; }
@@ -32,7 +32,7 @@ namespace Core.Domain.Entities
         public Estado Estado { get; set; }
 
         public ICollection<Licencia> Licencias { get; set; }
-        public ICollection<Pago> Pagos { get; set; }
+        //public ICollection<Pago> Pagos { get; set; }
         public ICollection<EmpleadoProyectos> EmpleadoProyectos { get; set; }
     }
 }

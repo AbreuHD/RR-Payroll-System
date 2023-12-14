@@ -21,6 +21,7 @@
                 <th scope="col">Apellido</th>
                 <th scope="col">Correo</th>
                 <th scope="col">Usuario</th>
+                <th scope="col">Empleado</th>
                 <th scope="col">Admin</th>
                 <th scope="col">Activo</th>
                 <th scope="col">Editar</th>
@@ -36,6 +37,21 @@
                     <td>@user.LastName</td>
                     <td>@user.Email</td>
                     <td>@user.UserName</td>
+                    <td>
+                        @if(user.EsEmpleado == 0)
+                        {
+                            <div>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalEmpleado" data-idEmpleadoProyectos="@user.Id" onclick="updateInputValue(this)">Crear</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <a asp-controller="Employee" asp-action="info" asp-route-Id="@user.Id" type="button" class="btn btn-primary">Ver</a>
+                            </div>
+                        }
+
+                    </td>
                     <td>@user.IsAdmin</td>
                     <td>@user.IsActive</td>
                     <td>
@@ -43,7 +59,7 @@
                     </td>
                     <td>
                         <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Desactivar" asp-route-id="@user.Id">Cambiar Estatus</a></button>
-                    </td>
+                    </td> 
                 </tr>
             }
         </tbody>
@@ -83,6 +99,24 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
+                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="psw" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="psw" name="Password">
+                                    </div>
+
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
+                                        <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
+                                    </div>
+                                </div>
+                                <div>
+
+
+                                    <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email" name="Email">
                                     </div>
@@ -93,20 +127,52 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="psw" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="psw" name="Password">
+                                        <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
+                                        <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoCuenta)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
                                     </div>
-
                                     <div class="mb-3">
-                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
-                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
+                                        <label for="IdTipoBanco" class="form-label">Banco</label>
+                                        <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoBanco)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
                                     </div>
-                                    <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
-                                        <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
+                                    <div class="mb-3">
+                                        <label for="Cuenta" class="form-label">Cuenta</label>
+                                        <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
                                     </div>
                                 </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEmpleado" tabindex="-1" aria-labelledby="ModalEmpleado" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="ModalEmpleado">Crear Empleado</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <form method="post" asp-controller="Admin" asp-action="CreateEmpleado">
+                            <div class="row">
                                 <div>
+                                    <input value="1" name="IdentityId" id="IdentityId" hidden />
                                     <div class="mb-3">
                                         <label for="FechaNacimiento" class="form-label">Fecha Nacimiento</label>
                                         <input type="date" class="form-control" id="FechaNacimiento" name="FechaNacimiento" aria-describedby="username">
@@ -123,10 +189,10 @@
                                         <label for="Celular" class="form-label">Celular</label>
                                         <input type="tel" class="form-control" id="Celular" name="Celular" aria-describedby="username">
                                     </div>
-                                    <div class="mb-3">
+                                  @*<div class="mb-3">
                                         <label for="tipoPago" class="form-label">Tipo Pago</label>
                                         <input type="text" class="form-control" id="tipoPago" name="tipoPago" aria-describedby="username">
-                                    </div>
+                                    </div> *@
                                     <div class="mb-3">
                                         <label for="IdNacionalidad" class="form-label">Nacionalidad</label>
                                         <select class="form-select" name="IdNacionalidad" aria-label="Default select example">
@@ -172,4 +238,10 @@
         </div>
     </div>
 
+    <script>
+        function updateInputValue(button) {
+            var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
+            document.getElementById('IdentityId').value = idEmpleadoProyectos;
+        }
+    </script>
 </div>

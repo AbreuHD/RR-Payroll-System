@@ -24,6 +24,18 @@ namespace Infraestructure.Persistence
             services.AddTransient<IPuestoRepository, PuestoRepository>();
             services.AddTransient<INacionalidadRepository, NacionalidadRepository>();
             services.AddTransient<IProvinciaRepository, ProvinciaRepository>();
+            services.AddTransient<IAsistenciaRepository, AsistenciaRepository>();
+            services.AddTransient<IHorasRepository, HorasRepository>();
+
+            services.AddTransient<ITipoPagoRepository, TipoPagoRepository>();
+            services.AddTransient<IPagoRepository, PagoRepository>();
+            services.AddTransient<ITipoBancoRepository, TipoBancoRepository>();
+            services.AddTransient<ITipoCuentaRepository, TipoCuentaRepository>();
+            services.AddTransient<IPercepcionesRepository, PercepcionesRepository>();
+            services.AddTransient<IDeduccionesRepository, DeduccionesRepository>();
+            services.AddTransient<IActividadesAsignadasRepository, ActividadesAsignadasRepository>();
+            services.AddTransient<IActividadesRepository, ActividadesRepository>();
+
         }
     }
 }
