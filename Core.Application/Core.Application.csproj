@@ -30,6 +30,7 @@
   <ItemGroup>
     <Folder Include="DTOs\Pago\Commands\CreatePago\" />
     <Folder Include="DTOs\Pago\Queries\VerPagos\" />
+    <Folder Include="Features\Asistencia\Queries\GetAllAsistenciaByUserID\" />
   </ItemGroup>
 
 </Project>

@@ -69,5 +69,11 @@ namespace WebApp.Controllers
             await Mediator.Send(comm);
             return RedirectToAction("Admin");
         }
+
+        public async Task<IActionResult> InfoPoncheEmployee(int Id)
+        {
+            
+            return View();
+        }
     }
 }

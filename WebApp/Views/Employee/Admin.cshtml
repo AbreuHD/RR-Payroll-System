@@ -17,8 +17,8 @@
                 <th scope="col">Correo</th>
                 <th scope="col">Genero</th>
                 <th scope="col">Telefono</th>
-                <th scope="col">Activo</th>
-                <th scope="col">Editar</th>
+                <th scope="col">Ponche</th>
+                <th scope="col">Historico Pago</th>
             </tr>
         </thead>
         <tbody>
@@ -32,10 +32,10 @@
                     <td>@user.Sexo</td>
                     <td>@user.Telefono</td>
                     <td>
-                        <button class="btn btn-warning"><a asp-controller="Employee" asp-action="UpdateEmployee" asp-route-id="@user.Id">Editar</a></button>
+                        <button class="btn btn-warning"><a asp-controller="Employee" asp-action="InfoPoncheEmployee" asp-route-id="@user.Id">Ver</a></button>
                     </td>
                     <td>
-                        <button class="btn btn-danger"><a asp-controller="Employee" asp-action="Desactivar" asp-route-id="@user.Id">Eliminar</a></button>
+                        <button class="btn btn-danger"><a asp-controller="Pago" asp-action="HistoricoEmployee" asp-route-id="@user.Id">Ver</a></button>
                     </td>
                 </tr>
             }
