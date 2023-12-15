@@ -15,6 +15,8 @@ namespace Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyec
         public int Id { get; set; }
         public int IdPuesto { get; set; }
         public int IdProyecto { get; set; }
+        public int Horas { get; set; }
+        public double PagoHoras { get; set; }
     }
     public class EditEmpleadoProyectoCommandHandler : IRequestHandler<EditEmpleadoProyectoCommand, bool>
     {

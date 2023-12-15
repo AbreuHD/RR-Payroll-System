@@ -3,6 +3,7 @@ using Core.Application.Features.Actividades.Command.UpdateActividades;
 using Core.Application.Features.Actividades.Queries.GetActivityById;
 using Core.Application.Features.Actividades.Queries.GetAllActividades;
 using Core.Application.Features.ActividadesAsignadas.Commands.CreateActAsignada;
+using Core.Application.Features.ActividadesAsignadas.Commands.EliminarAsignada;
 using Core.Application.Features.ActividadesAsignadas.Queries.GetActividadesAsignadasByUserQuery;
 using Core.Application.Features.Empleado.Queries.GetAllEmpleadosWithoutChosen;
 using Core.Application.Features.Proyecto.Queries.GetAllProjects;
@@ -62,6 +63,13 @@ namespace WebApp.Controllers
 
         [HttpPost]
         public async Task<IActionResult> AgregarEmpleados(CreateActAsignadaCommand command)
+        {
+            await Mediator.Send(command);
+            return RedirectToAction("Admin");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarEmpleado(EliminarAsignadaCommand command)
         {
             await Mediator.Send(command);
             return RedirectToAction("Admin");

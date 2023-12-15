@@ -2,10 +2,12 @@
 using Core.Application.DTOs.Account;
 using Core.Application.DTOs.Actividades;
 using Core.Application.DTOs.Banco;
+using Core.Application.DTOs.Deducciones;
 using Core.Application.DTOs.EmpleadoProyecto;
 using Core.Application.DTOs.Empleados;
 using Core.Application.DTOs.Estado;
 using Core.Application.DTOs.Nacionalidad;
+using Core.Application.DTOs.Percepciones;
 using Core.Application.DTOs.Provincia;
 using Core.Application.DTOs.Proyecto;
 using Core.Application.DTOs.Puestos;
@@ -15,6 +17,7 @@ using Core.Application.Features.ActividadesAsignadas.Commands.CreateActAsignada;
 using Core.Application.Features.Asistencia.Command.CreateAsistenciaTable;
 using Core.Application.Features.Deducciones.Commands.CreateDeduccion;
 using Core.Application.Features.Empleado.Comands.CreateEmpleado;
+using Core.Application.Features.Empleado.Comands.UpdateEmpleado;
 using Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProyecto;
 using Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyecto;
 using Core.Application.Features.Estado.Command.CreateEstado;
@@ -147,8 +150,25 @@ namespace Core.Application.Mapping
                 .ForMember(x=> x.EmpleadoProyectos, i => i.Ignore())
                 .ReverseMap();            
             
-            
             CreateMap<ActividadesAsignadas, CreateActAsignadaCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Deducciones, GetAllDeduccionesResponseDTO>()
+                .ReverseMap();            
+            
+            CreateMap<Percepciones, GetAllPercepcionResponseDTO>()
+                .ReverseMap();            
+            
+            CreateMap<Empleado, GetEmpleadoByID>()
+                .ReverseMap();            
+            
+            CreateMap<Empleado, UpdateEmpleadoCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Percepciones, CreatePercepcionesCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Deducciones, CreateDeduccionesCommand>()
                 .ReverseMap();
         }
     }

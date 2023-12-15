@@ -14,6 +14,8 @@ namespace Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProy
         public int IdPuesto { get; set; }
         public int IdProyecto { get; set; }
         public int IdEmpleado { get; set; }
+        public int Horas { get; set; }
+        public double PagoHoras { get; set; }
     }
 
     public class CreateEmpleadoProyectoCommandHandler : IRequestHandler<CreateEmpleadoProyectoCommand, Domain.Entities.EmpleadoProyectos>

@@ -32,10 +32,10 @@
                     <td>@user.Sexo</td>
                     <td>@user.Telefono</td>
                     <td>
-                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Editar</a></button>
+                        <button class="btn btn-warning"><a asp-controller="Employee" asp-action="UpdateEmployee" asp-route-id="@user.Id">Editar</a></button>
                     </td>
                     <td>
-                        <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Desactivar" asp-route-id="@user.Id">Cambiar Estatus</a></button>
+                        <button class="btn btn-danger"><a asp-controller="Employee" asp-action="Desactivar" asp-route-id="@user.Id">Eliminar</a></button>
                     </td>
                 </tr>
             }

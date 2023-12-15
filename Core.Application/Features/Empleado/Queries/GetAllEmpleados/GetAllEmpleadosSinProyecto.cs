@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Empleados;
 using Core.Application.Interface.Repository;
+using Core.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Core.Application.Features.Empleado.Queries.GetAllEmpleados
 {
     public class GetAllEmpleadosSinProyecto : IRequest<List<GetAllEmpleadosResponseDTO>>
     {
-        public List<int> Id;
+        public List<EmpleadoProyectos> EmpleadoProyectos { get; set; }
     }
 
     public class GetAllEmpleadosSinProyectoHandler : IRequestHandler<GetAllEmpleadosSinProyecto, List<GetAllEmpleadosResponseDTO>>
@@ -28,11 +29,27 @@ namespace Core.Application.Features.Empleado.Queries.GetAllEmpleados
         public async Task<List<GetAllEmpleadosResponseDTO>> Handle(GetAllEmpleadosSinProyecto request, CancellationToken cancellationToken)
         {
             var empleados = await _empleadoRepository.GetAllAsync();
-            if(request.Id != null)
+            List<Domain.Entities.Empleado> empleadosToRemove = new();
+
+            if(request.EmpleadoProyectos != null)
             {
-                empleados = empleados.Where(item => !request.Id.Contains(item.Id)).ToList();
+                foreach (var i in request.EmpleadoProyectos)
+                {
+                    foreach (var j in empleados)
+                    {
+                        if (i.IdEmpleado == j.Id)
+                        {
+                            empleadosToRemove.Add(j);
+                        }
+                    }
+                }
+                foreach (var empleadoToRemove in empleadosToRemove)
+                {
+                    empleados.Remove(empleadoToRemove);
+                }
             }
             var response = _mapper.Map<List<GetAllEmpleadosResponseDTO>>(empleados);
+
             return response;
         }
     }

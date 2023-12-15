@@ -182,12 +182,25 @@
                                     }
                                 </select>
                             </div>
+
+
+                            <div class="mb-3">
+                                <label for="Horas" class="form-label">Horas de trabajo normales</label>
+                                <input type="number" class="form-control" id="Horas" name="Horas" aria-describedby="Horas">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="PagoHoras" class="form-label">Pago por horas</label>
+                                <input type="number" step="any" class="form-control" id="PagoHoras" name="PagoHoras" aria-describedby="PagoHoras">
+                            </div>
+
                             <input value="@Model.Id" name="IdProyecto" hidden>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Agregar</button>
                         </div>
+
                     </form>
                 </div>
             </div>

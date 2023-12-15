@@ -45,6 +45,12 @@ namespace Core.Application.Features.EmpleadoProyecto.Queries.GetAllProjects
                 {
                     item.Proyecto = await _proyectoRepository.GetByIdAsync(item.IdProyecto);
                 }
+                if (response.Count == 0)
+                {
+                    response.Add(new EmpleadoProyectoReponseDTO() {
+                        Empleado = searchEmpleado,
+                        });
+                }
                 return response;
             }
             catch (Exception ex)

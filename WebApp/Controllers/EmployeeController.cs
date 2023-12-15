@@ -1,7 +1,13 @@
 ﻿using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Empleados;
+using Core.Application.Features.Empleado.Comands.UpdateEmpleado;
 using Core.Application.Features.Empleado.Queries.GetAllEmpleados;
+using Core.Application.Features.Empleado.Queries.GetEmpleadoById;
 using Core.Application.Features.EmpleadoProyecto.Queries.GetAllProjects;
+using Core.Application.Features.Estado.Queries.GetAllEstado;
 using Core.Application.Features.Horas.Command.AddHoras;
+using Core.Application.Features.Nacionalidad.Queries.GetAllNacionalidad;
+using Core.Application.Features.Provincia.Queries.GetAllProvincia;
 using Core.Application.ViewModels.User;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -46,6 +52,22 @@ namespace WebApp.Controllers
         {
             var response = await Mediator.Send(new GetAllProjectsQuery() { IdUser = Id });
             return View(response);
+        }
+
+        public async Task<IActionResult> UpdateEmployee(int Id)
+        {
+            ViewBag.Estado = await Mediator.Send(new GetAllEstadoQuery());
+            ViewBag.Provincia = await Mediator.Send(new GetAllProvinciaQuery());
+            ViewBag.Nacionalidad = await Mediator.Send(new GetAllNacionalidadQuery());
+            var response =  await Mediator.Send(new GetEmpleadoByIdQuery() { Id = Id } );
+            return View(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateEmployees(UpdateEmpleadoCommand comm)
+        {
+            await Mediator.Send(comm);
+            return RedirectToAction("Admin");
         }
     }
 }

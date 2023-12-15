@@ -1,10 +1,14 @@
 ﻿using Azure.Core;
 using Core.Application.Features.Banco.Commands.CreateBanco;
 using Core.Application.Features.Banco.Queries.GetAllTipoBanco;
+using Core.Application.Features.Deducciones.Commands.CreateDeduccion;
+using Core.Application.Features.Deducciones.Queries.GetAllDeducciones;
 using Core.Application.Features.Estado.Command.CreateEstado;
 using Core.Application.Features.Estado.Queries.GetAllEstado;
 using Core.Application.Features.Nacionalidad.Commands.CreateNacionalidad;
 using Core.Application.Features.Nacionalidad.Queries.GetAllNacionalidad;
+using Core.Application.Features.Percepciones.Commands.CreatePercepciones;
+using Core.Application.Features.Percepciones.Queries.GetAllPercepcion;
 using Core.Application.Features.Provincia.Command.CreateProvincia;
 using Core.Application.Features.Provincia.Queries.GetAllProvincia;
 using Core.Application.Features.Puesto.Command.CreatePuesto;
@@ -92,6 +96,30 @@ namespace WebApp.Controllers
         {
             await Mediator.Send(request);
             return RedirectToAction("TipoBanco");
+        }
+
+        public async Task<IActionResult> Deducciones()
+        {
+            return View(await Mediator.Send(new GetAllDeduccionesQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateDeducciones(CreateDeduccionesCommand comm)
+        {
+            await Mediator.Send(comm);
+            return RedirectToAction("Deducciones");
+        }
+
+        public async Task<IActionResult> Percepciones()
+        {
+            return View(await Mediator.Send(new GetAllPercepcionQuery()));;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreatePercepciones(CreatePercepcionesCommand comm)
+        {
+            await Mediator.Send(comm);
+            return RedirectToAction("Percepciones");
         }
     }
 }

@@ -1,0 +1,80 @@
+﻿@using Core.Application.DTOs.Empleados
+@model GetEmpleadoByID
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+<div>
+    <form method="post" asp-controller="Employee" asp-action="UpdateEmployees">
+        <div class="mb-3">
+            <label for="UserID" class="form-label">UserID</label>
+            <input type="text" class="form-control" id="UserID" asp-for="UserID" disabled>
+        </div>
+        <input name="IdOld" asp-for="UserID" />
+        <div class="mb-3">
+            <label for="Nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="Nombre" asp-for="Nombre">
+        </div>
+
+        <div class="mb-3">
+            <label for="Apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="Apellido" asp-for="Apellido">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" asp-for="Email">
+        </div>
+
+        <div class="mb-3">
+            <label for="FechaNacimiento" class="form-label">FechaNacimiento</label>
+            <input type="date" class="form-control" id="FechaNacimiento" asp-for="FechaNacimiento">
+        </div>
+
+        <div class="mb-3">
+            <label for="Direccion" class="form-label">Direccion</label>
+            <input type="text" class="form-control" id="Direccion" asp-for="Direccion">
+        </div>
+
+        <div class="mb-3">
+            <label for="Telefono" class="form-label">Telefono</label>
+            <input type="tel" class="form-control" id="Telefono" asp-for="Telefono">
+        </div>
+
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="Sexo" asp-for="Sexo">
+            <label class="form-check-label" for="exampleCheck1">¿Es hombre?</label>
+        </div>
+
+        <div class="mb-3">
+            <label for="IdNacionalidad" class="form-label">Nacionalidad</label>
+            <select class="form-select" name="IdNacionalidad" aria-label="Default select example">
+                <option selected>Selecciona tu nacionalidad</option>
+                @foreach (var i in ViewBag.Nacionalidad)
+                {
+                    <option value="@i.Id">@i.Nombre</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="IdEstado" class="form-label">Estado</label>
+            <select class="form-select" name="IdEstado" aria-label="Default select example">
+                <option selected>Selecciona tu nacionalidad</option>
+                @foreach (var i in ViewBag.Estado)
+                {
+                    <option value="@i.Id">@i.Nombre</option>
+                }
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="IdProvincia" class="form-label">Provincia</label>
+            <select class="form-select" name="IdProvincia" aria-label="Default select example">
+                <option selected>Selecciona tu nacionalidad</option>
+                @foreach (var i in ViewBag.Provincia)
+                {
+                    <option value="@i.Id">@i.Nombre</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

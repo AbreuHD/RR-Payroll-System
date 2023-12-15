@@ -14,6 +14,8 @@ namespace Core.Domain.Entities
         //public int IdCOntrato { get; set; }
         public int IdProyecto { get; set; }
         public int IdEmpleado { get; set; }
+        public int Horas { get; set; }
+        public double PagoHoras { get; set; }
 
 
         public Puesto Puesto { get; set; }

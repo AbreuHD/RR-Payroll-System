@@ -29,8 +29,10 @@ namespace WebApp.Controllers
         public async Task<IActionResult> Info(int Id)
         {
             ViewBag.Puestos = await Mediator.Send(new GetAllPuestosQuery());
-            ViewBag.Empleados = await Mediator.Send(new GetAllEmpleadosSinProyecto());
-            var response = (await Mediator.Send(new GetProjectByIdQuery {Id = Id} ));
+            var response = (await Mediator.Send(new GetProjectByIdQuery { Id = Id }));
+            ViewBag.Empleados = await Mediator.Send(new GetAllEmpleadosSinProyecto() {
+                EmpleadoProyectos = response.EmpleadoProyectos
+            });
             return View(response);
         }
         [HttpPost]
