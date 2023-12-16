@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Account;
 using Core.Application.DTOs.Actividades;
+using Core.Application.DTOs.Asistencia;
 using Core.Application.DTOs.Banco;
 using Core.Application.DTOs.Deducciones;
 using Core.Application.DTOs.EmpleadoProyecto;
@@ -23,7 +24,9 @@ using Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyecto;
 using Core.Application.Features.Estado.Command.CreateEstado;
 using Core.Application.Features.Horas.Command.AddHoras;
 using Core.Application.Features.Nacionalidad.Commands.CreateNacionalidad;
+using Core.Application.Features.Pagos.Command.CreatePago;
 using Core.Application.Features.Percepciones.Commands.CreatePercepciones;
+using Core.Application.Features.Permiso.Command.CrearPermiso;
 using Core.Application.Features.Provincia.Command.CreateProvincia;
 using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.Features.Proyecto.Commands.EditProject;
@@ -169,7 +172,19 @@ namespace Core.Application.Mapping
                 .ReverseMap();            
             
             CreateMap<Deducciones, CreateDeduccionesCommand>()
-                .ReverseMap();
+                .ReverseMap();                   
+            
+            CreateMap<Permiso, CrearPermisoCommand>()
+                .ReverseMap();                
+            
+            CreateMap<Pago, CreatePagoCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Asistencia, GetAllAsistenciaByUserIDResponse>()
+                .ForMember(x=> x.Asistencia, i => i.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.EmpleadoProyecto, i => i.Ignore());            
+            
         }
     }
 }

@@ -14,6 +14,6 @@ namespace Core.Domain.Entities
         public decimal Monto { get; set; }
         public bool IsDefault { get; set; }
 
-        public ICollection<Pago> Pagos { get; set; }
+        public ICollection<Pago_Percepciones> Pago_Percepciones { get; set; }
     }
 }

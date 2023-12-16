@@ -16,6 +16,6 @@ namespace Core.Domain.Entities
 
         //public decimal Porcentaje { get; set; }
 
-        public ICollection<Pago> Pagos { get; set; }
+        public ICollection<Pago_Deducciones> Pago_Deducciones { get; set; }
     }
 }

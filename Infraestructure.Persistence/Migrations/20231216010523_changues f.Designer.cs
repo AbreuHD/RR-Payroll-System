@@ -4,6 +4,7 @@ using Infraestructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    partial class PersistenceContextModelSnapshot : ModelSnapshot
+    [Migration("20231216010523_changues f")]
+    partial class changuesf
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -593,6 +596,9 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
@@ -616,7 +622,7 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEmpleado");
+                    b.HasIndex("EmpleadoId");
 
                     b.HasIndex("IdTipoPago");
 
@@ -1144,9 +1150,9 @@ namespace Infraestructure.Persistence.Migrations
             modelBuilder.Entity("Core.Domain.Entities.Pago", b =>
                 {
                     b.HasOne("Core.Domain.Entities.Empleado", "Empleado")
-                        .WithMany("Pagos")
-                        .HasForeignKey("IdEmpleado")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .WithMany()
+                        .HasForeignKey("EmpleadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Domain.Entities.TipoPago", "TipoPago")
@@ -1266,8 +1272,6 @@ namespace Infraestructure.Persistence.Migrations
                     b.Navigation("EmpleadoProyectos");
 
                     b.Navigation("Licencias");
-
-                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.EmpleadoProyectos", b =>

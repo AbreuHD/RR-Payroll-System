@@ -4,6 +4,7 @@ using Infraestructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Persistence.Migrations
 {
     [DbContext(typeof(PersistenceContext))]
-    partial class PersistenceContextModelSnapshot : ModelSnapshot
+    [Migration("20231215211104_changues a")]
+    partial class changuesa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -593,13 +596,23 @@ namespace Infraestructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Emisor")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("IdDeducciones")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdEmpleado")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdProyecto")
+                    b.Property<int>("IdPercepciones")
                         .HasColumnType("int");
 
                     b.Property<int>("IdTipoPago")
@@ -616,83 +629,15 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdEmpleado");
+                    b.HasIndex("EmpleadoId");
+
+                    b.HasIndex("IdDeducciones");
+
+                    b.HasIndex("IdPercepciones");
 
                     b.HasIndex("IdTipoPago");
 
                     b.ToTable("Pagos", (string)null);
-                });
-
-            modelBuilder.Entity("Core.Domain.Entities.Pago_Deducciones", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdDeducciones")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdPago")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdDeducciones");
-
-                    b.HasIndex("IdPago");
-
-                    b.ToTable("Pago_Deducciones");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entities.Pago_Percepciones", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IdPago")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdPercepciones")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LastModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdPago");
-
-                    b.HasIndex("IdPercepciones");
-
-                    b.ToTable("Pago_Percepciones");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Percepciones", b =>
@@ -743,6 +688,9 @@ namespace Infraestructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AsistenciaId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -774,7 +722,7 @@ namespace Infraestructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdAsistencia");
+                    b.HasIndex("AsistenciaId");
 
                     b.ToTable("Permisos", (string)null);
                 });
@@ -1144,9 +1092,21 @@ namespace Infraestructure.Persistence.Migrations
             modelBuilder.Entity("Core.Domain.Entities.Pago", b =>
                 {
                     b.HasOne("Core.Domain.Entities.Empleado", "Empleado")
+                        .WithMany()
+                        .HasForeignKey("EmpleadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Entities.Deducciones", "Deducciones")
                         .WithMany("Pagos")
-                        .HasForeignKey("IdEmpleado")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("IdDeducciones")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Domain.Entities.Percepciones", "Percepciones")
+                        .WithMany("Pagos")
+                        .HasForeignKey("IdPercepciones")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Domain.Entities.TipoPago", "TipoPago")
@@ -1155,55 +1115,21 @@ namespace Infraestructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Empleado");
-
-                    b.Navigation("TipoPago");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entities.Pago_Deducciones", b =>
-                {
-                    b.HasOne("Core.Domain.Entities.Deducciones", "Deducciones")
-                        .WithMany("Pago_Deducciones")
-                        .HasForeignKey("IdDeducciones")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Core.Domain.Entities.Pago", "Pago")
-                        .WithMany("Pago_Deducciones")
-                        .HasForeignKey("IdPago")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Deducciones");
 
-                    b.Navigation("Pago");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entities.Pago_Percepciones", b =>
-                {
-                    b.HasOne("Core.Domain.Entities.Pago", "Pago")
-                        .WithMany("Pago_Percepciones")
-                        .HasForeignKey("IdPago")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Core.Domain.Entities.Percepciones", "Percepciones")
-                        .WithMany("Pago_Percepciones")
-                        .HasForeignKey("IdPercepciones")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Pago");
+                    b.Navigation("Empleado");
 
                     b.Navigation("Percepciones");
+
+                    b.Navigation("TipoPago");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Permiso", b =>
                 {
                     b.HasOne("Core.Domain.Entities.Asistencia", "Asistencia")
                         .WithMany("Permiso")
-                        .HasForeignKey("IdAsistencia")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("AsistenciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Asistencia");
@@ -1258,7 +1184,7 @@ namespace Infraestructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.Deducciones", b =>
                 {
-                    b.Navigation("Pago_Deducciones");
+                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Empleado", b =>
@@ -1266,8 +1192,6 @@ namespace Infraestructure.Persistence.Migrations
                     b.Navigation("EmpleadoProyectos");
 
                     b.Navigation("Licencias");
-
-                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.EmpleadoProyectos", b =>
@@ -1290,16 +1214,9 @@ namespace Infraestructure.Persistence.Migrations
                     b.Navigation("Empleados");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Pago", b =>
-                {
-                    b.Navigation("Pago_Deducciones");
-
-                    b.Navigation("Pago_Percepciones");
-                });
-
             modelBuilder.Entity("Core.Domain.Entities.Percepciones", b =>
                 {
-                    b.Navigation("Pago_Percepciones");
+                    b.Navigation("Pagos");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Provincia", b =>

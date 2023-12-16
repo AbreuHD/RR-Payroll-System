@@ -15,5 +15,6 @@ namespace Core.Domain.Entities
 
         public EmpleadoProyectos EmpleadoProyecto { get; set; }
         public ICollection<Horas> Horas { get; set; }
+        public ICollection<Permiso> Permiso { get; set; }
     }
 }

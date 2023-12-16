@@ -112,9 +112,6 @@
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
                                         <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
                                     </div>
-                                </div>
-                                <div>
-
 
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
@@ -126,30 +123,7 @@
                                         <input type="tel" class="form-control" id="phone" name="Phone">
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
-                                        <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
-                                            <option selected>Selecciona tu nacionalidad</option>
-                                            @foreach (var i in ViewBag.TipoCuenta)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="IdTipoBanco" class="form-label">Banco</label>
-                                        <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
-                                            <option selected>Selecciona tu nacionalidad</option>
-                                            @foreach (var i in ViewBag.TipoBanco)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Cuenta" class="form-label">Cuenta</label>
-                                        <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
-                                    </div>
+                                    
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -227,6 +201,32 @@
                                             }
                                         </select>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
+                                        <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoCuenta)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="IdTipoBanco" class="form-label">Banco</label>
+                                        <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoBanco)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Cuenta" class="form-label">Cuenta</label>
+                                        <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
+                                    </div>
+
                                 </div>
                             </div>
                             
@@ -237,11 +237,11 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function updateInputValue(button) {
-            var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
-            document.getElementById('IdentityId').value = idEmpleadoProyectos;
-        }
-    </script>
 </div>
+<script>
+    function updateInputValue(button) {
+        var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
+        console.log('Id Empleado Proyectos:', idEmpleadoProyectos);
+        document.getElementById('IdentityId').value = idEmpleadoProyectos;
+    }
+</script>

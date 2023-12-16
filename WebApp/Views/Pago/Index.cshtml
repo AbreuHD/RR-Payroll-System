@@ -1,52 +1,30 @@
-﻿@using Core.Application.ViewModels.User
-@model List<UserGetAllViewModel>
+﻿@using Core.Application.DTOs.Proyecto
+@model List<ProyectoDTO>
 @{
-    ViewData["Title"] = "Pago Panel";
+    ViewData["Title"] = "Pago";
 }
 
 
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-            <tr>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Usuario</th>
-                <th scope="col">UltimoPago</th>
-                <th scope="col">Historial de pagos</th>
-                <th scope="col">Aplicar Deduccion</th>
-                <th scope="col">Aplicar Percepcion</th>
-                <th scope="col">Realizar Pago</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
+<div class="container">
+
+
+    <div class="text-center">
+        <div class="row row-cols-2">
+            @foreach (var data in Model)
             {
-                <tr>
-                    <th scope="row">@user.Id</th>
-                    <td>@user.Name</td>
-                    <td>@user.LastName</td>
-                    <td>@user.Email</td>
-                    <td>@user.UserName</td>
-                    <td>2021/05/50</td>
-                    <td>
-                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Ver</a></button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Aplicar</a></button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Aplicar</a></button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Realizar Pago</a></button>
-                    </td>
-                </tr>
+                <div class="p-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">@data.Nombre</h5>
+                            <p class="card-text">@data.Descripcion</p>
+                            <a href="Pago/Detalle/@data.Id" class="btn btn-primary">Realizar Pago</a>
+                        </div>
+                        <div class="card-footer text-body-secondary">
+                            @data.Locacion
+                        </div>
+                    </div>
+                </div>
             }
-        </tbody>
-    </table>
+        </div>
+    </div>
 </div>

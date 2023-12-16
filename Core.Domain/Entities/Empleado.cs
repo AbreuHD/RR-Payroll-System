@@ -32,7 +32,7 @@ namespace Core.Domain.Entities
         public Estado Estado { get; set; }
 
         public ICollection<Licencia> Licencias { get; set; }
-        //public ICollection<Pago> Pagos { get; set; }
+        public ICollection<Pago> Pagos { get; set; }
         public ICollection<EmpleadoProyectos> EmpleadoProyectos { get; set; }
     }
 }

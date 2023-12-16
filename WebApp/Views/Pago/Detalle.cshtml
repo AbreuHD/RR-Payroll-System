@@ -1,0 +1,110 @@
+﻿@using Core.Application.DTOs.Empleados
+@model List<GetAllEmpleadosResponseDTO>
+@{
+    ViewData["Title"] = "Pago Panel";
+}
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+            <tr>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">UltimoPago</th>
+                <th scope="col">Historial de pagos</th>
+@*                 <th scope="col">Aplicar Deduccion</th>
+                <th scope="col">Aplicar Percepcion</th> *@
+                <th scope="col">Realizar Pago</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <th scope="row">@user.Id</th>
+                    <td>@user.Nombre</td>
+                    <td>@user.Apellido</td>
+                    <td>@user.Email</td>
+                    <td>@user.UserID</td>
+                    <td>2021/05/50</td>
+                    <td>
+                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Ver</a></button>
+                    </td>
+@*                     <td>
+                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Aplicar</a></button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Aplicar</a></button>
+                    </td> *@
+                    <td>
+                        <button class="btn btn-warning btn-realizar-pago"
+                                data-bs-toggle="modal"
+                                data-bs-target="#exampleModal"
+                                data-idUser="@user.Id"
+                                onclick="setUserId(this)">
+                            Realizar Pago
+                        </button>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crear Pago</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-controller="Pago" asp-action="CrearPago">
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Deducciones</label>
+                            <select name="IdPago_Deducciones" class="form-select" aria-label="Default select example" multiple>
+                                @foreach (var item in ViewBag.Deducciones)
+                                {
+                                    <option value="@item.Id">@item.Nombre</option>
+                                }
+                            </select>
+                        </div>
+
+                        <input name="IdProyecto" id="IdProyecto" value="@ViewBag.IdProyecto" hidden />
+                        <input name="IdEmpleado" id="UserIdInput" hidden />
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Percepciones</label>
+                            <select name="IdPago_Percepciones" class="form-select" aria-label="Default select example" multiple>
+                                @foreach (var item in ViewBag.Percepciones)
+                                {
+                                    <option value="@item.Id">@item.Nombre</option>
+                                }
+                            </select>
+                        </div>
+
+                        @* <input name="infoId" id="infoId" value="@Model.Id" hidden />
+                        <input name="IdAsistencia" id="IdAsistencia" value="@Model.Id" hidden /> *@
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    function setUserId(button) {
+        var userId = button.getAttribute('data-idUser');
+        document.getElementById('UserIdInput').value = userId;
+    }
+</script>

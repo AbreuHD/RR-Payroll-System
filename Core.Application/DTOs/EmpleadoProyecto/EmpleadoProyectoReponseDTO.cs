@@ -18,6 +18,6 @@ namespace Core.Application.DTOs.EmpleadoProyecto
         public Puesto Puesto { get; set; }
         public Domain.Entities.Proyecto Proyecto { get; set; }
         public Empleado Empleado { get; set; }
-        public Asistencia Asistencia { get; set; }
+        public Domain.Entities.Asistencia Asistencia { get; set; }
     }
 }

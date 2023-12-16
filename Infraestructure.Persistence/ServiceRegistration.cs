@@ -34,7 +34,10 @@ namespace Infraestructure.Persistence
             services.AddTransient<IPercepcionesRepository, PercepcionesRepository>();
             services.AddTransient<IDeduccionesRepository, DeduccionesRepository>();
             services.AddTransient<IActividadesAsignadasRepository, ActividadesAsignadasRepository>();
-            services.AddTransient<IActividadesRepository, ActividadesRepository>();
+            services.AddTransient<IActividadesRepository, ActividadesRepository>();            
+            services.AddTransient<IPermisoRepository, PermisoRepository>();
+            services.AddTransient<IPago_PercepcionesRepository, Pago_PercepcionesRepository>();
+            services.AddTransient<IPago_DeduccionesRepository, Pago_DeduccionesRepository>();
 
         }
     }

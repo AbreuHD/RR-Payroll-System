@@ -35,6 +35,8 @@ namespace Infraestructure.Persistence.Context
         public DbSet<TipoPago> TipoPago { get; set; }
         public DbSet<TipoCuenta> TipoCuenta { get; set; }
         public DbSet<TipoBanco> TipoBanco { get; set; }
+        public DbSet<Pago_Deducciones> Pago_Deducciones { get; set; }
+        public DbSet<Pago_Percepciones> Pago_Percepciones { get; set; }
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -128,7 +130,7 @@ namespace Infraestructure.Persistence.Context
                 .HasForeignKey<Asistencia>(a => a.IdEmpleadoProyecto);
 
             modelBuilder.Entity<Deducciones>()
-                .HasMany(d => d.Pagos)
+                .HasMany(d => d.Pago_Deducciones)
                 .WithOne(p => p.Deducciones)
                 .HasForeignKey(p => p.IdDeducciones);
 
@@ -153,16 +155,30 @@ namespace Infraestructure.Persistence.Context
                 .WithMany(es => es.Empleados)
                 .HasForeignKey(e => e.IdEstado);
 
-            //modelBuilder.Entity<Pago>()
-            //    .HasOne(p => p.Empleado)
-            //    .WithMany(e => e.Pagos)
-            //    .HasForeignKey(p => p.IdEmpleado);
-
             modelBuilder.Entity<Pago>()
-                .HasOne(p => p.Percepciones)
-                .WithMany(pe => pe.Pagos)
-                .HasForeignKey(p => p.IdPercepciones);
+                .HasOne(p => p.Empleado)
+                .WithMany(e => e.Pagos)
+                .HasForeignKey(p => p.IdEmpleado).OnDelete(DeleteBehavior.NoAction); ;
 
+            modelBuilder.Entity<Pago_Percepciones>()
+                .HasOne(p => p.Pago)
+                .WithMany(pe => pe.Pago_Percepciones)
+                .HasForeignKey(p => p.IdPago).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Pago_Percepciones>()
+                .HasOne(p => p.Percepciones)
+                .WithMany(pe => pe.Pago_Percepciones)
+                .HasForeignKey(p => p.IdPercepciones).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Pago_Deducciones>()
+                .HasOne(p => p.Pago)
+                .WithMany(pe => pe.Pago_Deducciones)
+                .HasForeignKey(p => p.IdPago).OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Pago_Deducciones>()
+                .HasOne(p => p.Deducciones)
+                .WithMany(pe => pe.Pago_Deducciones)
+                .HasForeignKey(p => p.IdDeducciones).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Horas>()
                 .HasOne(h => h.Asistencia)
@@ -228,6 +244,14 @@ namespace Infraestructure.Persistence.Context
                 .HasOne(aa => aa.EmpleadoProyecto)
                 .WithMany(ep => ep.ActividadesAsignadas)
                 .HasForeignKey(aa => aa.IdEmpleadoProyecto).OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<Permiso>()
+                .HasOne(p => p.Asistencia)
+                .WithMany(a => a.Permiso)
+                .HasForeignKey(p => p.IdAsistencia)
+                .OnDelete(DeleteBehavior.NoAction);
+
             #endregion
 
         }
