@@ -87,10 +87,6 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UserEditar(UserSaveViewModel vm)
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToRoute(new { controller = "Admin", action = "Index" });
-            }
             var data = await _userService.UpdateClient(vm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }

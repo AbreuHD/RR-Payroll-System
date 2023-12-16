@@ -4,7 +4,14 @@
 @inject IHttpContextAccessor httpContextAccesor
 @{
     var user = httpContextAccesor.HttpContext.Session.Get<AuthenticationResponse>("user");
-    var isAdmin = user != null ? user.Roles.Any(rol => rol == "Admin") : false;
+    var isOwner = user != null ? user.Roles.Any(rol => rol =="Owner") : false;
+    var isEmpleado = user != null ? user.Roles.Any(rol => rol == "Empleado") : false;
+    var isRRHH = user != null ? user.Roles.Any(rol => rol == "RRHH") : false;
+    var isGerente = user != null ? user.Roles.Any(rol => rol == "Gerente") : false;
+    var isJefeDeObras = user != null ? user.Roles.Any(rol => rol == "JefeDeObras") : false;
+    var isContador = user != null ? user.Roles.Any(rol => rol == "Contador") : false;
+    var isAdmin = user != null ? user.Roles.Any(rol => rol == "AdministradorDeUsuarios") : false;
+
 }
 
 <!DOCTYPE html>
@@ -31,25 +38,130 @@
 <body>
     <div class="d-flex justify-content-between">
         <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; min-height:100vh; height:auto; position: fixed;">
-            @if (isAdmin)
+            @if (isOwner)
             {
                 <a href="/admin" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
                     <span class="fs-4">RR Payroll System</span>
                 </a>
             }
-            else
+            else if(isEmpleado)
             {
                 <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
                     <span class="fs-4">RR Payroll System</span>
                 </a>
             }
+            else if (isGerente)
+            {
+                <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">RR Payroll System</span>
+                </a>
+
+                <a>
+                    <a asp-controller="Proyectos" asp-action="Index" class="nav-link link-dark">
+                        Proyectos
+                    </a>
+                </a>
+
+                <a class="nav-item">
+                    <a asp-controller="Admin" asp-action="Index" class="nav-link active" aria-current="page">
+                        Usuarios
+                    </a>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
+                        Home
+                    </a>
+                </a>
+            }else if (isContador)
+            {
+                <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">RR Payroll System</span>
+                </a>
+                <a>
+                    <a asp-controller="Pago" asp-action="Index" class="nav-link link-dark">
+                        Pagos
+                    </a>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
+                        Home
+                    </a>
+                </a>
+            }
+            else if (isAdmin)
+            {
+                <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">RR Payroll System</span>
+                </a>
+                <a class="nav-item">
+                    <a asp-controller="Admin" asp-action="Index" class="nav-link active" aria-current="page">
+                        Usuarios
+                    </a>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Admin" class="nav-link link-dark">
+                        Empleados
+                    </a>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
+                        Home
+                    </a>
+                </a>
+            }else if (isRRHH)
+            {
+                <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">RR Payroll System</span>
+                </a>
+                <a>
+                    <a asp-controller="Nomina" asp-action="Index" class="nav-link link-dark">
+                        Nomina
+                    </a>
+                </a>
+                <a class="nav-item">
+                    <a asp-controller="Admin" asp-action="Index" class="nav-link active" aria-current="page">
+                        Usuarios
+                    </a>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Admin" class="nav-link link-dark">
+                        Empleados
+                    </a>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
+                        Home
+                    </a>
+                </a>
+            }
+            else if (isJefeDeObras)
+            {
+                <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                    <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-4">RR Payroll System</span>
+                </a>
+                <a>
+                    <a asp-controller="Proyectos" asp-action="Index" class="nav-link link-dark">
+                        Proyectos
+                    </a>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
+                        Home
+                    </a>
+                </a>
+            }
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 @if (user != null)
                 {
-                    if (isAdmin)
+                    if (isOwner)
                     {
                         <li class="nav-item">
                             <a asp-controller="Admin" asp-action="Index" class="nav-link active" aria-current="page">
@@ -105,7 +217,7 @@
                         </li>
 
                     }
-                    else
+                    else if (isEmpleado)
                     {
                         <li>
                             <a asp-controller="Employee" asp-action="Index" class="nav-link active">
@@ -121,7 +233,7 @@
                     <span class="text nav-text">@user.UserName</span>
                 </a>
                 <ul class="dropdown-menu text-small ms-5 shadow">
-                    @if (isAdmin)
+                    @if (isOwner)
                     {
                         <li><a class="dropdown-item" href="#">New project...</a></li>
                         <li><a class="dropdown-item" href="#">Settings</a></li>

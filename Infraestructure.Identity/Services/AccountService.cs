@@ -51,7 +51,7 @@ namespace Infraestructure.Identity.Services
             if (!user.EmailConfirmed)
             {
                 response.HasError = true;
-                response.Error = $"Account no confirmed for {request.UserName}";
+                response.Error = $"Cuenta desactivada para {request.UserName}";
 
                 return response;
             }
@@ -104,7 +104,7 @@ namespace Infraestructure.Identity.Services
                     response.Error = $"An error ocurred trying to register the user";
                     return response;
                 }
-                await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+                //await _userManager.AddToRoleAsync(user, Roles.User.ToString());
                 response.Id = user.Id;
                 return response;
             
@@ -125,16 +125,24 @@ namespace Infraestructure.Identity.Services
             user.PhoneNumber = request.Phone;
 
             var result = await _userManager.UpdateAsync(user);
-            if (request.isAdmin)
+            Roles selectedRole = (Roles)request.TipoUsuario - 1;
+
+            foreach (var item in await _userManager.GetRolesAsync(user))
             {
-                await _userManager.RemoveFromRoleAsync(user, Roles.User.ToString());
-                await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+                await _userManager.RemoveFromRoleAsync(user, item);
             }
-            else
-            {
-                await _userManager.RemoveFromRoleAsync(user, Roles.Admin.ToString());
-                await _userManager.AddToRoleAsync(user, Roles.User.ToString());
-            }
+
+            await _userManager.AddToRoleAsync(user, selectedRole.ToString());
+            //if (request.isAdmin)
+            //{
+            //    await _userManager.RemoveFromRoleAsync(user, Roles.User.ToString());
+            //    await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+            //}
+            //else
+            //{
+            //    await _userManager.RemoveFromRoleAsync(user, Roles.Admin.ToString());
+            //    await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+            //}
 
             if (!result.Succeeded)
             {
@@ -204,14 +212,16 @@ namespace Infraestructure.Identity.Services
                 response.Error = $"An error ocurred trying to register the user";
                 return response;
             }
-            if (request.isAdmin)
-            {
-                await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
-            }
-            else
-            {
-                await _userManager.AddToRoleAsync(user, Roles.User.ToString());
-            }
+            Roles selectedRole = (Roles)request.TipoUsuario - 1;
+            await _userManager.AddToRoleAsync(user, selectedRole.ToString());
+            //if (request.isAdmin)
+            //{
+            //    await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
+            //}
+            //else
+            //{
+            //    await _userManager.AddToRoleAsync(user, Roles.User.ToString());
+            //}
             response.Id = user.Id;
             return response;
         }

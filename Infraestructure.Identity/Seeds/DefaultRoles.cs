@@ -9,10 +9,12 @@ namespace Infrastructure.Identity.Seeds
         public static async Task Seed(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             await roleManager.CreateAsync(new IdentityRole(Roles.Owner.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.Helper.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.Admin.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.Helper.ToString()));
-            await roleManager.CreateAsync(new IdentityRole(Roles.User.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Empleado.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.AdministradorDeUsuarios.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Contador.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.Gerente.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.JefeDeObras.ToString()));
+            await roleManager.CreateAsync(new IdentityRole(Roles.RRHH.ToString()));
         }
     }
 }

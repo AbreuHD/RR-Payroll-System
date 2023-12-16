@@ -33,7 +33,6 @@
                                     <th scope="col">Correo</th>
                                     <th scope="col">Usuario</th>
                                     <th scope="col">Empleado</th>
-                                    <th scope="col">Admin</th>
                                     <th scope="col">Activo</th>
                                     <th scope="col">Editar</th>
                                     <th scope="col">Desactivar</th>
@@ -62,7 +61,6 @@
                                                 </div>
                                             }
                                         </td>
-                                        <td>@(user.IsAdmin ? "Si" : "No")</td>
                                         <td>@(user.IsActive  ? "Si" : "No")</td>
                                         <td>
                                             <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Editar</a></button>
@@ -143,10 +141,10 @@
                                         <input type="password" class="form-control" id="psw" name="Password">
                                     </div>
 
-                                    <div class="mb-3 form-check">
+@*                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
                                         <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
-                                    </div>
+                                    </div> *@
 
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
@@ -157,6 +155,22 @@
                                         <label for="phone" class="form-label">Telefono</label>
                                         <input type="tel" class="form-control" id="phone" name="Phone">
                                     </div>
+
+                                        <div class="mb-3">
+                                            <label for="TipoUsuario" class="form-label">Tipo De Usuario</label>
+                                            <select class="form-select" name="TipoUsuario" aria-label="Default select example">
+                                                <option selected>Selecciona un TipoUsuario</option>
+                                                <option value="1">Owner</option>
+                                                <option value="2">Empleado</option>
+                                                <option value="3">RRHH</option>
+                                                <option value="4">Gerente</option>
+                                                <option value="5">JefeDeObras</option>
+                                                <option value="6">Contador</option>
+                                                <option value="7">AdministradorDeUsuarios</option>
+                                            </select>
+                                        </div>
+
+
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>

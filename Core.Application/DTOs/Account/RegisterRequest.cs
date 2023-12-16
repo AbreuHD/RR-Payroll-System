@@ -17,7 +17,7 @@ namespace Core.Application.DTOs.Account
         public string ConfirmPassword { get; set; }
         public string Phone { get; set; }
         public string SavingsAccount { get; set; }
-
+        public int TipoUsuario { get; set; }
         public bool isActive { get; set; } = false;
         public bool isAdmin { get; set; } = false;
     }

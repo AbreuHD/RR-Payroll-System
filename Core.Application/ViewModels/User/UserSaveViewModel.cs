@@ -37,6 +37,7 @@ namespace Core.Application.ViewModels.User
         public string ConfirmPassword { get; set; }
 
         public bool IsAdmin { get; set; }
+        public int TipoUsuario { get; set; }
         public string Phone{ get; set; }
         
         public bool isActive { get; set; }
