@@ -13,11 +13,12 @@ namespace Core.Domain.Entities
         public int IdEmpleadoProyecto { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
-        public int IdEstado { get; set; }
-
+        public int Estado { get; set; }
+        //public int IdProyecto { get; set; }
 
         public Actividades Actividad { get; set; }
         public EmpleadoProyectos EmpleadoProyecto { get; set; }
-        public Estado Estado { get; set; }
+        //public Estado Estado { get; set; }
+        //public Proyecto Proyecto { get; set; }
     }
 }

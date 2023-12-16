@@ -11,19 +11,17 @@
     }
 </style>
 <div class="container">
-
-    <div class="row m-3">
-        <div class="col-3 offset-10">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-        </div>
-    </div>
-
-    <div id="Cardnfo">
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
         <div class="card mb-5" style="width: 90rem;">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>Info Usuario</h1>
+
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Usuarios</h1>
+                            </div>
+                        </div>
                         <hr />
                         <dl class="dl-horizontal">
                             <dt>
@@ -56,20 +54,27 @@
         </div>
     </div>
 
-    <div id="Ponche">
+    <div id="Ponche" style="padding-left: 5%">
         <div class="text-center">
             <div class="row row-cols-4">
                 @foreach (var item in Model)
                 {
-                    <div id="Empleados">
-                        <div class="card text-center" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">@item.Proyecto.Nombre</h5>
-                                <p class="card-text">@item.Proyecto.Cliente</p>
-                                <button type="button" class="btn btn-primary editarEmpleado" data-bs-toggle="modal" data-bs-target="#ListaModal" data-idEmpleadoProyectos="@item.Id">Lista</button>
-                            </div>
+                        @if(item.Proyecto != null)
+                        {
+                            <div id="Empleados">
+                                <div class="card text-center" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@item.Proyecto.Nombre</h5>
+                                        <p class="card-text">@item.Proyecto.Cliente</p>
+                                        <button type="button" class="btn btn-primary editarEmpleado" data-bs-toggle="modal" data-bs-target="#ListaModal" data-idEmpleadoProyectos="@item.Id">Lista</button>
+                                    </div>
+                                </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <h5> No tienes proyectos asignados aun </h5>
+                    }
                 }
             </div>
         </div>

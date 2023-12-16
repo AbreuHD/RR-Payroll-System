@@ -1,25 +1,33 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Account;
 using Core.Application.DTOs.Actividades;
+using Core.Application.DTOs.Asistencia;
 using Core.Application.DTOs.Banco;
+using Core.Application.DTOs.Deducciones;
 using Core.Application.DTOs.EmpleadoProyecto;
 using Core.Application.DTOs.Empleados;
 using Core.Application.DTOs.Estado;
 using Core.Application.DTOs.Nacionalidad;
+using Core.Application.DTOs.Pago;
+using Core.Application.DTOs.Percepciones;
 using Core.Application.DTOs.Provincia;
 using Core.Application.DTOs.Proyecto;
 using Core.Application.DTOs.Puestos;
 using Core.Application.DTOs.TipoCuenta;
 using Core.Application.Features.Actividades.Command.CreateActividades;
+using Core.Application.Features.ActividadesAsignadas.Commands.CreateActAsignada;
 using Core.Application.Features.Asistencia.Command.CreateAsistenciaTable;
 using Core.Application.Features.Deducciones.Commands.CreateDeduccion;
 using Core.Application.Features.Empleado.Comands.CreateEmpleado;
+using Core.Application.Features.Empleado.Comands.UpdateEmpleado;
 using Core.Application.Features.EmpleadoProyecto.Commands.CreateEmpleadoProyecto;
 using Core.Application.Features.EmpleadoProyecto.Commands.EditEmpleadoProyecto;
 using Core.Application.Features.Estado.Command.CreateEstado;
 using Core.Application.Features.Horas.Command.AddHoras;
 using Core.Application.Features.Nacionalidad.Commands.CreateNacionalidad;
+using Core.Application.Features.Pagos.Command.CreatePago;
 using Core.Application.Features.Percepciones.Commands.CreatePercepciones;
+using Core.Application.Features.Permiso.Command.CrearPermiso;
 using Core.Application.Features.Provincia.Command.CreateProvincia;
 using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.Features.Proyecto.Commands.EditProject;
@@ -142,8 +150,45 @@ namespace Core.Application.Mapping
             CreateMap<Actividades, GetActivityByIdResponseDTO>()
                 .ReverseMap();            
             
-            CreateMap<Actividades, GetAllEmpleadosResponseDTO>()
-                .ReverseMap();
+            CreateMap<Empleado, GetAllEmpleadosResponseDTO>()
+                .ForMember(x=> x.EmpleadoProyectos, i => i.Ignore())
+                .ReverseMap();            
+            
+            CreateMap<ActividadesAsignadas, CreateActAsignadaCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Deducciones, GetAllDeduccionesResponseDTO>()
+                .ReverseMap();            
+            
+            CreateMap<Percepciones, GetAllPercepcionResponseDTO>()
+                .ReverseMap();            
+            
+            CreateMap<Empleado, GetEmpleadoByID>()
+                .ReverseMap();            
+            
+            CreateMap<Empleado, UpdateEmpleadoCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Percepciones, CreatePercepcionesCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Deducciones, CreateDeduccionesCommand>()
+                .ReverseMap();                   
+            
+            CreateMap<Permiso, CrearPermisoCommand>()
+                .ReverseMap();                
+            
+            CreateMap<Pago, CreatePagoCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Pago, GetPagoByIdDTO>()
+                .ReverseMap();            
+            
+            CreateMap<Asistencia, GetAllAsistenciaByUserIDResponse>()
+                .ForMember(x=> x.Asistencia, i => i.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.EmpleadoProyecto, i => i.Ignore());            
+            
         }
     }
 }

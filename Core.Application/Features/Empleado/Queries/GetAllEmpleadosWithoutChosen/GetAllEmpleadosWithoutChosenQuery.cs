@@ -13,12 +13,14 @@ namespace Core.Application.Features.Empleado.Queries.GetAllEmpleadosWithoutChose
     public class GetAllEmpleadosWithoutChosenQuery : IRequest<List<GetAllEmpleadosResponseDTO>>
     {
         public List<Domain.Entities.Empleado> Empleados { get; set; }
+        public int IdProyecto { get; set; }
     }
-    public class GetAllEmpleadosWithoutChosenQueryHandler : IRequestHandler<GetAllEmpleadosWithoutChosenQuery, List<GetAllEmpleadosResponseDTO>>>
+    public class GetAllEmpleadosWithoutChosenQueryHandler : IRequestHandler<GetAllEmpleadosWithoutChosenQuery, List<GetAllEmpleadosResponseDTO>>
     {
         private readonly IEmpleadoRepository _empleadoRepository;
         private readonly IMapper _mapper;
         private readonly IEmpleadoProyectosRepository _empleadoProyectosRepository;
+
         public GetAllEmpleadosWithoutChosenQueryHandler(IEmpleadoRepository empleadoRepository, IMapper mapper, IEmpleadoProyectosRepository empleadoProyectosRepository)
         {
             _empleadoRepository = empleadoRepository;
@@ -29,20 +31,43 @@ namespace Core.Application.Features.Empleado.Queries.GetAllEmpleadosWithoutChose
         public async Task<List<GetAllEmpleadosResponseDTO>> Handle(GetAllEmpleadosWithoutChosenQuery request, CancellationToken cancellationToken)
         {
             var requestEmpleados = await _empleadoRepository.GetAllAsync();
+            var requestEmpleadoProyecto = await _empleadoProyectosRepository.GetAllAsync();
 
-            foreach(var i in requestEmpleados)
+            var employeesToRemove = new List<Domain.Entities.Empleado>();
+
+            foreach (var i in requestEmpleados)
             {
-                foreach(var j in request.Empleados)
+                foreach (var j in request.Empleados)
                 {
-                    if(i.Id == j.Id)
+                    if (i.Id == j.Id)
                     {
-                        requestEmpleados.Remove(i);
+                        employeesToRemove.Add(i);
                     }
                 }
             }
-            var response = _mapper.Map<List<GetAllEmpleadosResponseDTO>>(requestEmpleados);
+
+            foreach (var employeeToRemove in employeesToRemove)
+            {
+                requestEmpleados.Remove(employeeToRemove);
+            }
+
+            var responseDTO = _mapper.Map<List<GetAllEmpleadosResponseDTO>>(requestEmpleados);
+            List<GetAllEmpleadosResponseDTO> response = new();
+
+            foreach (var i in requestEmpleadoProyecto)
+            {
+                foreach (var x in responseDTO)
+                {
+                    if (i.IdEmpleado == x.Id && i.IdProyecto == request.IdProyecto)
+                    {
+                        x.EmpleadoProyectos = i;
+                        response.Add(x);
+                    }
+                }
+            }
 
             return response;
         }
+
     }
 }

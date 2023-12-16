@@ -1,0 +1,70 @@
+﻿@using Core.Application.DTOs.Percepciones
+@model List<GetAllPercepcionResponseDTO>
+@{
+    ViewData["Title"] = "Percepciones";
+}
+
+
+<div class="container">
+
+    <div class="row m-3">
+        <div class="col-3 offset-10">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Estado</button>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <div class="row row-cols-2">
+            @foreach (var data in Model)
+            {
+                <div class="p-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title">@data.Nombre</h5>
+                            <p class="card-text">@data.Descripcion</p>
+                            <p class="card-text">@data.Monto</p>
+                            <p class="card-text">@data.IsDefault</p>
+                            <a href="Proyectos/Info/@data.Id" class="btn btn-primary">Mas info</a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Estado</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="post" asp-controller="ExtraAdmin" asp-action="CreatePercepciones">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="name" name="Nombre" aria-describedby="name">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Monto" class="form-label">Monto</label>
+                                    <input type="number" step="any" class="form-control" id="Monto" name="Monto" rows="3">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Descripcion" class="form-label">Descripcion</label>
+                                    <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3"></textarea>
+                                </div>
+
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsDefault">
+                                    <label class="form-check-label" for="IsDefault">¿Es por default?</label>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Crear</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

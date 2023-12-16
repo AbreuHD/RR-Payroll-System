@@ -27,8 +27,6 @@ using (var scope = app.Services.CreateScope())
 
         await DefaultRoles.Seed(userManager, roleManager);
         await DefaultOwner.Seed(userManager, roleManager);
-        await DefaultUser.Seed(userManager, roleManager);
-        await DefaultAdmin.Seed(userManager, roleManager);
     }
     catch (Exception ex)
     {

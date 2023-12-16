@@ -9,9 +9,9 @@ namespace Core.Domain.Entities
 {
     public class Permiso : AuditableBase
     {
-        public DateTime FechaSolicitud { get; set; }
+        public DateTime FechaInicio { get; set; }
         public String Motivo { get; set; }
-        public DateTime FechaEmision { get; set; }
+        public DateTime FechaFinal { get; set; }
         public bool Pagado { get; set; }
         public int IdAsistencia { get; set; }
 

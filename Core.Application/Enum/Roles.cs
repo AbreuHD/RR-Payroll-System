@@ -8,10 +8,12 @@ namespace Core.Application.Enum
 {
     public enum Roles
     {
-        User,
-        Admin,
         Owner,
-        Helper,
-        BetaTester
+        Empleado,
+        RRHH,
+        Gerente,
+        JefeDeObras,
+        Contador,
+        AdministradorDeUsuarios
     }
 }

@@ -6,68 +6,101 @@
 
 
 <div>
-    <div class="row m-3">
-        <div class="col-3 offset-9">
-            <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Usuario</button>
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Usuarios</h1>
+                            </div>
+                            <div class="col-3 offset-6" style="padding-left: 15%">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Usuario</button>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Correo</th>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Empleado</th>
+                                    <th scope="col">Activo</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Desactivar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@user.Id</th>
+                                        <td>@user.Name</td>
+                                        <td>@user.LastName</td>
+                                        <td>@user.Email</td>
+                                        <td>@user.UserName</td>
+                                        <td>
+                                            @if (user.EsEmpleado == 0)
+                                            {
+                                                <div>
+                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalEmpleado" data-idEmpleadoProyectos="@user.Id" onclick="updateInputValue(this)">Crear</button>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    <a asp-controller="Employee" asp-action="info" asp-route-Id="@user.Id" type="button" class="btn btn-primary">Ver</a>
+                                                </div>
+                                            }
+                                        </td>
+                                        <td>@(user.IsActive  ? "Si" : "No")</td>
+                                        <td>
+                                            <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Editar</a></button>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Desactivar" asp-route-id="@user.Id">Cambiar Estatus</a></button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                </div>
+            </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-            <tr>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Usuario</th>
-                <th scope="col">Empleado</th>
-                <th scope="col">Admin</th>
-                <th scope="col">Activo</th>
-                <th scope="col">Editar</th>
-                <th scope="col">Desactivar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var user in Model)
-            {
-                <tr>
-                    <th scope="row">@user.Id</th>
-                    <td>@user.Name</td>
-                    <td>@user.LastName</td>
-                    <td>@user.Email</td>
-                    <td>@user.UserName</td>
-                    <td>
-                        @if(user.EsEmpleado == 0)
-                        {
-                            <div>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalEmpleado" data-idEmpleadoProyectos="@user.Id" onclick="updateInputValue(this)">Crear</button>
-                            </div>
-                        }
-                        else
-                        {
-                            <div>
-                                <a asp-controller="Employee" asp-action="info" asp-route-Id="@user.Id" type="button" class="btn btn-primary">Ver</a>
-                            </div>
-                        }
 
-                    </td>
-                    <td>@user.IsAdmin</td>
-                    <td>@user.IsActive</td>
-                    <td>
-                        <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Editar</a></button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Desactivar" asp-route-id="@user.Id">Cambiar Estatus</a></button>
-                    </td> 
-                </tr>
-            }
-        </tbody>
-    </table>
-
+        @if (ViewBag.errors != null && ViewBag.errors.Length > 0)
+        {
+            <div class="toast-container position-static">
+                @foreach (var error in ViewBag.errors)
+                {
+                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-header">
+                                <img src="https://img.freepik.com/vector-premium/signo-pintado-pincel-ilustracion-estilo-dibujado-mano-efecto-grunge-signo_546559-113.jpg" class="rounded me-2" width="20" height="20" alt="...">
+                                <strong class="me-auto">Error</strong>
+                                <small>Ahora Mismo</small>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                            </div>
+                            <div class="toast-body">
+                                @error
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Usuario</h1>
@@ -76,7 +109,7 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <form method="post" asp-controller="Admin" asp-action="CreateUser">
-                            <div class="row row-cols-2">
+                            <div class="row">
                                 <div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Usuario</label>
@@ -108,13 +141,10 @@
                                         <input type="password" class="form-control" id="psw" name="Password">
                                     </div>
 
-                                    <div class="mb-3 form-check">
+@*                                     <div class="mb-3 form-check">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
                                         <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
-                                    </div>
-                                </div>
-                                <div>
-
+                                    </div> *@
 
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
@@ -126,30 +156,21 @@
                                         <input type="tel" class="form-control" id="phone" name="Phone">
                                     </div>
 
-                                    <div class="mb-3">
-                                        <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
-                                        <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
-                                            <option selected>Selecciona tu nacionalidad</option>
-                                            @foreach (var i in ViewBag.TipoCuenta)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="IdTipoBanco" class="form-label">Banco</label>
-                                        <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
-                                            <option selected>Selecciona tu nacionalidad</option>
-                                            @foreach (var i in ViewBag.TipoBanco)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Cuenta" class="form-label">Cuenta</label>
-                                        <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="TipoUsuario" class="form-label">Tipo De Usuario</label>
+                                            <select class="form-select" name="TipoUsuario" aria-label="Default select example">
+                                                <option selected>Selecciona un TipoUsuario</option>
+                                                <option value="1">Owner</option>
+                                                <option value="2">Empleado</option>
+                                                <option value="3">RRHH</option>
+                                                <option value="4">Gerente</option>
+                                                <option value="5">JefeDeObras</option>
+                                                <option value="6">Contador</option>
+                                                <option value="7">AdministradorDeUsuarios</option>
+                                            </select>
+                                        </div>
+
+
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -227,6 +248,32 @@
                                             }
                                         </select>
                                     </div>
+
+                                    <div class="mb-3">
+                                        <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
+                                        <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoCuenta)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="IdTipoBanco" class="form-label">Banco</label>
+                                        <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
+                                            <option selected>Selecciona tu nacionalidad</option>
+                                            @foreach (var i in ViewBag.TipoBanco)
+                                            {
+                                                <option value="@i.Id">@i.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Cuenta" class="form-label">Cuenta</label>
+                                        <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
+                                    </div>
+
                                 </div>
                             </div>
                             
@@ -237,11 +284,18 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function updateInputValue(button) {
-            var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
-            document.getElementById('IdentityId').value = idEmpleadoProyectos;
-        }
-    </script>
 </div>
+<script>
+    window.onload = (event) => {
+        let myAlert = document.querySelectorAll('.toast');
+        myAlert.forEach((toast, index) => {
+            let bsToast = new bootstrap.Toast(toast);
+            bsToast.show();
+        });
+    }
+    function updateInputValue(button) {
+        var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
+        console.log('Id Empleado Proyectos:', idEmpleadoProyectos);
+        document.getElementById('IdentityId').value = idEmpleadoProyectos;
+    }
+ </script>

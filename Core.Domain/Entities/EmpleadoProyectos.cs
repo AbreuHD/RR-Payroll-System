@@ -14,6 +14,8 @@ namespace Core.Domain.Entities
         //public int IdCOntrato { get; set; }
         public int IdProyecto { get; set; }
         public int IdEmpleado { get; set; }
+        public int Horas { get; set; }
+        public double PagoHoras { get; set; }
 
 
         public Puesto Puesto { get; set; }
@@ -21,6 +23,6 @@ namespace Core.Domain.Entities
         public Proyecto Proyecto { get; set; }
         public Empleado Empleado { get; set; }
         public Asistencia Asistencia { get; set; }
-        //public ActividadesAsignadas ActividadesAsignadas { get; set; }
+        public ICollection<ActividadesAsignadas> ActividadesAsignadas { get; set; }
     }
 }

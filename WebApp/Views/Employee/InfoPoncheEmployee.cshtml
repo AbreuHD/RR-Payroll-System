@@ -1,0 +1,92 @@
+﻿@using Core.Application.DTOs.EmpleadoProyecto
+@model List<GetAllByEmployeeIdDTO>
+@{
+    ViewData["Title"] = "User";
+}
+
+<style>
+    .asis {
+        min-width: 400px;
+        min-height: 400px;
+    }
+</style>
+<div class="container">
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 3%">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Proyectos</h1>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div id="Ponche">
+                            <div class="text-center">
+                                <div class="row row-cols-4">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div id="Empleados">
+                                            <div class="card text-center" style="width: 18rem;">
+                                                <div class="card-body">
+                                                    <p class="card-text">@item.Id</p>
+                                                    <h5 class="card-title">@item.Nombre</h5>
+                                                    <a type="button" class="btn btn-primary editarEmpleado" asp-controller="Employee" asp-action="InfoPoncheHistorico" asp-route-id="@item.Id">Lista</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalLista">
+        <div class="modal fade" id="ListaModal" tabindex="-1" aria-labelledby="ListaModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="ListaModal">Click para ponchar!</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post" asp-controller="Employee" asp-action="Ponche">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <div class-="container">
+                                    <div class="text-center">
+                                        <form method="post" asp-controller="Asistencia" asp-action="AddPonche">
+                                            <div class="col">
+                                                <input name="id" id="idInput" value="55" hidden />
+                                                <button type="submit" class="btn btn-primary rounded-circle asis">
+                                                    <i class="bi bi-person-check-fill" style="font-size: 250px;"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.editarEmpleado');
+
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
+                document.getElementById('idInput').value = idEmpleadoProyectos;
+            });
+        });
+    });
+</script>

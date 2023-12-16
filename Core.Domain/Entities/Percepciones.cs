@@ -12,7 +12,8 @@ namespace Core.Domain.Entities
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public decimal Monto { get; set; }
+        public bool IsDefault { get; set; }
 
-        public ICollection<Pago> Pagos { get; set; }
+        public ICollection<Pago_Percepciones> Pago_Percepciones { get; set; }
     }
 }

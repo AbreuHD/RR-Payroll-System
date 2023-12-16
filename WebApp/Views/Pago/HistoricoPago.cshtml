@@ -1,0 +1,54 @@
+﻿@using Core.Application.DTOs.Pago
+@model List<GetPagoByIdDTO>
+@{
+    ViewData["Title"] = "Historico Pagos";
+}
+
+
+<div>
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Pagos</h1>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Monto</th>
+                                    <th scope="col">Comision</th>
+                                    <th scope="col">Cuenta</th>
+                                    <th scope="col">Empleado</th>
+                                    <th scope="col">Proyecto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pago in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">@pago.Id</th>
+                                        <td>@pago.Monto</td>
+                                        <td>@pago.Comision</td>
+                                        <td>@pago.TipoPago.Cuenta</td>
+                                        <td>@pago.Empleado.Nombre @pago.Empleado.Apellido</td>
+                                        <td>@pago.Proyecto.Nombre</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

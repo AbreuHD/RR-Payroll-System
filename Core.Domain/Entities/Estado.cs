@@ -14,6 +14,6 @@ namespace Core.Domain.Entities
 
         public ICollection<Empleado> Empleados { get; set; }
         public ICollection<Proyecto> Proyecto { get; set; }
-        public ICollection<ActividadesAsignadas> ActividadesAsignadas { get; set; }
+        //public ICollection<ActividadesAsignadas> ActividadesAsignadas { get; set; }
     }
 }

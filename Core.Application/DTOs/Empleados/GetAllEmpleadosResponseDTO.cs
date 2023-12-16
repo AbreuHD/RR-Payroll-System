@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,5 +28,7 @@ namespace Core.Application.DTOs.Empleados
         public int IdProvincia { get; set; }
         public int IdEstado { get; set; }
         public int IdLicencia { get; set; }
+
+        public EmpleadoProyectos EmpleadoProyectos { get; set; }
     }
 }

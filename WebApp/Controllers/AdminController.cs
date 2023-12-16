@@ -42,16 +42,21 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserSaveViewModel vm, CreateTipoPagoCommand comm)
+        public async Task<IActionResult> CreateUser(UserSaveViewModel vm)
         {
             var data = await _userService.RegisterAdmin(vm);
-            comm.IdUsuario = data.Id;
-            await Mediator.Send(comm);
+            if(data.HasError == true)
+            {
+                ViewBag.Error = data.Error;
+                return RedirectToRoute(new { controller = "Admin", action = "Index" });
+            }
+            //comm.IdUsuario = data.Id;
+            //await Mediator.Send(comm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEmpleado(CreateEmpleadoCommand comm, string IdentityId)
+        public async Task<IActionResult> CreateEmpleado(CreateEmpleadoCommand comm, string IdentityId, CreateTipoPagoCommand commPago)
         {
             var user = await _userService.GetAccountByid(IdentityId);
             try
@@ -66,6 +71,8 @@ namespace WebApp.Controllers
             {
                 return RedirectToRoute(new { controller = "Admin", action = "Index" });
             }
+            commPago.IdUsuario = user.Id;
+            await Mediator.Send(commPago); //pago
             comm.UserID = user.Id;
             await Mediator.Send(comm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
@@ -80,10 +87,6 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UserEditar(UserSaveViewModel vm)
         {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToRoute(new { controller = "Admin", action = "Index" });
-            }
             var data = await _userService.UpdateClient(vm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }

@@ -6,19 +6,19 @@
 
 
 <div class="container">
-
-    <div class="row m-3">
-        <div class="col-3 offset-10">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
-        </div>
-    </div>
-
-    <div id="Cardnfo">
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
         <div class="card mb-5" style="width: 90rem;">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1>Info Proyecto</h1>
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Info Proyecto</h1>
+                            </div>
+                            <div class="col-3 offset-6" style="padding-left: 15%">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</button>
+                            </div>
+                        </div>
                         <hr />
                         <dl class="dl-horizontal">
                             <dt>
@@ -67,7 +67,7 @@
         </div>
     </div>
 
-    <div id="Empleado">
+    <div id="Empleado" style="padding-left: 5%">
         <div class="text-center">
             <div class="row row-cols-4">
                 <div id="AgregarEmpleado">
@@ -182,12 +182,25 @@
                                     }
                                 </select>
                             </div>
+
+
+                            <div class="mb-3">
+                                <label for="Horas" class="form-label">Horas de trabajo normales</label>
+                                <input type="number" class="form-control" id="Horas" name="Horas" aria-describedby="Horas">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="PagoHoras" class="form-label">Pago por horas</label>
+                                <input type="number" step="any" class="form-control" id="PagoHoras" name="PagoHoras" aria-describedby="PagoHoras">
+                            </div>
+
                             <input value="@Model.Id" name="IdProyecto" hidden>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Agregar</button>
                         </div>
+
                     </form>
                 </div>
             </div>

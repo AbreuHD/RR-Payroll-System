@@ -13,9 +13,11 @@ namespace Core.Domain.Entities
         public string Titulo { get; set; }
         public string Descripcion { get; set; }
         public decimal Monto { get; set; }
-        
+        public int IdProyecto { get; set; }
+
         //public int IdActividadAsignada { get; set; }
         //public ActividadesAsignadas ActividadesAsignadas { get; set; }
         public ICollection<ActividadesAsignadas> ActividadesAsignadas { get; set; }
+        public Proyecto Proyecto { get; set; }
     }
 }

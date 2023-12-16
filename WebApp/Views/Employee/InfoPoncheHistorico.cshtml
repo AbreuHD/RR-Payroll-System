@@ -1,0 +1,91 @@
+﻿@using Core.Application.DTOs.Asistencia
+@model GetAllAsistenciaByUserIDResponse
+@{
+    ViewData["Title"] = "Ponche Historico";
+}
+
+<div class="container">
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Ponche Usuario</h1>
+                            </div>
+                            <div class="col-3 offset-6" style="padding-left: 15%">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#permisoModal">Crear Permiso</button>
+
+                            </div>
+                        </div>
+                        <hr />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Fuente</th>
+                                    <th scope="col">Hora Entrada</th>
+                                    <th scope="col">Hora Salida</th>
+                                    <th scope="col">Es pagado?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Asistencia)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Source</td>
+                                        <td>@item.Inicio</td>
+                                        <td>@(item.Final != null ? item.Final : "No registrado")</td>
+                                        <td>@item.IsPagado</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="permisoModal" tabindex="-1" aria-labelledby="permisoModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="permisoModalLabel">Crear Permiso</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-controller="Employee" asp-action="CrearPermiso">
+
+                        <div class="mb-3">
+                            <label for="Motivo" class="form-label">Motivo</label>
+                            <input type="text" class="form-control" id="Motivo" name="Motivo" aria-describedby="Motivo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="FechaInicio" class="form-label">Fecha Inicio</label>
+                            <input type="date" class="form-control" id="FechaInicio" name="FechaInicio" aria-describedby="FechaInicio">
+                        </div>
+                        <div class="mb-3">
+                            <label for="FechaFinal" class="form-label">Fecha Final</label>
+                            <input type="date" class="form-control" id="FechaFinal" name="FechaFinal" aria-describedby="FechaFinal">
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="Pagado" name="Pagado">
+                            <label class="form-check-label" for="Pagado">¿Es Pagado?</label>
+                        </div>
+
+                        <input name="infoId" id="infoId"  value="@Model.Id" hidden/>
+                        <input name="IdAsistencia" id="IdAsistencia" value="@Model.Id" hidden />
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

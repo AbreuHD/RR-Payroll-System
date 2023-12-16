@@ -29,9 +29,18 @@
             <label for="phone" class="form-label">Telefono</label>
             <input type="tel" class="form-control" id="phone" asp-for="Phone">
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" asp-for="IsAdmin">
-            <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
+        <div class="mb-3">
+            <label for="TipoUsuario" class="form-label">Tipo De Usuario</label>
+            <select class="form-select" name="TipoUsuario" aria-label="Default select example">
+                <option selected>Selecciona un TipoUsuario</option>
+                <option value="1">Owner</option>
+                <option value="2">Empleado</option>
+                <option value="3">RRHH</option>
+                <option value="4">Gerente</option>
+                <option value="5">JefeDeObras</option>
+                <option value="6">Contador</option>
+                <option value="7">AdministradorDeUsuarios</option>
+            </select>
         </div>
 
         <!--
