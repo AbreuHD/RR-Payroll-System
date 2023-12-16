@@ -5,36 +5,50 @@
 }
 
 <div class="container">
-    <div class="row m-3">
-        <div class="col-3 offset-10">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#permisoModal">Crear Permiso</button>
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Ponche Usuario</h1>
+                            </div>
+                            <div class="col-3 offset-6" style="padding-left: 15%">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#permisoModal">Crear Permiso</button>
+
+                            </div>
+                        </div>
+                        <hr />
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Fuente</th>
+                                    <th scope="col">Hora Entrada</th>
+                                    <th scope="col">Hora Salida</th>
+                                    <th scope="col">Es pagado?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Asistencia)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Source</td>
+                                        <td>@item.Inicio</td>
+                                        <td>@(item.Final != null ? item.Final : "No registrado")</td>
+                                        <td>@item.IsPagado</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Fuente</th>
-                <th scope="col">Hora Entrada</th>
-                <th scope="col">Hora Salida</th>
-                <th scope="col">Es pagado?</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Asistencia)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Source</td>
-                    <td>@item.Inicio</td>
-                    <td>@(item.Final != null ? item.Final : "No registrado")</td>
-                    <td>@item.IsPagado</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
     <div class="modal fade" id="permisoModal" tabindex="-1" aria-labelledby="permisoModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">

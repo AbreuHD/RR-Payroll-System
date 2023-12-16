@@ -8,6 +8,7 @@ using Core.Application.DTOs.EmpleadoProyecto;
 using Core.Application.DTOs.Empleados;
 using Core.Application.DTOs.Estado;
 using Core.Application.DTOs.Nacionalidad;
+using Core.Application.DTOs.Pago;
 using Core.Application.DTOs.Percepciones;
 using Core.Application.DTOs.Provincia;
 using Core.Application.DTOs.Proyecto;
@@ -178,6 +179,9 @@ namespace Core.Application.Mapping
                 .ReverseMap();                
             
             CreateMap<Pago, CreatePagoCommand>()
+                .ReverseMap();            
+            
+            CreateMap<Pago, GetPagoByIdDTO>()
                 .ReverseMap();            
             
             CreateMap<Asistencia, GetAllAsistenciaByUserIDResponse>()

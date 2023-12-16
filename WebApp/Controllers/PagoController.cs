@@ -5,6 +5,7 @@ using Core.Application.Features.Deducciones.Queries.GetAllDeduccionesWithoutDefa
 using Core.Application.Features.Empleado.Queries.GetAllEmpleados;
 using Core.Application.Features.EmpleadoProyecto.Queries.GetAllProjects;
 using Core.Application.Features.Pagos.Command.CreatePago;
+using Core.Application.Features.Pagos.Queries.GetPagoByUserID;
 using Core.Application.Features.Percepciones.Commands.CreatePercepciones;
 using Core.Application.Features.Percepciones.Queries.GetAllPercepcion;
 using Core.Application.Features.Percepciones.Queries.GetAllPercepcionWithoutDefault;
@@ -73,6 +74,15 @@ namespace WebApp.Controllers
         {
             var response = await Mediator.Send(comm);
             return RedirectToAction("index");
+        }
+
+        public async Task<IActionResult> HistoricoPago(int IdEmpleado, int IdProyecto)
+        {
+            var response = await Mediator.Send(new GetPagoByUserIDQuery() { 
+                IdProyecto = IdProyecto,
+                IdEmpleado = IdEmpleado
+            });
+            return View(response);
         }
     }
 }

@@ -86,6 +86,12 @@ namespace WebApp.Controllers
             return View(response);
         }
 
+        //public async Task<IActionResult> ActividadesAsignadas()
+        //{
+        //    var response = await Mediator.Send(new GetAllAsistenciaByUserIDQuery() { EmpleadoProyectoID = Id });
+        //    return View(response);
+        //}
+
         [HttpPost]
         public async Task<IActionResult> CrearPermiso(CrearPermisoCommand comm, int infoId)
         {

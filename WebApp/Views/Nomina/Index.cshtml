@@ -1,7 +1,7 @@
 ﻿@using Core.Application.DTOs.Proyecto
 @model List<ProyectoDTO>
 @{
-    ViewData["Title"] = "Pago";
+    ViewData["Title"] = "Nomina";
 }
 
 
@@ -13,7 +13,7 @@
                     <div class="col-md-12">
                         <div class="row m-3">
                             <div class="col-3">
-                                <h1>Pagos</h1>
+                                <h1>Descargar Nomina</h1>
                             </div>
                         </div>
 
@@ -26,7 +26,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">@data.Nombre</h5>
                                                 <p class="card-text">@data.Descripcion</p>
-                                                <a href="Pago/Detalle/@data.Id" class="btn btn-primary">Realizar Pago</a>
+                                                <a asp-controller="Nomina" asp-action="Descargar" asp-route-ProjectId="@data.Id" class="btn btn-primary">Descargar</a>
                                             </div>
                                             <div class="card-footer text-body-secondary">
                                                 @data.Locacion

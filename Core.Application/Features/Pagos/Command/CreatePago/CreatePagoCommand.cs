@@ -130,7 +130,7 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
                         }
                     }
                 }
-                response.Monto = (suma + sumaDeduccion) - sumaPercepcion;
+                response.Monto = (suma + sumaPercepcion) - sumaDeduccion;
                 response.Comision = sumaDeduccion;
 
                 await _pagoRepository.UpdateAsync(response, response.Id);
@@ -139,7 +139,7 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
             }
             catch (Exception ex)
             {
-                throw;
+                return false;
             }
 
         }

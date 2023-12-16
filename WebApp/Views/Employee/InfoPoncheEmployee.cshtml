@@ -11,23 +11,38 @@
     }
 </style>
 <div class="container">
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 3%">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row m-3">
+                            <div class="col-3">
+                                <h1>Proyectos</h1>
+                            </div>
+                        </div>
+                        <hr />
 
-
-    <div id="Ponche">
-        <div class="text-center">
-            <div class="row row-cols-4">
-                @foreach (var item in Model)
-                {
-                    <div id="Empleados">
-                        <div class="card text-center" style="width: 18rem;">
-                            <div class="card-body">
-                                <p class="card-text">@item.Id</p>
-                                <h5 class="card-title">@item.Nombre</h5>
-                                <a type="button" class="btn btn-primary editarEmpleado" asp-controller="Employee" asp-action="InfoPoncheHistorico" asp-route-id="@item.Id">Lista</a>
+                        <div id="Ponche">
+                            <div class="text-center">
+                                <div class="row row-cols-4">
+                                    @foreach (var item in Model)
+                                    {
+                                        <div id="Empleados">
+                                            <div class="card text-center" style="width: 18rem;">
+                                                <div class="card-body">
+                                                    <p class="card-text">@item.Id</p>
+                                                    <h5 class="card-title">@item.Nombre</h5>
+                                                    <a type="button" class="btn btn-primary editarEmpleado" asp-controller="Employee" asp-action="InfoPoncheHistorico" asp-route-id="@item.Id">Lista</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-                }
+                </div>
             </div>
         </div>
     </div>

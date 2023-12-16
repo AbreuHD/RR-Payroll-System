@@ -16,9 +16,7 @@ namespace Infraestructure.Persistence.Context
         public DbSet<Actividades> Actividades { get; set; }
         public DbSet<ActividadesAsignadas> ActividadesAsignadas { get; set; }
         public DbSet<Asistencia> Asistencias { get; set; }
-        public DbSet<Contrato> Contrato { get; set; }
         public DbSet<Deducciones> Deducciones { get; set; }
-        public DbSet<DetalleNomina> DetalleNomina { get; set; }
         public DbSet<Empleado> Empleado { get; set; }
         public DbSet<EmpleadoProyectos> EmpleadoProyectos { get; set; }
         public DbSet<Estado> Estado { get; set; }
@@ -66,9 +64,7 @@ namespace Infraestructure.Persistence.Context
             modelBuilder.Entity<Actividades>().ToTable("Actividades");
             modelBuilder.Entity<ActividadesAsignadas>().ToTable("ActividadesAsignadas");
             modelBuilder.Entity<Asistencia>().ToTable("Asistencias");
-            modelBuilder.Entity<Contrato>().ToTable("Contrato");
             modelBuilder.Entity<Deducciones>().ToTable("Deducciones");
-            modelBuilder.Entity<DetalleNomina>().ToTable("DetalleNomina");
             modelBuilder.Entity<Empleado>().ToTable("Empleado");
             modelBuilder.Entity<EmpleadoProyectos>().ToTable("EmpleadoProyectos");
             modelBuilder.Entity<Estado>().ToTable("Estado");
@@ -92,9 +88,7 @@ namespace Infraestructure.Persistence.Context
             modelBuilder.Entity<Actividades>().HasKey(x => x.Id);
             modelBuilder.Entity<ActividadesAsignadas>().HasKey(x => x.Id);
             modelBuilder.Entity<Asistencia>().HasKey(x => x.Id);
-            modelBuilder.Entity<Contrato>().HasKey(x => x.Id);
             modelBuilder.Entity<Deducciones>().HasKey(x => x.Id);
-            modelBuilder.Entity<DetalleNomina>().HasKey(x => x.Id);
             modelBuilder.Entity<Empleado>().HasKey(x => x.Id);
             modelBuilder.Entity<EmpleadoProyectos>().HasKey(x => x.Id);
             modelBuilder.Entity<Estado>().HasKey(x => x.Id);
@@ -133,11 +127,6 @@ namespace Infraestructure.Persistence.Context
                 .HasMany(d => d.Pago_Deducciones)
                 .WithOne(p => p.Deducciones)
                 .HasForeignKey(p => p.IdDeducciones);
-
-            modelBuilder.Entity<DetalleNomina>()
-                .HasOne(dn => dn.Proyecto)
-                .WithMany(p => p.DetalleNominas)
-                .HasForeignKey(dn => dn.IdProyecto);
 
             modelBuilder.Entity<Empleado>()
                 .HasOne(e => e.Nacionalidad)

@@ -45,6 +45,11 @@ namespace WebApp.Controllers
         public async Task<IActionResult> CreateUser(UserSaveViewModel vm)
         {
             var data = await _userService.RegisterAdmin(vm);
+            if(data.HasError == true)
+            {
+                ViewBag.Error = data.Error;
+                return RedirectToRoute(new { controller = "Admin", action = "Index" });
+            }
             //comm.IdUsuario = data.Id;
             //await Mediator.Send(comm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });

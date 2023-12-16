@@ -5,40 +5,55 @@
 }
 
 
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-            <tr>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Genero</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Ponche</th>
-                <th scope="col">Historico Pago</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var user in Model)
-            {
-                <tr>
-                    <th scope="row">@user.Id</th>
-                    <td>@user.Nombre</td>
-                    <td>@user.Apellido</td>
-                    <td>@user.Email</td>
-                    <td>@user.Sexo</td>
-                    <td>@user.Telefono</td>
-                    <td>
-                        <button class="btn btn-warning"><a asp-controller="Employee" asp-action="InfoPoncheEmployee" asp-route-id="@user.Id">Ver</a></button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger"><a asp-controller="Pago" asp-action="HistoricoEmployee" asp-route-id="@user.Id">Ver</a></button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
+    <div class="card mb-5" style="width: 90rem;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row m-3">
+                        <div class="col-3">
+                            <h1>Empleados</h1>
+                        </div>
+                        <div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                    <tr>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Correo</th>
+                                        <th scope="col">Genero</th>
+                                        <th scope="col">Telefono</th>
+                                        <th scope="col">Ponche</th>
+                                        <th scope="col">Historico Pago</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <th scope="row">@user.Id</th>
+                                            <td>@user.Nombre</td>
+                                            <td>@user.Apellido</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.Sexo</td>
+                                            <td>@user.Telefono</td>
+                                            <td>
+                                                <button class="btn btn-warning"><a asp-controller="Employee" asp-action="InfoPoncheEmployee" asp-route-id="@user.Id">Ver</a></button>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger"><a asp-controller="Pago" asp-action="HistoricoPago" asp-route-IdEmpleado="@user.Id" asp-route-IdEmpleado="@user.Id">Ver</a></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
