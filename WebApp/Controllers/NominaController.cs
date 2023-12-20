@@ -41,7 +41,7 @@ namespace WebApp.Controllers
         private FileResult DescargarExcel(string nombre, IEnumerable<NominaDTO> nomina)
         {
             DataTable dt = new DataTable("Nomina");
-            dt.Columns.AddRange(new DataColumn[12]
+            dt.Columns.AddRange(new DataColumn[11]
             {
                 new DataColumn("Nombre", typeof(string)),
                 new DataColumn("Apellido", typeof(string)),
@@ -54,11 +54,10 @@ namespace WebApp.Controllers
                 new DataColumn("Percepcion", typeof(decimal)),
                 new DataColumn("PercepcionDescripcion", typeof(string)),
                 new DataColumn("NombreProyecto", typeof(string)),
-                new DataColumn("Neto", typeof(decimal)),
             });
             foreach (var item in nomina)
             {
-                dt.Rows.Add(item.Nombre, item.Apellido, item.FechaNacimiento, item.Fecha.ToString(), item.Monto, item.Comision, item.Deduccion, item.DeduccionDescripcion, item.Percepcion, item.PercepcionDescripcion, item.NombreProyecto, item.Neto);
+                dt.Rows.Add(item.Nombre, item.Apellido, item.FechaNacimiento, item.Fecha.ToString(), item.Monto, item.Comision, item.Deduccion, item.DeduccionDescripcion, item.Percepcion, item.PercepcionDescripcion, item.NombreProyecto);
             }
 
 
