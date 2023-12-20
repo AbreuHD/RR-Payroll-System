@@ -106,6 +106,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDeducciones(CreateDeduccionesCommand comm)
         {
+            comm.IsDefault = comm.DefaultBool == 1;
             await Mediator.Send(comm);
             return RedirectToAction("Deducciones");
         }
@@ -118,6 +119,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePercepciones(CreatePercepcionesCommand comm)
         {
+            comm.IsDefault = comm.DefaultBool == 1;
             await Mediator.Send(comm);
             return RedirectToAction("Percepciones");
         }

@@ -15,6 +15,7 @@ namespace Core.Application.Features.Deducciones.Commands.CreateDeduccion
         public string Descripcion { get; set; }
         public decimal Monto { get; set; }
         public bool IsDefault { get; set; }
+        public int DefaultBool { get; set; }
     }
     public class CreateDeduccionesCommandHandler : IRequestHandler<CreateDeduccionesCommand, bool>
     {

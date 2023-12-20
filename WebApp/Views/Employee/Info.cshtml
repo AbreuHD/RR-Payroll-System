@@ -18,31 +18,41 @@
                     <div class="col-md-12">
                         <h1>Info Usuario</h1>
                         <hr />
-                        <dl class="dl-horizontal">
-                            <dt>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Nombre)
-                            </dt>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.FirstOrDefault().Empleado.Nombre)
-                            </dd>
+                        @if(Model == null)
+                        {
+                            <div>
+                                No Tienes Perfil De Empleado
+                            </div>
+                        }
+                        else
+                        {
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Nombre)
+                                </dt>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Email)
-                            </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.FirstOrDefault().Empleado.Nombre)
+                                </dd>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.FirstOrDefault().Empleado.Email)
-                            </dd>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Email)
+                                </dt>
 
-                            <dt>
-                                @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Celular)
-                            </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.FirstOrDefault().Empleado.Email)
+                                </dd>
 
-                            <dd>
-                                @Html.DisplayFor(model => model.FirstOrDefault().Empleado.Celular)
-                            </dd>
-                        </dl>
+                                <dt>
+                                    @Html.DisplayNameFor(model => model.FirstOrDefault().Empleado.Celular)
+                                </dt>
+
+                                <dd>
+                                    @Html.DisplayFor(model => model.FirstOrDefault().Empleado.Celular)
+                                </dd>
+                            </dl>
+                        }
                     </div>
                 </div>
             </div>
@@ -54,15 +64,18 @@
             <div class="row row-cols-4">
                 @foreach (var item in Model)
                 {
-                    <div id="Empleados">
-                        <div class="card text-center" style="width: 18rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">@item.Proyecto.Nombre</h5>
-                                <p class="card-text">@item.Proyecto.Cliente</p>
-                                @* <button type="button" class="btn btn-primary editarEmpleado" data-bs-toggle="modal" data-bs-target="#ListaModal" data-idEmpleadoProyectos="@item.Id">Lista</button> *@
+                    @if (item.Proyecto.Nombre != null)
+                    {
+                        <div id="Empleados">
+                            <div class="card text-center" style="width: 18rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.Proyecto.Nombre</h5>
+                                    <p class="card-text">@item.Proyecto.Cliente</p>
+                                    @* <button type="button" class="btn btn-primary editarEmpleado" data-bs-toggle="modal" data-bs-target="#ListaModal" data-idEmpleadoProyectos="@item.Id">Lista</button> *@
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         </div>

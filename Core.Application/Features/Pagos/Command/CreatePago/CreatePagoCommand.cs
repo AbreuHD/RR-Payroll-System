@@ -132,7 +132,7 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
                 }
                 response.Monto = (suma + sumaPercepcion) - sumaDeduccion;
                 response.Comision = sumaDeduccion;
-
+                response.Fecha = DateTime.Now;
                 await _pagoRepository.UpdateAsync(response, response.Id);
 
                 return true;

@@ -8,6 +8,7 @@ namespace Core.Application.DTOs.Nomina
 {
     public class NominaDTO
     {
+        public int ProjectId { get; set; }
         //empleado table
         public string Nombre { get; set; }
         public string Apellido { get; set; }
