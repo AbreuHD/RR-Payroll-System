@@ -11,6 +11,12 @@ namespace Core.Domain.Entities
         
         public int IdTipoPago { get; set; }
         public int IdEmpleado { get; set; }
+
+        public Decimal AFP { get; set; }
+        public Decimal SFS { get; set; }
+        public Decimal INFOTEP { get; set; }
+        public Decimal ISR { get; set; }
+
         //public int IdPercepciones { get; set; }
         //public int IdDeducciones { get; set; }
         //public int IdPago_Percepciones { get; set; }

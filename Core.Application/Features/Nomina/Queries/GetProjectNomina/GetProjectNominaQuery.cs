@@ -48,13 +48,13 @@ namespace Core.Application.Features.Nomina.Queries.GetProjectNomina
                 foreach (var d in item.Pago_Deducciones) {
                     d.Deducciones = await _deduccionesRepository.GetByIdAsync(d.IdDeducciones);
                     sumdeducciones += d.Deducciones.Monto;
-                    deducciones += " " + d.Deducciones.Nombre;
+                    deducciones += ", " + d.Deducciones.Nombre;
                 }
                 foreach (var p in item.Pago_Percepciones)
                 {
                     p.Percepciones = await _percepcionesRepository.GetByIdAsync(p.IdPercepciones);
                     sumpercepciones += p.Percepciones.Monto;
-                    percepciones += " " + p.Percepciones.Nombre;
+                    percepciones += ", " + p.Percepciones.Nombre;
                 }
 
                 response.Add(new NominaDTO()
@@ -66,6 +66,11 @@ namespace Core.Application.Features.Nomina.Queries.GetProjectNomina
 
                     Monto = item.Monto,
                     Comision = item.Comision,
+                    
+                    AFP = item.AFP,
+                    SFS = item.SFS,
+                    INFOTEP = item.INFOTEP,
+                    ISR = item.ISR,
 
                     Deduccion = sumdeducciones,
                     DeduccionDescripcion = "Pago"+ deducciones,
@@ -74,8 +79,7 @@ namespace Core.Application.Features.Nomina.Queries.GetProjectNomina
                     PercepcionDescripcion = "Pago" + percepciones,
 
                     NombreProyecto = responseProyecto.Nombre,
-                    ProjectId = request.ProjectId,
-                    Neto = item.Monto - sumdeducciones + sumpercepciones
+                    ProjectId = request.ProjectId
                 });
             }
 

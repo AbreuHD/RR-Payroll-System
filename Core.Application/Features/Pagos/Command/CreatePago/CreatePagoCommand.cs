@@ -18,8 +18,8 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
         //public string Emisor { get; set; }
         public int IdTipoPago { get; set; }
         public int IdEmpleado { get; set; }
-        public List<int> IdPago_Percepciones { get; set; }
-        public List<int> IdPago_Deducciones { get; set; }
+        public List<int>? IdPago_Percepciones { get; set; }
+        public List<int>? IdPago_Deducciones { get; set; }
 
         public int IdProyecto { get; set; }
     }
@@ -71,14 +71,18 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
                 decimal sumaPercepcion = 0.0m;
                 decimal sumaDeduccion = 0.0m;
 
-                foreach (var item in request.IdPago_Deducciones)
+                if(request.IdPago_Deducciones != null)
                 {
-                    var pago_Deducciones = new Pago_Deducciones();
-                    pago_Deducciones.IdDeducciones = item;
-                    pago_Deducciones.IdPago = response.Id;
-                    await _pago_DeduccionesRepository.AddAsync(pago_Deducciones);
-                    sumaPercepcion += deducciones.FirstOrDefault(x => x.Id == item).Monto;
+                    foreach (var item in request.IdPago_Deducciones)
+                    {
+                        var pago_Deducciones = new Pago_Deducciones();
+                        pago_Deducciones.IdDeducciones = item;
+                        pago_Deducciones.IdPago = response.Id;
+                        await _pago_DeduccionesRepository.AddAsync(pago_Deducciones);
+                        sumaPercepcion += deducciones.FirstOrDefault(x => x.Id == item).Monto;
+                    }
                 }
+
                 foreach(var item in deduccionesDefault) {
                     var pago_Deducciones = new Pago_Deducciones();
                     pago_Deducciones.IdDeducciones = item.Id;
@@ -87,14 +91,18 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
                     sumaPercepcion += item.Monto;
                 }
 
-                foreach (var item in request.IdPago_Percepciones)
+                if(request.IdPago_Percepciones != null)
                 {
-                    var pago_Percepciones = new Pago_Percepciones();
-                    pago_Percepciones.IdPercepciones = item;
-                    pago_Percepciones.IdPago = response.Id;
-                    await _pago_PercepcionesRepository.AddAsync(pago_Percepciones);
-                    sumaDeduccion += percepciones.FirstOrDefault(x => x.Id == item).Monto;
+                    foreach (var item in request.IdPago_Percepciones)
+                    {
+                        var pago_Percepciones = new Pago_Percepciones();
+                        pago_Percepciones.IdPercepciones = item;
+                        pago_Percepciones.IdPago = response.Id;
+                        await _pago_PercepcionesRepository.AddAsync(pago_Percepciones);
+                        sumaDeduccion += percepciones.FirstOrDefault(x => x.Id == item).Monto;
+                    }
                 }
+
                 foreach (var item in percecionesDefault)
                 {
                     var pago_Percepciones = new Pago_Percepciones();
@@ -117,6 +125,8 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
                     suma = + i.Actividad.Monto;
                 }
 
+
+                
                 foreach (var i in horasEmpleado)
                 {
                     if(i.HoraFinal != null)
@@ -130,8 +140,41 @@ namespace Core.Application.Features.Pagos.Command.CreatePago
                         }
                     }
                 }
-                response.Monto = (suma + sumaPercepcion) - sumaDeduccion;
-                response.Comision = sumaDeduccion;
+                //2.87
+                response.AFP = (suma + sumaPercepcion) * (decimal)(0.0287);
+                
+                //0.5%
+                response.INFOTEP = (suma + sumaPercepcion) * (decimal)(0.05);
+                
+                //3.04%
+                response.SFS = (suma + sumaPercepcion) * (decimal)(0.0304);
+
+                var pagoAnual = empleadoSeleccionado.PagoHoras * empleadoSeleccionado.Horas * 12;
+                decimal excedente = 0;
+                if (pagoAnual > 867123.00)
+                {
+                    excedente = (decimal)(pagoAnual - 867123.00);
+                    response.ISR = 79776.00m + 0.25m * excedente;
+                }
+                else if (pagoAnual > 624329.00)
+                {
+                    excedente = (decimal)(pagoAnual - 624329.00);
+                    response.ISR = 31216.00m + 0.20m * excedente;
+                }
+                else if (pagoAnual > 416220.00)
+                {
+                    excedente = (decimal)(pagoAnual - 416220.01);
+                    response.ISR = 0.15m * excedente;
+                }
+                else
+                {
+                    response.ISR = 0m;
+                }
+
+                var resto = response.AFP + response.INFOTEP + response.SFS + (response.ISR / 12);
+
+                response.Monto = ((suma + sumaPercepcion) - (sumaDeduccion + resto)) ;
+                response.Comision = suma + sumaPercepcion;
                 response.Fecha = DateTime.Now;
                 await _pagoRepository.UpdateAsync(response, response.Id);
 

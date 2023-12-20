@@ -14,6 +14,10 @@ namespace Core.Application.DTOs.Nomina
         public string Apellido { get; set; }
         public DateTime FechaNacimiento { get; set; }
         //pago table
+        public Decimal AFP { get; set; }
+        public Decimal SFS { get; set; }
+        public Decimal INFOTEP { get; set; }
+        public Decimal ISR { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Monto { get; set; }
         public decimal Comision { get; set; }
@@ -26,6 +30,6 @@ namespace Core.Application.DTOs.Nomina
         //proyecto table
         public string NombreProyecto { get; set; }
         //neto pay table
-        public decimal Neto { get; set; }
+       // public decimal Neto { get; set; }
     }
 }

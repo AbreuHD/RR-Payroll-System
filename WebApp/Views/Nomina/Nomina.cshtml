@@ -7,7 +7,7 @@
 
 <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
     <div class="card mb-5" style="width: 90rem;">
-        <div class="card-body">
+        <div class="card-body">0.5%
             <div class="row">
                 <div class="col-md-12">
                     <div class="row m-3">
@@ -26,14 +26,19 @@
                                             <th scope="col">Apellido</th>
                                             <th scope="col">Fecha de nacimiento</th>
                                             <th scope="col">Fecha de pago</th>
-                                            <th scope="col">Monto</th>
-                                            <th scope="col">Comision</th>
+                                            <th scope="col">AFP (2.87%)</th>
+                                            <th scope="col">INFOTEP (0.5%)</th>
+                                            <th scope="col">SFS (3.04%)</th>
+                                            <th scope="col">ISR</th>
+                                            <th scope="col">Nombre Proyecto</th>
                                             <th scope="col">Deduccion</th>
                                             <th scope="col">Deducciones aplicadas</th>
                                             <th scope="col">Percepcion</th>
                                             <th scope="col">Percepcion Aplicada</th>
-                                            <th scope="col">Nombre Proyecto</th>
-                                            <th scope="col">Neto</th>
+                                            <th scope="col">Comision</th>
+                                            <th scope="col">Monto Pago</th>
+
+                                            @* <th scope="col">Neto</th> *@
                                             @*                                         <th scope="col">Ver</th> *@
                                         </tr>
                                     </thead>
@@ -45,14 +50,18 @@
                                                 <td>@user.Apellido</td>
                                                 <td>@user.FechaNacimiento</td>
                                                 <td>@user.Fecha</td>
-                                                <td>@user.Monto</td>
-                                                <td>@user.Comision</td>
+                                                <td>@user.AFP</td>
+                                                <td>@user.INFOTEP</td>
+                                                <td>@user.SFS</td>
+                                                <td>@user.ISR</td>
+                                                <td>@user.NombreProyecto</td>
                                                 <td>@user.Deduccion</td>
                                                 <td>@user.DeduccionDescripcion</td>
                                                 <td>@user.Percepcion</td>
                                                 <td>@user.PercepcionDescripcion</td>
-                                                <td>@user.NombreProyecto</td>
-                                                <td>@user.Neto</td>
+                                                <td>@user.Comision</td>
+                                                <td>@user.Monto</td>
+                                                @* <td>@user.Neto</td> *@
                                                 @*                                             <td>
                                         <button class="btn btn-warning"><a asp-controller="Nomina" asp-action="Descargar" asp-route-ProjectId="@user.ProjectId">Mas Informacion</a></button>
                                         </td> *@
