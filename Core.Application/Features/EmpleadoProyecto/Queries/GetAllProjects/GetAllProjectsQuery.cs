@@ -35,7 +35,10 @@ namespace Core.Application.Features.EmpleadoProyecto.Queries.GetAllProjects
             {
                 var empleado = await _empleadoRepository.GetAllAsync();
                 var searchEmpleado = empleado.Where(x => x.UserID == request.IdUser).FirstOrDefault();
-
+                if(searchEmpleado == null)
+                {
+                    return null;
+                }
                 var result = await _empleadoProyectoRepository.GetAllAsync();
                 var search = result.Where(x => x.IdEmpleado == searchEmpleado.Id).ToList();
                 var response = _mapper.Map<List<EmpleadoProyectoReponseDTO>>(search);

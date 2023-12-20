@@ -77,6 +77,11 @@
                 </a>
             }else if (isContador)
             {
+                <a>
+                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
+                        Home
+                    </a>
+                </a>
                 <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
                     <span class="fs-4">RR Payroll System</span>
@@ -86,17 +91,17 @@
                         Pagos
                     </a>
                 </a>
-                <a>
-                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
-                        Home
-                    </a>
-                </a>
             }
             else if (isAdmin)
             {
                 <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                     <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
                     <span class="fs-4">RR Payroll System</span>
+                </a>
+                <a>
+                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
+                        Home
+                    </a>
                 </a>
                 <a class="nav-item">
                     <a asp-controller="Admin" asp-action="Index" class="nav-link active" aria-current="page">
@@ -108,11 +113,7 @@
                         Empleados
                     </a>
                 </a>
-                <a>
-                    <a asp-controller="Employee" asp-action="Index" class="nav-link active">
-                        Home
-                    </a>
-                </a>
+
             }else if (isRRHH)
             {
                 <a href="/employee" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">

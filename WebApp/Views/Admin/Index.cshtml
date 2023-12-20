@@ -4,7 +4,6 @@
     ViewData["Title"] = "Admin Panel";
 }
 
-
 <div>
     <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
         <div class="card mb-5" style="width: 90rem;">
@@ -132,13 +131,13 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
-                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
+                                        <label for="psw" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="psw" name="Password">
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="psw" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="psw" name="Password">
+                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
+                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
                                     </div>
 
 @*                                     <div class="mb-3 form-check">
@@ -252,7 +251,7 @@
                                     <div class="mb-3">
                                         <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
                                         <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
-                                            <option selected>Selecciona tu nacionalidad</option>
+                                            <option selected>Selecciona tu tipo de cuenta</option>
                                             @foreach (var i in ViewBag.TipoCuenta)
                                             {
                                                 <option value="@i.Id">@i.Nombre</option>
@@ -262,7 +261,7 @@
                                     <div class="mb-3">
                                         <label for="IdTipoBanco" class="form-label">Banco</label>
                                         <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
-                                            <option selected>Selecciona tu nacionalidad</option>
+                                            <option selected>Selecciona tu tipo de banco</option>
                                             @foreach (var i in ViewBag.TipoBanco)
                                             {
                                                 <option value="@i.Id">@i.Nombre</option>

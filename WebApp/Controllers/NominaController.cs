@@ -18,6 +18,15 @@ namespace WebApp.Controllers
             return View(await Mediator.Send(new GetAllProjectsQuery()));
         }
 
+        public async Task<IActionResult> Nomina(int ProjectId)
+        {
+           var response = await Mediator.Send(new GetProjectNominaQuery()
+            {
+                ProjectId = ProjectId
+            });
+            return View(response);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Descargar(int ProjectId)
         {

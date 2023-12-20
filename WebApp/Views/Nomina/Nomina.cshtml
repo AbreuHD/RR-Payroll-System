@@ -1,0 +1,77 @@
+﻿@using Core.Application.DTOs.Nomina;
+@model List<NominaDTO>
+@{
+    ViewData["Title"] = "Nomina";
+}
+
+
+<div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
+    <div class="card mb-5" style="width: 90rem;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row m-3">
+                        @if(Model != null && Model.Count > 0){
+                            <div class="col-3">
+                                <h1>Nomina Proyecto @Model.FirstOrDefault().NombreProyecto</h1>
+                            </div>
+                            <div class="col-3 offset-6" style="padding-left: 18%">
+                                <button class="btn btn-warning"><a asp-controller="Nomina" asp-action="Descargar" asp-route-ProjectId="@Model.FirstOrDefault().ProjectId">Descargar</a></button>
+                            </div>
+                            <div>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Fecha de nacimiento</th>
+                                            <th scope="col">Fecha de pago</th>
+                                            <th scope="col">Monto</th>
+                                            <th scope="col">Comision</th>
+                                            <th scope="col">Deduccion</th>
+                                            <th scope="col">Deducciones aplicadas</th>
+                                            <th scope="col">Percepcion</th>
+                                            <th scope="col">Percepcion Aplicada</th>
+                                            <th scope="col">Nombre Proyecto</th>
+                                            <th scope="col">Neto</th>
+                                            @*                                         <th scope="col">Ver</th> *@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var user in Model)
+                                        {
+                                            <tr>
+                                                <td>@user.Nombre</td>
+                                                <td>@user.Apellido</td>
+                                                <td>@user.FechaNacimiento</td>
+                                                <td>@user.Fecha</td>
+                                                <td>@user.Monto</td>
+                                                <td>@user.Comision</td>
+                                                <td>@user.Deduccion</td>
+                                                <td>@user.DeduccionDescripcion</td>
+                                                <td>@user.Percepcion</td>
+                                                <td>@user.PercepcionDescripcion</td>
+                                                <td>@user.NombreProyecto</td>
+                                                <td>@user.Neto</td>
+                                                @*                                             <td>
+                                        <button class="btn btn-warning"><a asp-controller="Nomina" asp-action="Descargar" asp-route-ProjectId="@user.ProjectId">Mas Informacion</a></button>
+                                        </td> *@
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-3">
+                                <h1>No tiene pagos aun</h1>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
