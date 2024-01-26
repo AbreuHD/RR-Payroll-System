@@ -258,7 +258,91 @@
             </main>
         </div>
     </div>
+    @if (ViewBag.Created != null)
+    {
+        <div class="toast-container position-static">
+            @foreach (var i in ViewBag.Created)
+            {
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Light_green_check.svg/2048px-Light_green_check.svg.png" class="rounded me-2" width="20" height="20" alt="...">
+                            <strong class="me-auto">@i.Title</strong>
+                            <small>Ahora Mismo</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            @i.Message
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (ViewBag.Deleted != null)
+    {
+        <div class="toast-container position-static">
+            @foreach (var i in ViewBag.Deleted)
+            {
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Light_green_check.svg/2048px-Light_green_check.svg.png" class="rounded me-2" width="20" height="20" alt="...">
+                            <strong class="me-auto">@i.Title</strong>
+                            <small>Ahora Mismo</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            @i.Message
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (ViewBag.Modified != null)
+    {
+        <div class="toast-container position-static">
+            @foreach (var i in ViewBag.Modified)
+            {
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Light_green_check.svg/2048px-Light_green_check.svg.png" class="rounded me-2" width="20" height="20" alt="...">
+                            <strong class="me-auto">@i.Title</strong>
+                            <small>Ahora Mismo</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            @i.Message
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 
+    @if (ViewBag.Error != null)
+    {
+        <div class="toast-container position-static">
+            @foreach (var i in ViewBag.Error)
+            {
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="toast-header">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Light_green_check.svg/2048px-Light_green_check.svg.png" class="rounded me-2" width="20" height="20" alt="...">
+                            <strong class="me-auto">@i.Title</strong>
+                            <small>Ahora Mismo</small>
+                            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            @i.Message
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
     <script src="~/lib/sidervar/script.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -266,5 +350,19 @@
     <script src="~/lib/bootstrap/dist/js/sidebars.js"></script>
     <script src="~/js/toastr.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @{
+        if (ViewBag.created != null || ViewBag.Deleted != null || ViewBag.Modified != null || ViewBag.Error != null)
+        {
+            <script>
+                window.onload = (event) => {
+                    let myAlert = document.querySelectorAll('.toast');
+                    myAlert.forEach((toast, index) => {
+                        let bsToast = new bootstrap.Toast(toast);
+                        bsToast.show();
+                    });
+                }
+            </script>
+        }
+    }
 </body>
 </html>

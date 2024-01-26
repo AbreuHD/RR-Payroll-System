@@ -34,18 +34,20 @@
                 <form method="post" asp-controller="Home" asp-action="Index">
                     <div class="from-group">
                         <label asp-for="UserName" class="form-label">Nombre de usuario</label>
-                        <input class="form-input" asp-for="UserName" />
+                        <input class="form-input" asp-for="UserName" required/>
                         <span asp-validation-for="UserName" class="text-danger"></span>
                     </div>
                     <div class="from-group">
                         <label asp-for="Password" class="form-label">Contraseña</label>
-                        <input class="form-input" asp-for="Password" />
+                        <input class="form-input" asp-for="Password" required />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="buttons">
                         <button type="submit">Iniciar Sesion</button>
                     </div>
                 </form>
+                <i>¿No tienes una cuenta? <a href="/Register">Crear Cuenta</a></i>
+
             </div>
             <div class="banner">
                 <img src="https://cdn-icons-png.flaticon.com/512/5087/5087579.png" />

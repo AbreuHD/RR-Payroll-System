@@ -48,49 +48,51 @@
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Proyecto</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body text-start">
                                                 <form method="post" asp-controller="Proyectos" asp-action="Crear">
                                                     <div class="mb-3">
                                                         <label for="name" class="form-label">Nombre</label>
-                                                        <input type="text" class="form-control" id="name" name="Nombre" aria-describedby="name">
+                                                        <input type="text" class="form-control" id="name" name="Nombre" aria-describedby="name" required>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label for="cliente" class="form-label">Cliente</label>
-                                                        <input type="text" class="form-control" id="cliente" name="Cliente">
+                                                        <input type="text" class="form-control" id="cliente" name="Cliente" required>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label for="localizacion" class="form-label">Localizacion</label>
-                                                        <input type="localizacion" class="form-control" id="localizacion" name="Locacion">
+                                                        <input type="text" class="form-control" id="localizacion" name="Locacion" required>
                                                     </div>
 
-                                                    <select class="form-select" aria-label="Estado" name="IdEstado">
+                                                    <div class="mb-3">
                                                         <label for="Estado" class="form-label">Estado</label>
-                                                        <option selected>Selecciona un estado</option>
-                                                        @foreach (var i in ViewBag.Estados)
-                                                        {
-                                                            <option value="@i.Id">@i.Nombre</option>
-                                                        }
-                                                    </select>
+                                                        <select class="form-select" aria-label="Estado" name="IdEstado" required>
+                                                            @foreach (var i in ViewBag.Estados)
+                                                            {
+                                                                <option value="@i.Id">@i.Nombre</option>
+                                                            }
+                                                        </select>
+                                                    </div>
 
                                                     <div class="mb-3">
                                                         <label for="fechaInicio" class="form-label">Fecha de inicio</label>
-                                                        <input type="date" class="form-control" id="fechaInicio" name="FechaInicio">
+                                                        <input type="date" class="form-control" id="fechaInicio" name="FechaInicio" required>
                                                     </div>
 
 
                                                     <div class="mb-3">
                                                         <label for="FechaEntrega" class="form-label">Fecha De Entrega</label>
-                                                        <input type="date" class="form-control" id="FechaEntrega" name="FechaFinal">
+                                                        <input type="date" class="form-control" id="FechaEntrega" name="FechaFinal" required>
                                                     </div>
 
                                                     <div class="mb-3">
                                                         <label for="Descripcion" class="form-label">Descripcion</label>
-                                                        <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3"></textarea>
+                                                        <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3" required></textarea>
                                                     </div>
-
-                                                    <button type="submit" class="btn btn-primary">Crear</button>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Crear</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>

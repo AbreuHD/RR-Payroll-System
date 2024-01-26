@@ -20,7 +20,7 @@
                             </div>
                         </div>
 
-                        <div class="text-center">
+                        <div class="text-start">
                             <div class="row row-cols-2">
                                 @foreach (var data in Model)
                                 {
@@ -44,9 +44,11 @@
                                                 <form method="post" asp-controller="ExtraAdmin" asp-action="CrearNacionalidad">
                                                     <div class="mb-3">
                                                         <label for="name" class="form-label">Nombre</label>
-                                                        <input type="text" class="form-control" id="name" name="Nombre" aria-describedby="name">
+                                                        <input type="text" class="form-control" id="name" name="Nombre" aria-describedby="name" required>
                                                     </div>
-                                                    <button type="submit" class="btn btn-primary">Crear</button>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Crear</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>

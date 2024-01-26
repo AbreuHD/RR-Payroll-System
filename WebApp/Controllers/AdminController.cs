@@ -44,14 +44,14 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser(UserSaveViewModel vm)
         {
-            var data = await _userService.RegisterAdmin(vm);
-            if(data.HasError == true)
-            {
-                ViewBag.Error = data.Error;
-                return RedirectToRoute(new { controller = "Admin", action = "Index" });
-            }
-            //comm.IdUsuario = data.Id;
-            //await Mediator.Send(comm);
+            //var data = await _userService.RegisterAdmin(vm);
+            //if(data.HasError == true)
+            //{
+            //    ViewBag.Error = data.Error;
+            //    return RedirectToRoute(new { controller = "Admin", action = "Index" });
+            //}
+            ////comm.IdUsuario = data.Id;
+            ////await Mediator.Send(comm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }
 
@@ -87,7 +87,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UserEditar(UserSaveViewModel vm)
         {
-            var data = await _userService.UpdateClient(vm);
+            //var data = await _userService.UpdateClient(vm);
             return RedirectToRoute(new { controller = "Admin", action = "Index" });
         }
 

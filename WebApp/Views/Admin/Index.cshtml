@@ -34,7 +34,7 @@
                                     <th scope="col">Empleado</th>
                                     <th scope="col">Activo</th>
                                     <th scope="col">Editar</th>
-                                    <th scope="col">Desactivar</th>
+                                    <th scope="col">Estatus</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,9 +106,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="text-center">
+                        <div class="">
                         <form method="post" asp-controller="Admin" asp-action="CreateUser">
-                            <div class="row">
+                            <div class="row row-cols-2">
                                 <div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Usuario</label>
@@ -121,11 +121,6 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="lastname" class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" id="lastname" name="LastName">
-                                    </div>
-
-                                    <div class="mb-3">
                                         <label for="cedula" class="form-label">Cedula</label>
                                         <input type="number" class="form-control" id="cedula" name="Identification">
                                     </div>
@@ -134,20 +129,31 @@
                                         <label for="psw" class="form-label">Contraseña</label>
                                         <input type="password" class="form-control" id="psw" name="Password">
                                     </div>
-
                                     <div class="mb-3">
-                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
-                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
+                                        <label for="TipoUsuario" class="form-label">Tipo De Usuario</label>
+                                        <select class="form-select" name="TipoUsuario" aria-label="Default select example">
+                                            <option selected>Selecciona un Tipo</option>
+                                            <option value="1">Owner</option>
+                                            <option value="2">Empleado</option>
+                                            <option value="3">RRHH</option>
+                                            <option value="4">Gerente</option>
+                                            <option value="5">Jefe De Obras</option>
+                                            <option value="6">Contador</option>
+                                            <option value="7">Administrador De Usuarios</option>
+                                        </select>
                                     </div>
+                                </div>
 
-@*                                     <div class="mb-3 form-check">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1" name="IsAdmin">
-                                        <label class="form-check-label" for="exampleCheck1">¿Es administrador?</label>
-                                    </div> *@
-
+                                <div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email" name="Email">
+                                    </div>
+
+
+                                    <div class="mb-3">
+                                        <label for="lastname" class="form-label">Apellido</label>
+                                        <input type="text" class="form-control" id="lastname" name="LastName">
                                     </div>
 
                                     <div class="mb-3">
@@ -155,24 +161,15 @@
                                         <input type="tel" class="form-control" id="phone" name="Phone">
                                     </div>
 
-                                        <div class="mb-3">
-                                            <label for="TipoUsuario" class="form-label">Tipo De Usuario</label>
-                                            <select class="form-select" name="TipoUsuario" aria-label="Default select example">
-                                                <option selected>Selecciona un TipoUsuario</option>
-                                                <option value="1">Owner</option>
-                                                <option value="2">Empleado</option>
-                                                <option value="3">RRHH</option>
-                                                <option value="4">Gerente</option>
-                                                <option value="5">JefeDeObras</option>
-                                                <option value="6">Contador</option>
-                                                <option value="7">AdministradorDeUsuarios</option>
-                                            </select>
-                                        </div>
-
-
+                                    <div class="mb-3">
+                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
+                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
+                                    </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Crear</button>
+                            </div>
                     </form>
                     </div>
                 </div>
@@ -190,93 +187,91 @@
                 <div class="modal-body">
                     <div class="text-center">
                         <form method="post" asp-controller="Admin" asp-action="CreateEmpleado">
-                            <div class="row">
-                                <div>
-                                    <input value="1" name="IdentityId" id="IdentityId" hidden />
-                                    <div class="mb-3">
-                                        <label for="FechaNacimiento" class="form-label">Fecha Nacimiento</label>
-                                        <input type="date" class="form-control" id="FechaNacimiento" name="FechaNacimiento" aria-describedby="username">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Sexo" class="form-label">Genero</label>
-                                        <select class="form-select" name="Sexo" aria-label="Default select example">
-                                            <option selected>Selecciona un sexo</option>
-                                            <option value="0">Femenino</option>
-                                            <option value="1">Masculino</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Celular" class="form-label">Celular</label>
-                                        <input type="tel" class="form-control" id="Celular" name="Celular" aria-describedby="username">
-                                    </div>
-                                  @*<div class="mb-3">
-                                        <label for="tipoPago" class="form-label">Tipo Pago</label>
-                                        <input type="text" class="form-control" id="tipoPago" name="tipoPago" aria-describedby="username">
-                                    </div> *@
-                                    <div class="mb-3">
-                                        <label for="IdNacionalidad" class="form-label">Nacionalidad</label>
-                                        <select class="form-select" name="IdNacionalidad" aria-label="Default select example">
-                                            <option selected>Selecciona tu nacionalidad</option>
-                                            @foreach (var i in ViewBag.Nacionalidades)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="Direccion" class="form-label">Direccion</label>
-                                        <input type="text" class="form-control" id="Direccion" name="Direccion" aria-describedby="username">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="IdProvincia" class="form-label">Provincia</label>
-                                        <select class="form-select" name="IdProvincia" aria-label="Default select example">
-                                            <option selected>Selecciona tu provincia</option>
-                                            @foreach (var i in ViewBag.Provincias)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="IdEstado" class="form-label">Estado</label>
-                                        <select class="form-select" name="IdEstado" aria-label="Default select example">
-                                            <option selected>Selecciona tu estado</option>
-                                            @foreach (var i in ViewBag.Estados)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
-                                    </div>
+                                <div class="row row-cols-2">
+                                    <div>
+                                        <input value="1" name="IdentityId" id="IdentityId" hidden />
+                                        <div class="mb-3">
+                                            <label for="FechaNacimiento" class="form-label">Fecha Nacimiento</label>
+                                            <input type="date" class="form-control" id="FechaNacimiento" name="FechaNacimiento" aria-describedby="username">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="Sexo" class="form-label">Genero</label>
+                                            <select class="form-select" name="Sexo" aria-label="Default select example">
+                                                <option selected>Selecciona un sexo</option>
+                                                <option value="0">Femenino</option>
+                                                <option value="1">Masculino</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="Celular" class="form-label">Celular</label>
+                                            <input type="tel" class="form-control" id="Celular" name="Celular" aria-describedby="username">
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="IdTipoCuenta" class="form-label">TipoCuenta</label>
-                                        <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
-                                            <option selected>Selecciona tu tipo de cuenta</option>
-                                            @foreach (var i in ViewBag.TipoCuenta)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
+                                        <div class="mb-3">
+                                            <label for="IdNacionalidad" class="form-label">Nacionalidad</label>
+                                            <select class="form-select" name="IdNacionalidad" aria-label="Default select example">
+                                                <option selected>Selecciona tu nacionalidad</option>
+                                                @foreach (var i in ViewBag.Nacionalidades)
+                                                {
+                                                    <option value="@i.Id">@i.Nombre</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="IdTipoBanco" class="form-label">Banco</label>
+                                            <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
+                                                <option selected>Selecciona tu tipo de banco</option>
+                                                @foreach (var i in ViewBag.TipoBanco)
+                                                {
+                                                    <option value="@i.Id">@i.Nombre</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="IdTipoBanco" class="form-label">Banco</label>
-                                        <select class="form-select" name="IdTipoBanco" aria-label="Default select example">
-                                            <option selected>Selecciona tu tipo de banco</option>
-                                            @foreach (var i in ViewBag.TipoBanco)
-                                            {
-                                                <option value="@i.Id">@i.Nombre</option>
-                                            }
-                                        </select>
+                                    <div>
+                                        <div class="mb-3">
+                                            <label for="Direccion" class="form-label">Direccion</label>
+                                            <input type="text" class="form-control" id="Direccion" name="Direccion" aria-describedby="username">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="IdProvincia" class="form-label">Provincia</label>
+                                            <select class="form-select" name="IdProvincia" aria-label="Default select example">
+                                                <option selected>Selecciona tu provincia</option>
+                                                @foreach (var i in ViewBag.Provincias)
+                                                {
+                                                    <option value="@i.Id">@i.Nombre</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="IdEstado" class="form-label">Estado</label>
+                                            <select class="form-select" name="IdEstado" aria-label="Default select example">
+                                                <option selected>Selecciona tu estado</option>
+                                                @foreach (var i in ViewBag.Estados)
+                                                {
+                                                    <option value="@i.Id">@i.Nombre</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="IdTipoCuenta" class="form-label">Tipo De Cuenta</label>
+                                            <select class="form-select" name="IdTipoCuenta" aria-label="Default select example">
+                                                <option selected>Selecciona tu tipo de cuenta</option>
+                                                @foreach (var i in ViewBag.TipoCuenta)
+                                                {
+                                                    <option value="@i.Id">@i.Nombre</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="Cuenta" class="form-label">Cuenta</label>
+                                            <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="Cuenta" class="form-label">Cuenta</label>
-                                        <input type="text" class="form-control" id="Cuenta" name="Cuenta" aria-describedby="username">
-                                    </div>
-
                                 </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Crear</button>
                             </div>
-                            
-                            <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                     </div>
                 </div>

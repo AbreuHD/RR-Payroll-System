@@ -12,13 +12,8 @@ namespace Core.Application.DTOs.Account
         public string LastName { get; set; }
         public string Identification { get; set; }
         public string Email { get; set; }
-        public string UserName { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public string Phone { get; set; }
-        public string SavingsAccount { get; set; }
-        public int TipoUsuario { get; set; }
         public bool isActive { get; set; } = false;
-        public bool isAdmin { get; set; } = false;
     }
 }

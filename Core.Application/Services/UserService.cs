@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Register;
 using Core.Application.Interface.Services;
 using Core.Application.ViewModels.User;
+using DocumentFormat.OpenXml.ExtendedProperties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,15 +30,23 @@ namespace Core.Application.Services
 
             return response;
         }
-        public async Task<RegisterResponse> RegisterClient(UserSaveViewModel userSaveViewModel)
+        //public async Task<RegisterResponse> RegisterClient(UserSaveViewModel userSaveViewModel)
+        //{
+        //    RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(userSaveViewModel);
+        //    return await _accountService.RegisterClients(registerRequest);
+        //}
+        public async Task<RegisterResponse> Register(RegisterRequestDTO dTO)
         {
-            RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(userSaveViewModel);
-            return await _accountService.RegisterClients(registerRequest);
-        }
-        public async Task<RegisterResponse> RegisterAdmin(UserSaveViewModel userSaveViewModel)
-        {
-            RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(userSaveViewModel);
-            return await _accountService.RegisterAdmin(registerRequest);
+            RegisterRequest registerRequest = new RegisterRequest() { 
+                Name = dTO.Nombre,
+                LastName = dTO.Apellido,
+                Identification = dTO.Cedula,
+                Email = dTO.Correo,
+                isActive = false,
+                Password = "123Pa$$word!",
+                ConfirmPassword = "123Pa$$word!"
+            };
+            return await _accountService.Register(registerRequest);
         }
         public async Task<string> ConfirmEmail(string userId, string token)
         {
@@ -84,18 +94,18 @@ namespace Core.Application.Services
             return false;
         }
 
-        public async Task<RegisterResponse> UpdateClient(UserSaveViewModel userSaveViewModel)
-        {
-            RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(userSaveViewModel);
-            return await _accountService.UpdateClient(registerRequest);
-        }
+        //public async Task<RegisterResponse> UpdateClient(UserSaveViewModel userSaveViewModel)
+        //{
+        //    RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(userSaveViewModel);
+        //    return await _accountService.UpdateClient(registerRequest);
+        //}
 
-        public async Task<RegisterResponse> UpdateAdmin(UserSaveViewModel userSaveViewModel)
-        {
-            RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(userSaveViewModel);
-            return await _accountService.UpdateAdmin(registerRequest);
+        //public async Task<RegisterResponse> UpdateAdmin(UserSaveViewModel userSaveViewModel)
+        //{
+        //    RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(userSaveViewModel);
+        //    return await _accountService.UpdateAdmin(registerRequest);
 
-        }
+        //}
 
         public async Task<string> GetSavingByID(string id)
         {

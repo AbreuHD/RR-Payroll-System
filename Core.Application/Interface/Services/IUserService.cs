@@ -1,4 +1,5 @@
 ﻿using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Register;
 using Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace Core.Application.Interface.Services
     public interface IUserService
     {
         Task<AuthenticationResponse> Login(LoginViewModel loginViewModel);
-        Task<RegisterResponse> RegisterClient(UserSaveViewModel userSaveViewModel);
-        Task<RegisterResponse> RegisterAdmin(UserSaveViewModel userSaveViewModel);
+        //Task<RegisterResponse> RegisterClient(UserSaveViewModel userSaveViewModel);
+        Task<RegisterResponse> Register(RegisterRequestDTO dTO);
         Task<string> ConfirmEmail(string userId, string token);
         Task<ForgotPasswordResponse> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel);
         Task<ResetPasswordResponse> ResetPassword(ResetPasswordViewModel resetPasswordViewModel);
@@ -21,8 +22,8 @@ namespace Core.Application.Interface.Services
         Task<UserSaveViewModel> GetAccountByid(string ID);
         Task<bool> IsAdmin(string ID);
         Task<string> GetSavingByID(string id);
-        Task<RegisterResponse> UpdateClient(UserSaveViewModel userSaveViewModel);
-        Task<RegisterResponse> UpdateAdmin(UserSaveViewModel userSaveViewModel);
+        //Task<RegisterResponse> UpdateClient(UserSaveViewModel userSaveViewModel);
+        //Task<RegisterResponse> UpdateAdmin(UserSaveViewModel userSaveViewModel);
         Task ChangeStatus(string Id);
 
     }
