@@ -1,0 +1,177 @@
+﻿@using Core.Application.DTOs.Register
+@model RegisterRequestDTO
+@{
+    ViewData["Title"] = "Editar Usuario";
+    var isEditableMode = Model != null;
+}
+<div>
+    <div id="Cardnfo" style="padding-top: 5%; padding-left: 5%">
+        <div class="card mb-5" style="width: 90rem;">
+            <div class="card-body">
+                <div class="form">
+                    <h1 class="formTitle"> @(isEditableMode ? "Editar usuario" : "Crear usuario")" </h1>
+                    <form method="post" asp-controller="Admin" asp-action="UserMod">
+                        <div class="row row-cols-2">
+                            <div>
+
+
+                                <input type="checkbox" name="isEditMode" value="@(isEditableMode ? "true" : "")" id="flexCheckChecked" @(isEditableMode ? "checked" : "") hidden>
+                                <input asp-for="Id" name="Id" value=@(isEditableMode ? @Model.Id : "") hidden />
+                                <input asp-for="IdTipoPago" name="IdTipoPago" value=@(isEditableMode ? @Model.IdTipoPago : "") hidden />
+                                <input asp-for="IdEmpleado" name="IdEmpleado" value=@(isEditableMode ? @Model.IdEmpleado : "") hidden />
+                                
+                                <div class="from-group">
+                                    <label asp-for="Nombre" class="form-label">Nombre</label>
+                                    <input type="text" asp-for="Nombre" class="form-control" name="Nombre" required />
+
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Telefono" class="form-label">Telefono</label>
+                                    <input type="tel" asp-for="Telefono" class="form-control" name="Telefono" required />
+
+                                </div>
+                                <div class="from-group">
+                                    <label name="Genero" name="test" class="form-label">Genero</label>
+                                    <select name="Genero" class="form-control" name="Genero" aria-label="Default select example" required>
+                                        <option value="1">Femenino</option>
+                                        <option value="2">Masculino</option>
+                                    </select>
+
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Direccion" class="form-label">Direccion</label>
+                                    <input type="text" asp-for="Direccion" class="form-control" name="Direccion" required />
+
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Estado" name="test" class="form-label">Estado</label>
+                                    <select asp-for="Estado" class="form-control" name="Estado" aria-label="Default select example" required>
+                                        @foreach (var i in ViewBag.Estados)
+                                        {
+                                            <option value="@i.Id">@i.Nombre</option>
+                                        }
+                                    </select>
+
+                                </div>
+                                <div class="from-group">
+                                    <label nasp-for="TipoCuenta" class="form-label">Tipo de cuenta</label>
+                                    <select class="form-control" name="TipoCuenta" asp-for="TipoCuenta" aria-label="Default select example" required>
+                                        @foreach (var i in ViewBag.TipoCuenta)
+                                        {
+                                            <option value="@i.Id">@i.Nombre</option>
+                                        }
+                                    </select>
+
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Cuenta" name="test" class="form-label">Cuenta</label>
+                                    <input type="text" asp-for="Cuenta" class="form-control" name="Cuenta" required />
+
+                                </div>
+                            </div>
+
+
+
+                            <div>
+                                <div class="from-group">
+                                    <label asp-for="Apellido" class="form-label">Apellido</label>
+                                    <input type="text" asp-for="Apellido" class="form-control" name="Apellido" required />
+
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Correo" name="test" class="form-label">Correo</label>
+                                    <input type="email" asp-for="Correo" class="form-control" name="Correo" required />
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Cedula" name="test" class="form-label">Cedula</label>
+                                    <input type="text" asp-for="Cedula" class="form-control" name="Cedula" required />
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Nacimiento" name="test" class="form-label">Fecha de Nacimiento</label>
+                                    <input asp-for="Nacimiento" class="form-control" id="fechaNacimiento" type="date" name="Nacimiento" max="2000-01-01" required />
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Provincia" class="form-label">Provincia</label>
+                                    <select asp-for="Provincia" class="form-control" name="Provincia" aria-label="Default select example" required>
+                                        @foreach (var i in ViewBag.Provincias)
+                                        {
+                                            <option value="@i.Id">@i.Nombre</option>
+                                        }
+                                    </select>
+
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Nacionalidad" class="form-label">Nacionalidad</label>
+                                    <select asp-for="Nacionalidad" class="form-control" name="Nacionalidad" aria-label="Default select example" required>
+                                        @foreach (var i in ViewBag.Nacionalidades)
+                                        {
+                                            <option value="@i.Id">@i.Nombre</option>
+                                        }
+                                    </select>
+
+                                </div>
+                                <div class="from-group">
+                                    <label asp-for="Banco" class="form-label">Banco</label>
+                                    <select asp-for="Banco" class="form-control" name="Banco" aria-label="Default select example" required>
+                                        @foreach (var i in ViewBag.TipoBanco)
+                                        {
+                                            <option value="@i.Id">@i.Nombre</option>
+                                        }
+                                    </select>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3 offset-md-11 pt-4">
+                            <button class="btn btn-success" type="submit">@(isEditableMode ? "Editar" : "Crear")</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*     <form method="post" asp-controller="Admin" asp-action="UserEditar">
+        <div class="mb-3">
+            <label for="username" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="username" asp-for="UserName" disabled>
+        </div>
+        <input name="UserName" value="@Model.UserName" hidden />
+        <div class="mb-3">
+            <label for="name" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" asp-for="Name">
+        </div>
+
+        <div class="mb-3">
+            <label for="lastname" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="lastname" asp-for="LastName">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" asp-for="Email">
+        </div>
+
+        <div class="mb-3">
+            <label for="phone" class="form-label">Telefono</label>
+            <input type="tel" class="form-control" id="phone" asp-for="Phone">
+        </div>
+        <div class="mb-3">
+            <label for="TipoUsuario" class="form-label">Tipo De Usuario</label>
+            <select class="form-select" name="TipoUsuario" aria-label="Default select example">
+                <option selected>Selecciona un TipoUsuario</option>
+                <option value="1">Owner</option>
+                <option value="2">Empleado</option>
+                <option value="3">RRHH</option>
+                <option value="4">Gerente</option>
+                <option value="5">JefeDeObras</option>
+                <option value="6">Contador</option>
+                <option value="7">AdministradorDeUsuarios</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form> *@
+</div>

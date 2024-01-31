@@ -12,7 +12,7 @@ namespace Core.Application.Features.Empleado.Comands.CreateEmpleado
     public class CreateEmpleadoCommand : IRequest<bool>
     {
         public string UserID { get; set; }
-        public string Documento { get; set; }
+        public string Cedula { get; set; }
         public int Codigo { get; set; }
         public string NumCuenta { get; set; }
         public string Nombre { get; set; }

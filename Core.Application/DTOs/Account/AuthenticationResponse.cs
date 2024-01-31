@@ -15,6 +15,7 @@ namespace Core.Application.DTOs.Account
         public bool IsVerified { get; set; }
         public bool HasError { get; set; }
         public string Error { get; set; }
+        public bool isTheFirsTime { get; set; }
 
 
     }

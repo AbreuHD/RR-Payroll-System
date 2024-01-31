@@ -10,7 +10,7 @@ namespace Core.Domain.Entities
     public class Empleado : AuditableBase
     {
         public string UserID { get; set; } //FK
-        //public string Documento { get; set; }
+        public string Cedula { get; set; }
         //public int Codigo { get; set; }
         //public string NumCuenta { get; set; }
         public string Nombre { get; set; }
@@ -22,7 +22,7 @@ namespace Core.Domain.Entities
         public string Celular { get; set; }
         public string Email { get; set; }
         //public string tipoPago { get; set; }
-        
+
         public int IdNacionalidad { get; set; }
         public int IdProvincia { get; set; }
         public int IdEstado { get; set; }

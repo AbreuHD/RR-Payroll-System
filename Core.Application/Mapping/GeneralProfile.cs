@@ -33,6 +33,7 @@ using Core.Application.Features.Proyecto.Commands.CreateProject;
 using Core.Application.Features.Proyecto.Commands.EditProject;
 using Core.Application.Features.Puesto.Command.CreatePuesto;
 using Core.Application.Features.TipoPago.Commands.CreateTipoPago;
+using Core.Application.Features.TipoPago.Commands.UpdateTipoPago;
 using Core.Application.ViewModels.User;
 using Core.Domain.Entities;
 using System;
@@ -63,7 +64,6 @@ namespace Core.Application.Mapping
                         .ReverseMap();
             CreateMap<ResetPasswordRequest, ResetPasswordViewModel>()
                 .ForMember(dest => dest.HasError, opt => opt.Ignore())
-                    .ForMember(dest => dest.Error, opt => opt.Ignore())
                         .ReverseMap();
 
             CreateMap<GetAllStatusDTO, Estado>()
@@ -164,11 +164,15 @@ namespace Core.Application.Mapping
                 .ReverseMap();            
             
             CreateMap<Empleado, GetEmpleadoByID>()
-                .ReverseMap();            
-            
+                .ReverseMap();
+
             CreateMap<Empleado, UpdateEmpleadoCommand>()
-                .ReverseMap();            
-            
+                .ForMember(dest => dest.tipoPago, opt => opt.Ignore())
+                .ForMember(dest => dest.NumCuenta, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+
             CreateMap<Percepciones, CreatePercepcionesCommand>()
                 .ReverseMap();            
             
@@ -182,6 +186,9 @@ namespace Core.Application.Mapping
                 .ReverseMap();            
             
             CreateMap<Pago, GetPagoByIdDTO>()
+                .ReverseMap();                  
+            
+            CreateMap<TipoPago, UpdateTipoPagoCommand>()
                 .ReverseMap();            
             
             CreateMap<Asistencia, GetAllAsistenciaByUserIDResponse>()

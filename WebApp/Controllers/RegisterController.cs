@@ -45,7 +45,7 @@ namespace WebApp.Controllers
         public async Task<IActionResult> RegisterCreate(RegisterRequestDTO dTO)
         {
             var data = await _userService.Register(dTO);
-            if (data.Toasts != null)
+            if (data.Toasts.Count != 0)
             {
                 TempData["Error"] = JsonConvert.SerializeObject(data.Toasts);
                 return RedirectToAction("Index");
@@ -65,7 +65,7 @@ namespace WebApp.Controllers
                 UserID = data.Id,
                 Telefono = dTO.Telefono,
                 Sexo = (dTO.Genero == 1) ? true : false,
-                Documento = dTO.Cedula,
+                Cedula = dTO.Cedula,
             };
             CreateTipoPagoCommand commPago = new CreateTipoPagoCommand()
             {

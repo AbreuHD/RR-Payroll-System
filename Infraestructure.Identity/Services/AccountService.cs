@@ -1,4 +1,6 @@
-﻿using Core.Application.DTOs.Account;
+﻿using Azure.Core;
+using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Register;
 using Core.Application.DTOs.Toast;
 using Core.Application.Enum;
 using Core.Application.Features.Empleado.Queries.GetEmpleadoByIdentityId;
@@ -64,121 +66,40 @@ namespace Infraestructure.Identity.Services
             var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
             response.Roles = rolesList.ToList();
             response.IsVerified = user.EmailConfirmed;
+            response.isTheFirsTime = user.isTheFirsTime;
 
             return response;
         }
 
-        //public async Task<RegisterResponse> RegisterClients(RegisterRequest request)
-        //{
-        //    RegisterResponse response = new();
+        public async Task<RegisterResponse> Update(RegisterRequestDTO dTo)
+        {
+            RegisterResponse response = new();
+            response.HasError = false;
 
-        //    response.HasError = false;
-        //    var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
-        //    if (userWithSameUserName != null)
-        //    {
-        //        response.HasError = true;
-        //        response.Error = $"userName {request.UserName} is already taken";
-        //        return response;
-        //    }
-        //    var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
+            var userToUpdate = await _userManager.FindByIdAsync(dTo.Id);
+            var user = userToUpdate;
 
-        //    if (userWithSameEmail != null)
-        //    {
-        //        response.HasError = true;
-        //        response.Error = $"Email {request.Email} is already register";
-        //        return response;
-        //    }
+            user.Email = dTo.Correo;
+            user.Name = dTo.Nombre;
+            user.LastName = dTo.Apellido;
+            user.PhoneNumber = dTo.Telefono;
 
-            
-        //        var user = new ApplicationUser()
-        //        {
-        //            Email = request.Email,
-        //            Name = request.Name,
-        //            LastName = request.LastName,
-        //            UserName = request.UserName,
-        //        };
 
-        //        var result = await _userManager.CreateAsync(user, request.Password);
-        //        //var created = GetAllUser();
+            var result = await _userManager.UpdateAsync(user);
 
-        //        if (!result.Succeeded)
-        //        {
-        //            response.HasError = true;
-        //            response.Error = $"An error ocurred trying to register the user";
-        //            return response;
-        //        }
-        //        //await _userManager.AddToRoleAsync(user, Roles.User.ToString());
-        //        response.Id = user.Id;
-        //        return response;
-            
-        //}
-
-        //public async Task<RegisterResponse> UpdateClient(RegisterRequest request)
-        //{
-        //    RegisterResponse response = new();
-        //    response.HasError = false;
-
-        //    var userToUpdate = await _userManager.FindByNameAsync(request.UserName);
-        //    var user = userToUpdate;
-
-        //    user.Email = request.Email;
-        //    user.Name = request.Name;
-        //    user.LastName = request.LastName;
-        //    user.UserName = request.UserName;
-        //    user.PhoneNumber = request.Phone;
-
-        //    var result = await _userManager.UpdateAsync(user);
-        //    Roles selectedRole = (Roles)request.TipoUsuario - 1;
-
-        //    foreach (var item in await _userManager.GetRolesAsync(user))
-        //    {
-        //        await _userManager.RemoveFromRoleAsync(user, item);
-        //    }
-
-        //    await _userManager.AddToRoleAsync(user, selectedRole.ToString());
-        //    //if (request.isAdmin)
-        //    //{
-        //    //    await _userManager.RemoveFromRoleAsync(user, Roles.User.ToString());
-        //    //    await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
-        //    //}
-        //    //else
-        //    //{
-        //    //    await _userManager.RemoveFromRoleAsync(user, Roles.Admin.ToString());
-        //    //    await _userManager.AddToRoleAsync(user, Roles.User.ToString());
-        //    //}
-
-        //    if (!result.Succeeded)
-        //    {
-        //        response.HasError = true;
-        //        response.Error = $"An error ocurred trying to update the user";
-        //        return response;
-        //    }
-        //    return response;
-        //}
-
-        //public async Task<RegisterResponse> UpdateAdmin(RegisterRequest request)
-        //{
-        //    RegisterResponse response = new();
-        //    response.HasError = false;
-
-        //    var userToUpdate = await _userManager.FindByNameAsync(request.UserName);
-
-        //    var user = userToUpdate;
-
-        //    user.Email = request.Email;
-        //    user.Name = request.Name;
-        //    user.LastName = request.LastName;
-        //    user.UserName = request.UserName;
-
-        //    var result = await _userManager.UpdateAsync(user);
-        //    if (!result.Succeeded)
-        //    {
-        //        response.HasError = true;
-        //        response.Error = $"An error ocurred trying to update the user";
-        //        return response;
-        //    }
-        //    return response;
-        //}
+            if (!result.Succeeded)
+            {
+                response.Toasts.Add(new ToastRequestDTO()
+                {
+                    Title = "ERROR",
+                    Message = $"Ocurrio un erorr tratando de actualizar el usuario"
+                });
+                //response.HasError = true;
+                //response.Error = $"An error ocurred trying to update the user";
+                return response;
+            }
+            return response;
+        }
 
         public async Task<RegisterResponse> Register(RegisterRequest request)
         {
@@ -227,16 +148,7 @@ namespace Infraestructure.Identity.Services
                 response.Error = $"An error ocurred trying to register the user";
                 return response;
             }
-            //Roles selectedRole = (Roles)request.TipoUsuario - 1;
-            //await _userManager.AddToRoleAsync(user, selectedRole.ToString());
-            //if (request.isAdmin)
-            //{
-            //    await _userManager.AddToRoleAsync(user, Roles.Admin.ToString());
-            //}
-            //else
-            //{
-            //    await _userManager.AddToRoleAsync(user, Roles.User.ToString());
-            //}
+
             response.Id = user.Id;
             response.Username = user.UserName;
             return response;
@@ -265,21 +177,28 @@ namespace Infraestructure.Identity.Services
             ResetPasswordResponse response = new();
             response.HasError = false;
 
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await _userManager.FindByIdAsync(request.UserId);
             if (user == null)
             {
                 response.HasError = true;
-                response.Error = $"No account registered with {request.Email}";
                 return response;
             }
-            request.Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
-            var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+            
+            var result = await _userManager.ResetPasswordAsync(user, token, request.Password);
             if (!result.Succeeded)
             {
                 response.HasError = true;
                 response.Error = $"An error occurred while resetting password ";
                 return response;
             }
+
+            var data = await _userManager.FindByIdAsync(request.UserId);
+            data.isTheFirsTime = true;
+            await _userManager.UpdateAsync(data);
+
 
             return response;
         }
@@ -401,11 +320,26 @@ namespace Infraestructure.Identity.Services
             };
         }
 
-        public async Task ChangeStatus(string id)
+        public async Task ChangeStatus(string Id, int TipoUsuario)
         {
-            var userToUpdate = await _userManager.FindByIdAsync(id);
+            var userToUpdate = await _userManager.FindByIdAsync(Id);
             userToUpdate.EmailConfirmed = !userToUpdate.EmailConfirmed;
-            await _userManager.UpdateAsync(userToUpdate);
+
+            var roles = await _userManager.GetRolesAsync(userToUpdate);
+
+            if(roles.Count > 0)
+            {
+                await _userManager.RemoveFromRolesAsync(userToUpdate, roles);
+
+            }
+            if(TipoUsuario != 0)
+            {
+                Roles selectedRole = (Roles)TipoUsuario - 1;
+                await _userManager.AddToRoleAsync(userToUpdate, selectedRole.ToString());
+                await _userManager.UpdateAsync(userToUpdate);
+            }
         }
+
+
     }
 }

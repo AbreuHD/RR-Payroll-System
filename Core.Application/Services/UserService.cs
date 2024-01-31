@@ -111,10 +111,14 @@ namespace Core.Application.Services
         {
             return "a";
         }
-        public async Task ChangeStatus(string Id)
+        public async Task ChangeStatus(string Id, int TipoUsuario)
         {
-            await _accountService.ChangeStatus(Id);
+            await _accountService.ChangeStatus(Id, TipoUsuario);
         }
 
+        public async Task<RegisterResponse> Update(RegisterRequestDTO dTo)
+        {
+            return await _accountService.Update(dTo);
+        }
     }
 }

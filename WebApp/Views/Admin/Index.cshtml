@@ -16,7 +16,7 @@
                                 <h1>Usuarios</h1>
                             </div>
                             <div class="col-3 offset-6" style="padding-left: 15%">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Crear Usuario</button>
+                                <a type="button" class="btn btn-primary" asp-controller="Admin" asp-action="User">Crear Usuario</a>
                             </div>
                         </div>
                         <hr />
@@ -47,10 +47,10 @@
                                         <td>@user.Email</td>
                                         <td>@user.UserName</td>
                                         <td>
-                                            @if (user.EsEmpleado == 0)
+                                            @if (user.UserName == "Owner")
                                             {
                                                 <div>
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalEmpleado" data-idEmpleadoProyectos="@user.Id" onclick="updateInputValue(this)">Crear</button>
+                                                    <button type="button" class="btn btn-primary" disabled>OWNER</button>
                                                 </div>
                                             }
                                             else
@@ -62,10 +62,16 @@
                                         </td>
                                         <td>@(user.IsActive  ? "Si" : "No")</td>
                                         <td>
-                                            <button class="btn btn-warning"><a asp-controller="Admin" asp-action="EditarUsuario" asp-route-id="@user.Id">Editar</a></button>
+                                            @if (user.UserName == "Owner")
+                                            {
+                                                <button type="button" class="btn btn-primary" disabled>OWNER</button>
+                                            }else
+                                            {
+                                                <button class="btn btn-warning"><a asp-controller="Admin" asp-action="User" asp-route-id="@user.Id">Editar</a></button>
+                                            }
                                         </td>
                                         <td>
-                                            <button class="btn btn-danger"><a asp-controller="Admin" asp-action="Desactivar" asp-route-id="@user.Id">Cambiar Estatus</a></button>
+                                            <button class="btn btn-danger" onclick="cambiarEstatus('@user.Id', '@user.UserName', '@user.IsActive')" data-bs-toggle="modal" data-bs-target="#exampleModal">Cambiar Estatus</button>
                                         </td>
                                     </tr>
                                 }
@@ -76,63 +82,27 @@
         </div>
     </div>
 
-        @if (ViewBag.errors != null && ViewBag.errors.Length > 0)
-        {
-            <div class="toast-container position-static">
-                @foreach (var error in ViewBag.errors)
-                {
-                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                            <div class="toast-header">
-                                <img src="https://img.freepik.com/vector-premium/signo-pintado-pincel-ilustracion-estilo-dibujado-mano-efecto-grunge-signo_546559-113.jpg" class="rounded me-2" width="20" height="20" alt="...">
-                                <strong class="me-auto">Error</strong>
-                                <small>Ahora Mismo</small>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                                @error
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        }
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear Usuario</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                        <div class="">
-                        <form method="post" asp-controller="Admin" asp-action="CreateUser">
-                            <div class="row row-cols-2">
+                        <form method="post" asp-controller="Admin" asp-action="Desactivar">
+                            <div class="row">
                                 <div>
                                     <div class="mb-3">
                                         <label for="username" class="form-label">Usuario</label>
-                                        <input type="text" class="form-control" id="username" name="UserName" aria-describedby="username">
+                                        <input type="text" class="form-control" id="username" name="UserName" aria-describedby="username" disabled>
                                     </div>
 
+                                    <input Id="UserId" name="UserId" value="" hidden />
+                                    
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="name" name="Name" aria-describedby="name">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="cedula" class="form-label">Cedula</label>
-                                        <input type="number" class="form-control" id="cedula" name="Identification">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="psw" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="psw" name="Password">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="TipoUsuario" class="form-label">Tipo De Usuario</label>
-                                        <select class="form-select" name="TipoUsuario" aria-label="Default select example">
-                                            <option selected>Selecciona un Tipo</option>
+                                        <label for="TipoUsuario" id="stringRole" class="form-label">Tipo De Usuario</label>
+                                        <select class="form-select" id="TipoUsuario" name="TipoUsuario" aria-label="Default select example">
                                             <option value="1">Owner</option>
                                             <option value="2">Empleado</option>
                                             <option value="3">RRHH</option>
@@ -143,34 +113,11 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="Email">
-                                    </div>
-
-
-                                    <div class="mb-3">
-                                        <label for="lastname" class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" id="lastname" name="LastName">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="phone" class="form-label">Telefono</label>
-                                        <input type="tel" class="form-control" id="phone" name="Phone">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="conpsw" class="form-label">Repite la contraseña</label>
-                                        <input type="password" class="form-control" id="conpsw" name="ConfirmPassword">
-                                    </div>
-                                </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Crear</button>
+                                <button type="submit" class="btn btn-primary" id="btnStatus"></button>
                             </div>
-                    </form>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -280,16 +227,29 @@
     </div>
 </div>
 <script>
-    window.onload = (event) => {
-        let myAlert = document.querySelectorAll('.toast');
-        myAlert.forEach((toast, index) => {
-            let bsToast = new bootstrap.Toast(toast);
-            bsToast.show();
-        });
-    }
-    function updateInputValue(button) {
-        var idEmpleadoProyectos = button.getAttribute('data-idEmpleadoProyectos');
-        console.log('Id Empleado Proyectos:', idEmpleadoProyectos);
-        document.getElementById('IdentityId').value = idEmpleadoProyectos;
+    function cambiarEstatus(id, username, isActive) {
+        document.getElementById('username').value = username;
+        document.getElementById('UserId').value = id;
+        
+        if (isActive == 'True') {
+            var modalEmpleadoElement = document.getElementById('exampleModalLabel');
+            modalEmpleadoElement.innerText = 'Estas Seguro de desactivarlo?';
+            document.getElementById('stringRole').hidden = true;
+            var userTipe = document.getElementById('TipoUsuario');
+            userTipe.value = 69;
+            userTipe.hidden = true;
+            document.getElementById('btnStatus').innerText = 'Desactivar';
+        }
+
+        if (isActive == 'False') {
+            var modalEmpleadoElement = document.getElementById('exampleModalLabel');
+            modalEmpleadoElement.innerText = 'Asignale un Rol';
+            document.getElementById('stringRole').hidden = false;
+            var userTipe = document.getElementById('TipoUsuario');
+            userTipe.hidden = false;
+            userTipe.value = 1;
+            document.getElementById('btnStatus').innerText = 'Activar';
+        }
     }
  </script>
+

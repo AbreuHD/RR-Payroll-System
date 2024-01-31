@@ -6,5 +6,7 @@ namespace Infrastructure.Identity.Entities
     {
         public string Name { get; set; }
         public string LastName { get; set; }
+        public bool isTheFirsTime { get; set; }
+
     }
 }

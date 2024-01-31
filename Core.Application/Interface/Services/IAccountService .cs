@@ -1,4 +1,5 @@
 ﻿using Core.Application.DTOs.Account;
+using Core.Application.DTOs.Register;
 using Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace Core.Application.Interface.Services
         Task<List<UserGetAllViewModel>> GetAllVMUser();
         Task<UserSaveViewModel> GetAccountByid(string ID);
         Task<List<string>> GetAdminUsers();
-        Task ChangeStatus(string id);
+        Task ChangeStatus(string Id, int TipoUsuario);
+        Task<RegisterResponse> Update(RegisterRequestDTO dTo);
     }
 }

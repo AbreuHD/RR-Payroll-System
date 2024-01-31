@@ -8,6 +8,7 @@ namespace Core.Application.DTOs.Register
 {
     public class RegisterRequestDTO
     {
+        public string Id { get; set; }
         public string Nombre { get; set; }
         public string Telefono { get; set; }
         public int Genero { get; set; }
@@ -22,5 +23,8 @@ namespace Core.Application.DTOs.Register
         public int Nacionalidad { get; set; }
         public int Banco { get; set; }
         public string Correo { get; set; }
+
+        public int IdTipoPago { get; set; }
+        public int IdEmpleado { get; set; }
     }
 }

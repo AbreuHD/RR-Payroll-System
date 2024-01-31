@@ -1,6 +1,4 @@
-﻿@using Core.Application.ViewModels.User
-@model LoginViewModel
-@{
+﻿@{
     Layout = "";
     ViewData["Title"] = "Register";
 }
@@ -31,13 +29,13 @@
                     <div class="row row-cols-2">
                         <div>
                             <div class="from-group">
-                                <label name="test" class="form-label">Nombre</label>
-                                <input class="form-input" name="Nombre" required/>
+                                <label name="Nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-input" name="Nombre" required/>
                                 
                             </div>
                             <div class="from-group">
-                                <label name="test" class="form-label">Telefono</label>
-                                <input class="form-input" name="Telefono" required />
+                                <label name="Telefono" class="form-label">Telefono</label>
+                                <input type="tel" class="form-input" name="Telefono" required />
                                 
                             </div>
                             <div class="from-group">
@@ -50,7 +48,7 @@
                             </div>
                             <div class="from-group">
                                 <label name="test" class="form-label">Direccion</label>
-                                <input class="form-input" name="Direccion" required />
+                                <input type="text" class="form-input" name="Direccion" required />
                                 
                             </div>
                             <div class="from-group">
@@ -75,23 +73,23 @@
                             </div>
                             <div class="from-group">
                                 <label name="test" class="form-label">Cuenta</label>
-                                <input class="form-input" name="Cuenta" required />
+                                <input type="number" class="form-input" name="Cuenta" required />
                                 
                             </div>
                         </div>
                         <div>
                             <div class="from-group">
                                 <label name="test" class="form-label">Apellido</label>
-                                <input class="form-input" name="Apellido" required />
+                                <input type="text" class="form-input" name="Apellido" required />
                                 
                             </div>
                             <div class="from-group">
                                 <label name="test" class="form-label">Correo</label>
-                                <input class="form-input" name="Correo" required />
+                                <input type="email" class="form-input" name="Correo" required />
                             </div>                            
                             <div class="from-group">
                                 <label name="test" class="form-label">Cedula</label>
-                                <input class="form-input" name="Cedula" required />
+                                <input type="text" class="form-input" name="Cedula" required />
                             </div>
                             <div class="from-group">
                                 <label name="test" class="form-label">Fecha de Nacimiento</label>

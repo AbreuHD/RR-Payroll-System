@@ -32,11 +32,6 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(LoginViewModel loginViewModel)
         {
-            //loginViewModel.Error = "QSsS";
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(loginViewModel);
-            //}
             AuthenticationResponse user = await _userService.Login(loginViewModel);
             if (user.HasError || user == null)
             {
@@ -45,11 +40,17 @@ namespace WebApp.Controllers
                 ModelState.AddModelError("userValidation", "Datos de acceso incorrectos");
                 return View(loginViewModel);
             }
-            //here is where the session is set
             var jsonSerializerSettings = new JsonSerializerSettings{};
             var userJson = JsonConvert.SerializeObject(user, jsonSerializerSettings);
             var userBytes = Encoding.UTF8.GetBytes(userJson);
             HttpContext.Session.Set("user", userBytes);
+
+            if(!user.isTheFirsTime)
+            {
+                TempData["user"] = user.UserName;
+                TempData["userId"] = user.Id;
+                return RedirectToRoute(new { controller = "Home", action = "FirstLogin" });
+            }
 
             if (user.Roles.Any(rol => rol == "Admin"))
             {
@@ -65,62 +66,25 @@ namespace WebApp.Controllers
             return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
 
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        public async Task<IActionResult> FirstLogin()
         {
-            string response = await _userService.ConfirmEmail(userId, token);
-            return View("ConfirmEmail", response);
-        }
-
-        public IActionResult ForgotPassword()
-        {
-            return View(new ForgotPasswordViewModel());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgotPassword)
-        {
-            if (!ModelState.IsValid)
+            if(TempData["user"] == null)
             {
-                return View(forgotPassword);
+                return RedirectToRoute(new { controller = "Home", action = "Index" });
             }
-            var origin = Request.Headers["origin"];
-            ForgotPasswordResponse forgotResponse = await _userService.ForgotPassword(forgotPassword);
-            if (forgotResponse.HasError)
-            {
-                forgotPassword.HasError = forgotResponse.HasError;
-                forgotPassword.Error = forgotResponse.Error;
-
-                return View(forgotPassword);
-            }
-            return RedirectToRoute(new { controller = "Home", action = "Index" });
-        }
-
-        public IActionResult ResetPassword(string token)
-        {
-            return View(new ResetPasswordViewModel { Token = token });
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPassword)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(resetPassword);
-            }
-            ResetPasswordResponse resetResponse = await _userService.ResetPassword(resetPassword);
-            if (resetResponse.HasError)
-            {
-                resetPassword.HasError = resetResponse.HasError;
-                resetPassword.Error = resetResponse.Error;
-
-                return View(resetPassword);
-            }
-            return RedirectToRoute(new { controller = "Home", action = "Index" });
-        }
-
-        public IActionResult AccessDenied()
-        {
+            ViewBag.Regex = " /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?\":{}|<>])(.{8,})$/";
+            ViewBag.user = TempData["user"];
+            ViewBag.userId = TempData["userId"];
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ResetPasswordViewModel vm)
+        {
+            await _userService.ResetPassword(vm);
+
+            return RedirectToAction("LogOut");
+        }
+
     }
 }
